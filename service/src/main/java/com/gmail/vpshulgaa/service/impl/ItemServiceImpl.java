@@ -17,7 +17,22 @@ public class ItemServiceImpl implements ItemService{
 
     @Override
     public Item findOne(Long id) {
-        return null;
+        Item item = null;
+        Session session = itemDao.getCurrentSession();
+        try {
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()){
+                transaction.begin();
+            }
+            item = itemDao.findOne(id);
+            transaction.commit();
+        } catch (Exception e) {
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
+            logger.error("Failed to get item", e);
+        }
+        return item;
     }
 
     @Override
@@ -45,16 +60,55 @@ public class ItemServiceImpl implements ItemService{
 
     @Override
     public void update(Item item) {
-
+        Session session = itemDao.getCurrentSession();
+        try {
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()){
+                transaction.begin();
+            }
+            itemDao.update(item);
+            transaction.commit();
+        } catch (Exception e) {
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
+            logger.error("Failed to update item", e);
+        }
     }
 
     @Override
     public void delete(Item item) {
-
+        Session session = itemDao.getCurrentSession();
+        try {
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()){
+                transaction.begin();
+            }
+            itemDao.delete(item);
+            transaction.commit();
+        } catch (Exception e) {
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
+            logger.error("Failed to delete item", e);
+        }
     }
 
     @Override
     public void deleteById(Long id) {
-
+        Session session = itemDao.getCurrentSession();
+        try {
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()){
+                transaction.begin();
+            }
+            itemDao.deleteById(id);
+            transaction.commit();
+        } catch (Exception e) {
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
+            logger.error("Failed to delete item", e);
+        }
     }
 }

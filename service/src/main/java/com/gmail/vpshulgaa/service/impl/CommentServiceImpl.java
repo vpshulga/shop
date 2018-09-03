@@ -1,115 +1,114 @@
 package com.gmail.vpshulgaa.service.impl;
 
-import com.gmail.vpshulgaa.dao.UserDao;
-import com.gmail.vpshulgaa.dao.entities.User;
-import com.gmail.vpshulgaa.dao.impl.UserDaoImpl;
-import com.gmail.vpshulgaa.service.UserService;
+import com.gmail.vpshulgaa.dao.CommentDao;
+import com.gmail.vpshulgaa.dao.entities.Comment;
+import com.gmail.vpshulgaa.dao.impl.CommentDaoImpl;
+import com.gmail.vpshulgaa.service.CommentService;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+public class CommentServiceImpl implements CommentService {
+    private static final Logger logger = LogManager.getLogger(CommentServiceImpl.class);
 
-public class UserServiceImpl implements UserService {
-    private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
-
-    private UserDao userDao = new UserDaoImpl(User.class);
+    private CommentDao commentDao = new CommentDaoImpl(Comment.class);
 
     @Override
-    public User findOne(Long id) {
-        User user = null;
-        Session session = userDao.getCurrentSession();
+    public Comment findOne(Long id) {
+        Comment comment = null;
+        Session session = commentDao.getCurrentSession();
         try {
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()){
                 transaction.begin();
             }
-            user = userDao.findOne(id);
+            comment = commentDao.findOne(id);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to get user", e);
+            logger.error("Failed to get comment", e);
         }
-        return user;
+        return comment;
     }
 
     @Override
-    public List<User> findAll() {
+    public List<Comment> findAll() {
         return null;
     }
 
     @Override
-    public void create(User user) {
-        Session session = userDao.getCurrentSession();
+    public void create(Comment comment) {
+        Session session = commentDao.getCurrentSession();
         try {
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()){
                 transaction.begin();
             }
-            userDao.create(user);
+            commentDao.create(comment);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to save user", e);
+            logger.error("Failed to save comment", e);
         }
     }
 
     @Override
-    public void update(User user) {
-        Session session = userDao.getCurrentSession();
+    public void update(Comment comment) {
+        Session session = commentDao.getCurrentSession();
         try {
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()){
                 transaction.begin();
             }
-            userDao.update(user);
+            commentDao.update(comment);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to update user", e);
+            logger.error("Failed to update comment", e);
         }
     }
 
     @Override
-    public void delete(User user) {
-        Session session = userDao.getCurrentSession();
+    public void delete(Comment comment) {
+        Session session = commentDao.getCurrentSession();
         try {
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()){
                 transaction.begin();
             }
-            userDao.delete(user);
+            commentDao.delete(comment);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to delete user", e);
+            logger.error("Failed to delete comment", e);
         }
     }
 
     @Override
     public void deleteById(Long id) {
-        Session session = userDao.getCurrentSession();
+        Session session = commentDao.getCurrentSession();
         try {
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()){
                 transaction.begin();
             }
-            userDao.deleteById(id);
+            commentDao.deleteById(id);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to delete user", e);
+            logger.error("Failed to delete comment", e);
         }
     }
 }

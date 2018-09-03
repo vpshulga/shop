@@ -1,115 +1,115 @@
 package com.gmail.vpshulgaa.service.impl;
 
-import com.gmail.vpshulgaa.dao.UserDao;
-import com.gmail.vpshulgaa.dao.entities.User;
-import com.gmail.vpshulgaa.dao.impl.UserDaoImpl;
-import com.gmail.vpshulgaa.service.UserService;
+import com.gmail.vpshulgaa.dao.NewsDao;
+import com.gmail.vpshulgaa.dao.entities.News;
+import com.gmail.vpshulgaa.dao.impl.NewsDaoImpl;
+import com.gmail.vpshulgaa.service.NewsService;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+public class NewsServiceImpl implements NewsService {
 
-public class UserServiceImpl implements UserService {
-    private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
+    private static final Logger logger = LogManager.getLogger(NewsServiceImpl.class);
 
-    private UserDao userDao = new UserDaoImpl(User.class);
+    private NewsDao newsDao = new NewsDaoImpl(News.class);
 
     @Override
-    public User findOne(Long id) {
-        User user = null;
-        Session session = userDao.getCurrentSession();
+    public News findOne(Long id) {
+        News news = null;
+        Session session = newsDao.getCurrentSession();
         try {
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()){
                 transaction.begin();
             }
-            user = userDao.findOne(id);
+            news = newsDao.findOne(id);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to get user", e);
+            logger.error("Failed to get news", e);
         }
-        return user;
+        return news;
     }
 
     @Override
-    public List<User> findAll() {
+    public List<News> findAll() {
         return null;
     }
 
     @Override
-    public void create(User user) {
-        Session session = userDao.getCurrentSession();
+    public void create(News news) {
+        Session session = newsDao.getCurrentSession();
         try {
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()){
                 transaction.begin();
             }
-            userDao.create(user);
+            newsDao.create(news);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to save user", e);
+            logger.error("Failed to save news", e);
         }
     }
 
     @Override
-    public void update(User user) {
-        Session session = userDao.getCurrentSession();
+    public void update(News news) {
+        Session session = newsDao.getCurrentSession();
         try {
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()){
                 transaction.begin();
             }
-            userDao.update(user);
+            newsDao.update(news);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to update user", e);
+            logger.error("Failed to update news", e);
         }
     }
 
     @Override
-    public void delete(User user) {
-        Session session = userDao.getCurrentSession();
+    public void delete(News news) {
+        Session session = newsDao.getCurrentSession();
         try {
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()){
                 transaction.begin();
             }
-            userDao.delete(user);
+            newsDao.delete(news);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to delete user", e);
+            logger.error("Failed to delete news", e);
         }
     }
 
     @Override
     public void deleteById(Long id) {
-        Session session = userDao.getCurrentSession();
+        Session session = newsDao.getCurrentSession();
         try {
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()){
                 transaction.begin();
             }
-            userDao.deleteById(id);
+            newsDao.deleteById(id);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to delete user", e);
+            logger.error("Failed to delete news", e);
         }
     }
 }

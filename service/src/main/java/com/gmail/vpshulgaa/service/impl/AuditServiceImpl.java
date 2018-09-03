@@ -1,115 +1,114 @@
 package com.gmail.vpshulgaa.service.impl;
 
-import com.gmail.vpshulgaa.dao.UserDao;
-import com.gmail.vpshulgaa.dao.entities.User;
-import com.gmail.vpshulgaa.dao.impl.UserDaoImpl;
-import com.gmail.vpshulgaa.service.UserService;
+import com.gmail.vpshulgaa.dao.AuditDao;
+import com.gmail.vpshulgaa.dao.entities.Audit;
+import com.gmail.vpshulgaa.dao.impl.AuditDaoImpl;
+import com.gmail.vpshulgaa.service.AuditService;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+public class AuditServiceImpl implements AuditService{
+    private static final Logger logger = LogManager.getLogger(AuditServiceImpl.class);
 
-public class UserServiceImpl implements UserService {
-    private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
-
-    private UserDao userDao = new UserDaoImpl(User.class);
+    private AuditDao auditDao = new AuditDaoImpl(Audit.class);
 
     @Override
-    public User findOne(Long id) {
-        User user = null;
-        Session session = userDao.getCurrentSession();
+    public Audit findOne(Long id) {
+        Audit audit = null;
+        Session session = auditDao.getCurrentSession();
         try {
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()){
                 transaction.begin();
             }
-            user = userDao.findOne(id);
+            audit = auditDao.findOne(id);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to get user", e);
+            logger.error("Failed to get audit", e);
         }
-        return user;
+        return audit;
     }
 
     @Override
-    public List<User> findAll() {
+    public List<Audit> findAll() {
         return null;
     }
 
     @Override
-    public void create(User user) {
-        Session session = userDao.getCurrentSession();
+    public void create(Audit audit) {
+        Session session = auditDao.getCurrentSession();
         try {
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()){
                 transaction.begin();
             }
-            userDao.create(user);
+            auditDao.create(audit);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to save user", e);
+            logger.error("Failed to save audit", e);
         }
     }
 
     @Override
-    public void update(User user) {
-        Session session = userDao.getCurrentSession();
+    public void update(Audit audit) {
+        Session session = auditDao.getCurrentSession();
         try {
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()){
                 transaction.begin();
             }
-            userDao.update(user);
+            auditDao.update(audit);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to update user", e);
+            logger.error("Failed to update audit", e);
         }
     }
 
     @Override
-    public void delete(User user) {
-        Session session = userDao.getCurrentSession();
+    public void delete(Audit audit) {
+        Session session = auditDao.getCurrentSession();
         try {
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()){
                 transaction.begin();
             }
-            userDao.delete(user);
+            auditDao.delete(audit);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to delete user", e);
+            logger.error("Failed to delete audit", e);
         }
     }
 
     @Override
     public void deleteById(Long id) {
-        Session session = userDao.getCurrentSession();
+        Session session = auditDao.getCurrentSession();
         try {
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()){
                 transaction.begin();
             }
-            userDao.deleteById(id);
+            auditDao.deleteById(id);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to delete user", e);
+            logger.error("Failed to delete audit", e);
         }
     }
 }

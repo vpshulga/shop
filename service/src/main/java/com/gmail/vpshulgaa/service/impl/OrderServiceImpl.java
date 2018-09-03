@@ -1,115 +1,114 @@
 package com.gmail.vpshulgaa.service.impl;
 
-import com.gmail.vpshulgaa.dao.UserDao;
-import com.gmail.vpshulgaa.dao.entities.User;
-import com.gmail.vpshulgaa.dao.impl.UserDaoImpl;
-import com.gmail.vpshulgaa.service.UserService;
+import com.gmail.vpshulgaa.dao.OrderDao;
+import com.gmail.vpshulgaa.dao.entities.Order;
+import com.gmail.vpshulgaa.dao.impl.OrderDaoImpl;
+import com.gmail.vpshulgaa.service.OrderService;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+public class OrderServiceImpl implements OrderService{
+    private static final Logger logger = LogManager.getLogger(OrderServiceImpl.class);
 
-public class UserServiceImpl implements UserService {
-    private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
-
-    private UserDao userDao = new UserDaoImpl(User.class);
+    private OrderDao orderDao = new OrderDaoImpl(Order.class);
 
     @Override
-    public User findOne(Long id) {
-        User user = null;
-        Session session = userDao.getCurrentSession();
+    public Order findOne(Long id) {
+        Order order = null;
+        Session session = orderDao.getCurrentSession();
         try {
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()){
                 transaction.begin();
             }
-            user = userDao.findOne(id);
+            order = orderDao.findOne(id);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to get user", e);
+            logger.error("Failed to get order", e);
         }
-        return user;
+        return order;
     }
 
     @Override
-    public List<User> findAll() {
+    public List<Order> findAll() {
         return null;
     }
 
     @Override
-    public void create(User user) {
-        Session session = userDao.getCurrentSession();
+    public void create(Order order) {
+        Session session = orderDao.getCurrentSession();
         try {
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()){
                 transaction.begin();
             }
-            userDao.create(user);
+            orderDao.create(order);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to save user", e);
+            logger.error("Failed to save order", e);
         }
     }
 
     @Override
-    public void update(User user) {
-        Session session = userDao.getCurrentSession();
+    public void update(Order order) {
+        Session session = orderDao.getCurrentSession();
         try {
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()){
                 transaction.begin();
             }
-            userDao.update(user);
+            orderDao.update(order);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to update user", e);
+            logger.error("Failed to update order", e);
         }
     }
 
     @Override
-    public void delete(User user) {
-        Session session = userDao.getCurrentSession();
+    public void delete(Order order) {
+        Session session = orderDao.getCurrentSession();
         try {
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()){
                 transaction.begin();
             }
-            userDao.delete(user);
+            orderDao.delete(order);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to delete user", e);
+            logger.error("Failed to delete order", e);
         }
     }
 
     @Override
     public void deleteById(Long id) {
-        Session session = userDao.getCurrentSession();
+        Session session = orderDao.getCurrentSession();
         try {
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()){
                 transaction.begin();
             }
-            userDao.deleteById(id);
+            orderDao.deleteById(id);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to delete user", e);
+            logger.error("Failed to delete order", e);
         }
     }
 }

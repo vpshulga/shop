@@ -1,115 +1,114 @@
 package com.gmail.vpshulgaa.service.impl;
 
-import com.gmail.vpshulgaa.dao.UserDao;
-import com.gmail.vpshulgaa.dao.entities.User;
-import com.gmail.vpshulgaa.dao.impl.UserDaoImpl;
-import com.gmail.vpshulgaa.service.UserService;
+import com.gmail.vpshulgaa.dao.RoleDao;
+import com.gmail.vpshulgaa.dao.entities.Role;
+import com.gmail.vpshulgaa.dao.impl.RoleDaoImpl;
+import com.gmail.vpshulgaa.service.RoleService;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+public class RoleServiceImpl implements RoleService{
+    private static final Logger logger = LogManager.getLogger(RoleServiceImpl.class);
 
-public class UserServiceImpl implements UserService {
-    private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
-
-    private UserDao userDao = new UserDaoImpl(User.class);
+    private RoleDao roleDao = new RoleDaoImpl(Role.class);
 
     @Override
-    public User findOne(Long id) {
-        User user = null;
-        Session session = userDao.getCurrentSession();
+    public Role findOne(Long id) {
+        Role role = null;
+        Session session = roleDao.getCurrentSession();
         try {
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()){
                 transaction.begin();
             }
-            user = userDao.findOne(id);
+            role = roleDao.findOne(id);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to get user", e);
+            logger.error("Failed to get role", e);
         }
-        return user;
+        return role;
     }
 
     @Override
-    public List<User> findAll() {
+    public List<Role> findAll() {
         return null;
     }
 
     @Override
-    public void create(User user) {
-        Session session = userDao.getCurrentSession();
+    public void create(Role role) {
+        Session session = roleDao.getCurrentSession();
         try {
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()){
                 transaction.begin();
             }
-            userDao.create(user);
+            roleDao.create(role);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to save user", e);
+            logger.error("Failed to save role", e);
         }
     }
 
     @Override
-    public void update(User user) {
-        Session session = userDao.getCurrentSession();
+    public void update(Role role) {
+        Session session = roleDao.getCurrentSession();
         try {
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()){
                 transaction.begin();
             }
-            userDao.update(user);
+            roleDao.update(role);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to update user", e);
+            logger.error("Failed to update role", e);
         }
     }
 
     @Override
-    public void delete(User user) {
-        Session session = userDao.getCurrentSession();
+    public void delete(Role role) {
+        Session session = roleDao.getCurrentSession();
         try {
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()){
                 transaction.begin();
             }
-            userDao.delete(user);
+            roleDao.delete(role);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to delete user", e);
+            logger.error("Failed to delete role", e);
         }
     }
 
     @Override
     public void deleteById(Long id) {
-        Session session = userDao.getCurrentSession();
+        Session session = roleDao.getCurrentSession();
         try {
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()){
                 transaction.begin();
             }
-            userDao.deleteById(id);
+            roleDao.deleteById(id);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
-            logger.error("Failed to delete user", e);
+            logger.error("Failed to delete role", e);
         }
     }
 }

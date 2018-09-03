@@ -19,6 +19,21 @@ public class Main {
         user.setSurname("Petrovich");
         user.setPassword("123");
         user.setRoleId(1);
+
+        News news1 = new News();
+        News news2 = new News();
+
+        news1.setTitle("title123");
+        news1.setContent("content1");
+        news1.setCreated(LocalDateTime.now());
+
+        news2.setTitle("title234");
+        news2.setContent("content2");
+        news2.setCreated(LocalDateTime.now());
+
+        user.getNews().add(news1);
+        user.getNews().add(news2);
+
         userService.create(user);
         ProfileService profileService = new ProfileServiceImpl();
         Profile profile = new Profile();
@@ -28,22 +43,9 @@ public class Main {
         profile.setTelephone("+375256682777");
         profileService.create(profile);
 
-        NewsService newsService = new NewsServiceImpl();
-        News news1 = new News();
-        News news2 = new News();
 
-        news1.setTitle("title1");
-        news1.setContent("content1");
-        news1.setCreated(LocalDateTime.now());
-        news1.setUserId(gotUser.getId());
 
-        news2.setTitle("title2");
-        news2.setContent("content2");
-        news2.setCreated(LocalDateTime.now());
-        news2.setUserId(gotUser.getId());
 
-        newsService.create(news1);
-        newsService.create(news2);
 
         PermissionService permissionService = new PermissionServiceImpl();
         RoleService roleService = new RoleServiceImpl();

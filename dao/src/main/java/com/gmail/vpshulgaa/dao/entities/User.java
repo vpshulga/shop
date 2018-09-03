@@ -24,4 +24,6 @@ public class User implements Serializable{
     private String password;
     @Column(name = "F_ROLE_ID", length = 50)
     private long roleId;
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Profile profile;
 }

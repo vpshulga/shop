@@ -1,13 +1,8 @@
-import com.gmail.vpshulgaa.dao.entities.Item;
-import com.gmail.vpshulgaa.dao.entities.Order;
-import com.gmail.vpshulgaa.dao.entities.Profile;
-import com.gmail.vpshulgaa.dao.entities.User;
-import com.gmail.vpshulgaa.service.ItemService;
-import com.gmail.vpshulgaa.service.ProfileService;
-import com.gmail.vpshulgaa.service.impl.ItemServiceImpl;
-import com.gmail.vpshulgaa.service.impl.OrderServiceImpl;
-import com.gmail.vpshulgaa.service.impl.ProfileServiceImpl;
-import com.gmail.vpshulgaa.service.impl.UserServiceImpl;
+import com.gmail.vpshulgaa.dao.PermissionDao;
+import com.gmail.vpshulgaa.dao.entities.*;
+import com.gmail.vpshulgaa.dao.impl.PermissionDaoImpl;
+import com.gmail.vpshulgaa.service.*;
+import com.gmail.vpshulgaa.service.impl.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import org.apache.logging.log4j.LogManager;
@@ -32,6 +27,41 @@ public class Main {
         profile.setAddress("some addr");
         profile.setTelephone("+375256682777");
         profileService.create(profile);
+
+        NewsService newsService = new NewsServiceImpl();
+        News news1 = new News();
+        News news2 = new News();
+
+        news1.setTitle("title1");
+        news1.setContent("content1");
+        news1.setCreated(LocalDateTime.now());
+        news1.setUserId(gotUser.getId());
+
+        news2.setTitle("title2");
+        news2.setContent("content2");
+        news2.setCreated(LocalDateTime.now());
+        news2.setUserId(gotUser.getId());
+
+        newsService.create(news1);
+        newsService.create(news2);
+
+        PermissionService permissionService = new PermissionServiceImpl();
+        RoleService roleService = new RoleServiceImpl();
+
+        Role role = new Role();
+        role.setName("ADMIN");
+
+        Permission permission1 = new Permission();
+        permission1.setName("perm1");
+
+        Permission permission2 = new Permission();
+        permission2.setName("perm2");
+
+        role.getPermissions().add(permission1);
+        permission1.getRoles().add(role);
+        role.getPermissions().add(permission2);
+
+        roleService.create(role);
 
 
 //        Profile profile1 = new Profile();

@@ -1,7 +1,7 @@
 package com.gmail.vpshulgaa.dao.util;
 
 import com.gmail.vpshulgaa.dao.config.ConfigManager;
-import com.gmail.vpshulgaa.dao.entities.User;
+import com.gmail.vpshulgaa.dao.entities.*;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.logging.log4j.LogManager;
@@ -40,7 +40,16 @@ public class HibernateUtil {
                 registry = registryBuilder.build();
                 logger.info("Hibernate Registry Builder created");
 
-                MetadataSources sources = new MetadataSources(registry).addAnnotatedClass(User.class);
+                MetadataSources sources = new MetadataSources(registry)
+                        .addAnnotatedClass(Audit.class)
+                        .addAnnotatedClass(Comment.class)
+                        .addAnnotatedClass(Item.class)
+                        .addAnnotatedClass(News.class)
+                        .addAnnotatedClass(Order.class)
+                        .addAnnotatedClass(Permission.class)
+                        .addAnnotatedClass(Profile.class)
+                        .addAnnotatedClass(Role.class)
+                        .addAnnotatedClass(User.class);
                 Metadata metadata = sources.getMetadataBuilder().build();
                 sessionFactory = metadata.getSessionFactoryBuilder().build();
                 logger.info("SessionFactory created.");

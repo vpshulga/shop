@@ -1,4 +1,6 @@
 package com.gmail.vpshulgaa.dao;
 
-public class UserDao {
+import com.gmail.vpshulgaa.dao.entities.User;
+
+public interface UserDao extends GenericDao<User> {
 }

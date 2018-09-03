@@ -5,6 +5,7 @@ import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 @Data
 @NoArgsConstructor
@@ -15,7 +16,7 @@ public class Profile implements Serializable {
     @GenericGenerator(
             name = "generator",
             strategy = "foreign",
-            parameters = @org.hibernate.annotations.Parameter(name = "property", value = "user")
+            parameters = @Parameter(name = "property", value = "user")
     )
     @GeneratedValue(generator = "generator")
     @Column(name = "F_USER_ID", updatable = false, nullable = false)

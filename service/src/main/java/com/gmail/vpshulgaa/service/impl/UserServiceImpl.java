@@ -112,4 +112,24 @@ public class UserServiceImpl implements UserService {
             logger.error("Failed to delete user", e);
         }
     }
+
+    @Override
+    public User findByEmail(String email) {
+        User user = null;
+        Session session = userDao.getCurrentSession();
+        try {
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()){
+                transaction.begin();
+            }
+            user = userDao.findByEmail(email);
+            transaction.commit();
+        } catch (Exception e) {
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
+            logger.error("Failed to find user", e);
+        }
+        return user;
+    }
 }

@@ -14,6 +14,7 @@ public class Main {
     public static void main(String[] args) {
         UserServiceImpl userService = new UserServiceImpl();
         User user = new User();
+
         user.setEmail("vpsh@gmail.com");
         user.setName("Valera");
         user.setSurname("Petrovich");
@@ -41,6 +42,9 @@ public class Main {
         profile.setUser(user);
 
         userService.create(user);
+
+        User user1 = userService.findByEmail("vpsh@gmail.com");
+        System.out.println(user1.getName());
 
 //        ProfileService profileService = new ProfileServiceImpl();
 //        Profile profile = new Profile();

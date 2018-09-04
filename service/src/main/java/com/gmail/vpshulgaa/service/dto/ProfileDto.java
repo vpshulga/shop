@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class ProfileDto {
-    private long useId;
+    private long userId;
     private String address;
     private String telephone;
 }

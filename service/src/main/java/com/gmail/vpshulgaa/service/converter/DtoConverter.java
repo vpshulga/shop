@@ -1,4 +1,9 @@
 package com.gmail.vpshulgaa.service.converter;
 
-public interface DtoConverter {
+import java.util.List;
+
+public interface DtoConverter<D, E> {
+    D toDto(E entity);
+
+    List<D> toDtoList(List<E> list);
 }

@@ -20,7 +20,7 @@ public class Profile implements Serializable {
     )
     @GeneratedValue(generator = "generator")
     @Column(name = "F_USER_ID", updatable = false, nullable = false)
-    private long useId;
+    private long userId;
     @Column(name = "F_ADDRESS", length = 200)
     private String address;
     @Column(name = "F_TELEPHONE", length = 20)

@@ -1,18 +1,18 @@
 package com.gmail.vpshulgaa.service;
 
-import com.gmail.vpshulgaa.dao.entities.Permission;
+import com.gmail.vpshulgaa.service.dto.PermissionDto;
 import java.util.List;
 
-public interface PermissionService {
-    Permission findOne(final Long id);
+public interface PermissionService extends GenericService<PermissionDto> {
+    PermissionDto findOne(final Long id);
 
-    List<Permission> findAll();
+    List<PermissionDto> findAll();
 
-    void create(final Permission permission);
+    PermissionDto create(final PermissionDto dto);
 
-    void update(final Permission permission);
+    PermissionDto update(final PermissionDto dto);
 
-    void delete(final Permission permission);
+    PermissionDto delete(final PermissionDto dto);
 
     void deleteById(final Long id);
 }

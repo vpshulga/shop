@@ -15,6 +15,7 @@ public class ProfileDtoConverter implements DtoConverter<ProfileDto, Profile> {
         profileDto.setUserId(entity.getUserId());
         profileDto.setAddress(entity.getAddress());
         profileDto.setTelephone(entity.getTelephone());
+        profileDto.setUser(entity.getUser());
         return profileDto;
     }
 

@@ -12,14 +12,14 @@ import org.hibernate.annotations.Parameter;
 @Entity
 @Table(name = "T_PROFILE")
 public class Profile implements Serializable {
-    @Id
     @GenericGenerator(
             name = "generator",
             strategy = "foreign",
             parameters = @Parameter(name = "property", value = "user")
     )
+    @Id
     @GeneratedValue(generator = "generator")
-    @Column(name = "F_USER_ID", updatable = false, nullable = false)
+    @Column(name = "F_USER_ID", unique = true, nullable = false)
     private long userId;
     @Column(name = "F_ADDRESS", length = 200)
     private String address;

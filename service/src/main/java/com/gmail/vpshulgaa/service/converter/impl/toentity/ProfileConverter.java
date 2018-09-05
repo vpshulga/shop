@@ -15,6 +15,7 @@ public class ProfileConverter implements Converter<ProfileDto, Profile>{
         profile.setUserId(dto.getUserId());
         profile.setAddress(dto.getAddress());
         profile.setTelephone(dto.getTelephone());
+        profile.setUser(dto.getUser());
         return profile;
     }
 

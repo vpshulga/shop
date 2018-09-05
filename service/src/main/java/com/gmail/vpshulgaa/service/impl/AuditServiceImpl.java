@@ -4,6 +4,7 @@ import com.gmail.vpshulgaa.dao.AuditDao;
 import com.gmail.vpshulgaa.dao.entities.Audit;
 import com.gmail.vpshulgaa.dao.impl.AuditDaoImpl;
 import com.gmail.vpshulgaa.service.AuditService;
+import com.gmail.vpshulgaa.service.util.ServiceUtils;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,10 +21,7 @@ public class AuditServiceImpl implements AuditService{
         Audit audit = null;
         Session session = auditDao.getCurrentSession();
         try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()){
-                transaction.begin();
-            }
+            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             audit = auditDao.findOne(id);
             transaction.commit();
         } catch (Exception e) {

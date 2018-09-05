@@ -18,6 +18,8 @@ public class UserConverter implements Converter<UserDto, User>{
         user.setSurname(dto.getSurname());
         user.setPassword(dto.getPassword());
         user.setRoleId(dto.getRoleId());
+        user.setProfile(dto.getProfile());
+        user.setNews(dto.getNews());
         return user;
     }
 

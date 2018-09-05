@@ -1,18 +1,9 @@
 package com.gmail.vpshulgaa.service;
 
 import com.gmail.vpshulgaa.dao.entities.Profile;
+import com.gmail.vpshulgaa.service.dto.ProfileDto;
 import java.util.List;
 
-public interface ProfileService {
-    Profile findOne(final Long id);
+public interface ProfileService extends GenericService<ProfileDto> {
 
-    List<Profile> findAll();
-
-    void create(final Profile profile);
-
-    void update(final Profile profile);
-
-    void delete(final Profile profile);
-
-    void deleteById(final Long id);
 }

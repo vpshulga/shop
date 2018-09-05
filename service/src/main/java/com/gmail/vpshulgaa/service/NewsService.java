@@ -1,18 +1,19 @@
 package com.gmail.vpshulgaa.service;
 
 import com.gmail.vpshulgaa.dao.entities.News;
+import com.gmail.vpshulgaa.service.dto.NewsDto;
 import java.util.List;
 
-public interface NewsService {
-    News findOne(final Long id);
+public interface NewsService extends GenericService<NewsDto>{
+    NewsDto findOne(final Long id);
 
-    List<News> findAll();
+    List<NewsDto> findAll();
 
-    void create(final News news);
+    NewsDto create(final NewsDto dto);
 
-    void update(final News news);
+    NewsDto update(final NewsDto dto);
 
-    void delete(final News news);
+    NewsDto delete(final NewsDto dto);
 
     void deleteById(final Long id);
 }

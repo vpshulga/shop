@@ -1,12 +1,9 @@
-import com.gmail.vpshulgaa.dao.PermissionDao;
-import com.gmail.vpshulgaa.dao.entities.*;
-import com.gmail.vpshulgaa.dao.impl.PermissionDaoImpl;
-import com.gmail.vpshulgaa.service.*;
-import com.gmail.vpshulgaa.service.converter.impl.todto.UserDtoConverter;
+import com.gmail.vpshulgaa.service.RoleService;
+import com.gmail.vpshulgaa.service.UserService;
 import com.gmail.vpshulgaa.service.converter.impl.toentity.*;
 import com.gmail.vpshulgaa.service.dto.*;
-import com.gmail.vpshulgaa.service.impl.*;
-import java.math.BigDecimal;
+import com.gmail.vpshulgaa.service.impl.RoleServiceImpl;
+import com.gmail.vpshulgaa.service.impl.UserServiceImpl;
 import java.time.LocalDateTime;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,22 +12,48 @@ public class Main {
     private static final Logger logger = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
-        ProfileConverter profileConverter = new ProfileConverter();
-        UserConverter userConverter = new UserConverter();
-        NewsConverter newsConverter = new NewsConverter();
-        PermissionConverter permissionConverter = new PermissionConverter();
-        RoleConverter roleConverter = new RoleConverter();
+        testOneToOne();
+        testManyToOne();
+        testManyToMany();
+    }
 
+
+    private static void testOneToOne(){
         UserService userService = new UserServiceImpl();
 
-
+        UserConverter userConverter = new UserConverter();
+        ProfileConverter profileConverter = new ProfileConverter();
 
         UserDto userDto = new UserDto();
-        userDto.setEmail("aaa");
-        userDto.setName("bbb");
-        userDto.setSurname("ccc");
-        userDto.setPassword("ddd");
+        ProfileDto profileDto = new ProfileDto();
+
+        userDto.setEmail("emailOO");
+        userDto.setName("nameOO");
+        userDto.setSurname("surnameOO");
+        userDto.setPassword("passwordOO");
         userDto.setRoleId(1);
+
+        profileDto.setAddress("addressOO");
+        profileDto.setTelephone("telephoneOO");
+
+        profileDto.setUser(userConverter.toEntity(userDto));
+        userDto.setProfile(profileConverter.toEntity(profileDto));
+
+        userService.create(userDto);
+    }
+
+    private static void testManyToOne(){
+        UserService userService = new UserServiceImpl();
+        NewsConverter newsConverter = new NewsConverter();
+
+        UserDto userDto = new UserDto();
+
+        userDto.setEmail("emailMO");
+        userDto.setName("nameMO");
+        userDto.setSurname("surnameMO");
+        userDto.setPassword("passwordMO");
+        userDto.setRoleId(1);
+
 
         NewsDto newsDto1 = new NewsDto();
         newsDto1.setTitle("1");
@@ -48,14 +71,15 @@ public class Main {
         userService.create(userDto);
 
 
+    }
 
-        UserDto user1 = userService.findByEmail("aaa");
-        System.out.println(user1.getNews());
-
+    private static void testManyToMany() {
+        PermissionConverter permissionConverter = new PermissionConverter();
+        RoleConverter roleConverter = new RoleConverter();
+        RoleService roleService = new RoleServiceImpl();
 
         RoleDto roleDto = new RoleDto();
         roleDto.setName("ADMIN");
-
         RoleDto roleDto1 = new RoleDto();
         roleDto1.setName("USER");
 
@@ -70,49 +94,24 @@ public class Main {
 
         roleDto.getPermissions().add(permissionConverter.toEntity(permissionDto));
         roleDto.getPermissions().add(permissionConverter.toEntity(permissionDto2));
-        permissionDto.getRoles().add(roleConverter.toEntity(roleDto));
-        permissionDto2.getRoles().add(roleConverter.toEntity(roleDto));
-
 
         roleDto1.getPermissions().add(permissionConverter.toEntity(permissionDto));
         roleDto1.getPermissions().add(permissionConverter.toEntity(permissionDto1));
         roleDto1.getPermissions().add(permissionConverter.toEntity(permissionDto2));
         roleDto1.getPermissions().add(permissionConverter.toEntity(permissionDto3));
 
+        permissionDto.getRoles().add(roleConverter.toEntity(roleDto));
         permissionDto.getRoles().add(roleConverter.toEntity(roleDto1));
+
         permissionDto1.getRoles().add(roleConverter.toEntity(roleDto1));
+
+        permissionDto2.getRoles().add(roleConverter.toEntity(roleDto));
         permissionDto2.getRoles().add(roleConverter.toEntity(roleDto1));
+
         permissionDto3.getRoles().add(roleConverter.toEntity(roleDto1));
 
-        RoleService roleService = new RoleServiceImpl();
         roleService.create(roleDto);
         roleService.create(roleDto1);
-        PermissionService permissionService = new PermissionServiceImpl();
-        permissionService.create(permissionDto);
-        permissionService.create(permissionDto1);
-        permissionService.create(permissionDto2);
-        permissionService.create(permissionDto3);
-
-
-//
-//        PermissionService permissionService = new PermissionServiceImpl();
-//        RoleService roleService = new RoleServiceImpl();
-//
-//        Role role = new Role();
-//        role.setName("ADMIN");
-//
-//        Permission permission1 = new Permission();
-//        permission1.setName("perm1");
-//
-//        Permission permission2 = new Permission();
-//        permission2.setName("perm2");
-//
-//        role.getPermissions().add(permission1);
-//        permission1.getRoles().add(role);
-//        role.getPermissions().add(permission2);
-//
-//        roleService.create(role);
-
 
 
     }

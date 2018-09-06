@@ -15,6 +15,7 @@ public class RoleDto {
     private long id;
     private String name;
     private Set<PermissionDto> permissionDtoSet = new HashSet<>();
+    private Set<UserDto> userDtoSet = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {

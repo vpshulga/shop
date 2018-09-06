@@ -1,9 +1,13 @@
 package com.gmail.vpshulgaa.service.converter.impl.todto;
 
 import com.gmail.vpshulgaa.dao.entities.Role;
+import com.gmail.vpshulgaa.dao.entities.User;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.RoleDto;
+import com.gmail.vpshulgaa.service.dto.UserDto;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class RoleDtoConverter implements DtoConverter<RoleDto, Role> {
     @Override
@@ -14,6 +18,12 @@ public class RoleDtoConverter implements DtoConverter<RoleDto, Role> {
         RoleDto roleDto = new RoleDto();
         roleDto.setId(entity.getId());
         roleDto.setName(entity.getName());
+        UserDtoConverter userDtoConverter = new UserDtoConverter();
+        Set<UserDto> userDtoSet = new HashSet<>();
+        for (User user : entity.getUsers()) {
+            userDtoSet.add(userDtoConverter.toDto(user));
+        }
+        roleDto.setUserDtoSet(userDtoSet);
         return roleDto;
     }
 

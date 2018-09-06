@@ -30,7 +30,6 @@ public class Main {
         userDto.setName("nameOO");
         userDto.setSurname("surnameOO");
         userDto.setPassword("passwordOO");
-        userDto.setRoleId(1);
 
         profileDto.setAddress("addressOO");
         profileDto.setTelephone("telephoneOO");
@@ -61,7 +60,6 @@ public class Main {
         userDto.setName("nameMO");
         userDto.setSurname("surnameMO");
         userDto.setPassword("passwordMO");
-        userDto.setRoleId(1);
 
         ProfileDto profileDto = new ProfileDto();
 

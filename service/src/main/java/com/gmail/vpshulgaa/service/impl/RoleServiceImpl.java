@@ -28,8 +28,8 @@ public class RoleServiceImpl implements RoleService{
         try {
             Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Role role = roleDao.findOne(id);
-            transaction.commit();
             roleDto = roleDtoConverter.toDto(role);
+            transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
@@ -86,8 +86,8 @@ public class RoleServiceImpl implements RoleService{
         try {
             Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Role role = roleConverter.toEntity(roleDto);
-            roleDto = roleDtoConverter.toDto(role);
             roleDao.delete(role);
+            roleDto = roleDtoConverter.toDto(role);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {

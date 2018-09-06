@@ -14,7 +14,7 @@ import lombok.Setter;
 public class PermissionDto {
     private long id;
     private String name;
-    private Set<Role> roles = new HashSet<>();
+    private Set<RoleDto> roleDtoSet = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {

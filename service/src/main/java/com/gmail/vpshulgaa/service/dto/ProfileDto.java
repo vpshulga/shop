@@ -13,7 +13,6 @@ public class ProfileDto {
     private long userId;
     private String address;
     private String telephone;
-    private User user;
 
     @Override
     public boolean equals(Object o) {

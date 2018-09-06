@@ -2,11 +2,16 @@ package com.gmail.vpshulgaa.dao.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "T_ITEM")
@@ -23,5 +28,8 @@ public class Item implements Serializable{
     private String uniqueNumber;
     @Column(name = "F_PRICE")
     private BigDecimal price;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "F_ITEM_ID")
+    private Set<Order> orders = new HashSet<>();
 
 }

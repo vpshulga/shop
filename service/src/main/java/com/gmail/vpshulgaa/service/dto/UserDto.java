@@ -18,8 +18,9 @@ public class UserDto {
     private String surname;
     private String password;
     private long roleId;
-    private Profile profile;
-    private Set<News> news = new HashSet<>();
+    private ProfileDto profileDto;
+    private Set<NewsDto> newsDtoSet = new HashSet<>();
+    private Set<CommentDto> commentDtoSet = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {

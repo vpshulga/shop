@@ -12,6 +12,7 @@ public class Main {
     private static final Logger logger = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
+
         testOneToOne();
         testManyToOne();
         testManyToMany();
@@ -21,8 +22,6 @@ public class Main {
     private static void testOneToOne(){
         UserService userService = new UserServiceImpl();
 
-        UserConverter userConverter = new UserConverter();
-        ProfileConverter profileConverter = new ProfileConverter();
 
         UserDto userDto = new UserDto();
         ProfileDto profileDto = new ProfileDto();
@@ -36,15 +35,25 @@ public class Main {
         profileDto.setAddress("addressOO");
         profileDto.setTelephone("telephoneOO");
 
-        profileDto.setUser(userConverter.toEntity(userDto));
-        userDto.setProfile(profileConverter.toEntity(profileDto));
+
+        userDto.setProfileDto(profileDto);
 
         userService.create(userDto);
+        userService.create(userDto);
+
+        UserDto userDto1 = userService.findOne((long) 2);
+
+        userDto1.setEmail("new");
+        userDto1.getProfileDto().setAddress("new");
+
+
+
+        userService.update(userDto1);
+//        userService.delete(userDto1);
     }
 
     private static void testManyToOne(){
         UserService userService = new UserServiceImpl();
-        NewsConverter newsConverter = new NewsConverter();
 
         UserDto userDto = new UserDto();
 
@@ -54,6 +63,12 @@ public class Main {
         userDto.setPassword("passwordMO");
         userDto.setRoleId(1);
 
+        ProfileDto profileDto = new ProfileDto();
+
+        profileDto.setAddress("addressMO");
+        profileDto.setTelephone("telephoneMO");
+
+        userDto.setProfileDto(profileDto);
 
         NewsDto newsDto1 = new NewsDto();
         newsDto1.setTitle("1");
@@ -65,8 +80,25 @@ public class Main {
         newsDto2.setContent("3");
         newsDto2.setCreated(LocalDateTime.now());
 
-        userDto.getNews().add(newsConverter.toEntity(newsDto1));
-        userDto.getNews().add(newsConverter.toEntity(newsDto2));
+        userDto.getNewsDtoSet().add(newsDto1);
+        userDto.getNewsDtoSet().add(newsDto2);
+
+        CommentDto commentDto = new CommentDto();
+        commentDto.setContent("c1");
+        commentDto.setCreated(LocalDateTime.now());
+
+        CommentDto commentDto1 = new CommentDto();
+        commentDto1.setContent("c2");
+        commentDto1.setCreated(LocalDateTime.now());
+
+        CommentDto commentDto2 = new CommentDto();
+        commentDto2.setContent("c3");
+        commentDto2.setCreated(LocalDateTime.now());
+
+
+        userDto.getCommentDtoSet().add(commentDto);
+        userDto.getCommentDtoSet().add(commentDto1);
+        userDto.getCommentDtoSet().add(commentDto2);
 
         userService.create(userDto);
 
@@ -74,12 +106,11 @@ public class Main {
     }
 
     private static void testManyToMany() {
-        PermissionConverter permissionConverter = new PermissionConverter();
-        RoleConverter roleConverter = new RoleConverter();
         RoleService roleService = new RoleServiceImpl();
 
         RoleDto roleDto = new RoleDto();
         roleDto.setName("ADMIN");
+
         RoleDto roleDto1 = new RoleDto();
         roleDto1.setName("USER");
 
@@ -92,23 +123,14 @@ public class Main {
         PermissionDto permissionDto3 = new PermissionDto();
         permissionDto3.setName("p3");
 
-        roleDto.getPermissions().add(permissionConverter.toEntity(permissionDto));
-        roleDto.getPermissions().add(permissionConverter.toEntity(permissionDto2));
+        roleDto.getPermissionDtoSet().add(permissionDto);
+        roleDto.getPermissionDtoSet().add(permissionDto2);
 
-        roleDto1.getPermissions().add(permissionConverter.toEntity(permissionDto));
-        roleDto1.getPermissions().add(permissionConverter.toEntity(permissionDto1));
-        roleDto1.getPermissions().add(permissionConverter.toEntity(permissionDto2));
-        roleDto1.getPermissions().add(permissionConverter.toEntity(permissionDto3));
+        roleDto1.getPermissionDtoSet().add(permissionDto);
+        roleDto1.getPermissionDtoSet().add(permissionDto1);
+        roleDto1.getPermissionDtoSet().add(permissionDto2);
+        roleDto1.getPermissionDtoSet().add(permissionDto3);
 
-        permissionDto.getRoles().add(roleConverter.toEntity(roleDto));
-        permissionDto.getRoles().add(roleConverter.toEntity(roleDto1));
-
-        permissionDto1.getRoles().add(roleConverter.toEntity(roleDto1));
-
-        permissionDto2.getRoles().add(roleConverter.toEntity(roleDto));
-        permissionDto2.getRoles().add(roleConverter.toEntity(roleDto1));
-
-        permissionDto3.getRoles().add(roleConverter.toEntity(roleDto1));
 
         roleService.create(roleDto);
         roleService.create(roleDto1);

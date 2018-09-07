@@ -16,6 +16,7 @@ public class Main {
         testOneToOne();
         testManyToOne();
         testManyToMany();
+        testRole();
     }
 
 
@@ -30,7 +31,6 @@ public class Main {
         userDto.setName("nameOO");
         userDto.setSurname("surnameOO");
         userDto.setPassword("passwordOO");
-        userDto.setRoleId(1);
 
         profileDto.setAddress("addressOO");
         profileDto.setTelephone("telephoneOO");
@@ -61,7 +61,6 @@ public class Main {
         userDto.setName("nameMO");
         userDto.setSurname("surnameMO");
         userDto.setPassword("passwordMO");
-        userDto.setRoleId(1);
 
         ProfileDto profileDto = new ProfileDto();
 
@@ -136,5 +135,27 @@ public class Main {
         roleService.create(roleDto1);
 
 
+    }
+
+    private static void testRole() {
+        RoleService roleService = new RoleServiceImpl();
+        UserService userService = new UserServiceImpl();
+
+        UserDto userDto = userService.findOne((long) 3);
+
+
+
+        RoleDto roleDto = roleService.findOne((long) 2);
+        roleDto.getUserDtoSet().add(userDto);
+        roleService.update(roleDto);
+
+
+        UserDto userDto1 = userService.findOne((long) 1);
+        RoleDto roleDto1 = new RoleDto();
+        roleDto1.setName("q");
+        roleService.create(roleDto1);
+
+        roleDto1.getUserDtoSet().add(userDto1);
+        roleService.update(roleDto1);
     }
 }

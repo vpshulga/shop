@@ -23,6 +23,10 @@ public class Role implements Serializable {
     private String name;
     @ManyToMany(mappedBy = "roles",  cascade = CascadeType.ALL)
     private Set<Permission> permissions = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "F_ROLE_ID")
+    private Set<User> users = new HashSet<>();
+
 
     @Override
     public boolean equals(Object o) {

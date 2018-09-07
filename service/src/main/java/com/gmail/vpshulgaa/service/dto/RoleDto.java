@@ -3,6 +3,8 @@ package com.gmail.vpshulgaa.service.dto;
 import com.gmail.vpshulgaa.dao.entities.Permission;
 import java.util.HashSet;
 import java.util.Set;
+
+import com.gmail.vpshulgaa.dao.entities.User;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +17,8 @@ public class RoleDto {
     private long id;
     private String name;
     private Set<PermissionDto> permissionDtoSet = new HashSet<>();
+    private Set<UserDto> userDtoSet = new HashSet<>();
+
 
     @Override
     public boolean equals(Object o) {

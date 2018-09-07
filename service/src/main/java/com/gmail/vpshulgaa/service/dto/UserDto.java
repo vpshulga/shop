@@ -1,13 +1,11 @@
 package com.gmail.vpshulgaa.service.dto;
 
-import com.gmail.vpshulgaa.dao.entities.News;
-import com.gmail.vpshulgaa.dao.entities.Profile;
-import java.util.HashSet;
-import java.util.Set;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,7 +15,6 @@ public class UserDto {
     private String name;
     private String surname;
     private String password;
-    private long roleId;
     private ProfileDto profileDto;
     private Set<NewsDto> newsDtoSet = new HashSet<>();
     private Set<CommentDto> commentDtoSet = new HashSet<>();
@@ -29,7 +26,7 @@ public class UserDto {
 
         UserDto userDto = (UserDto) o;
 
-        return id == userDto.id && roleId == userDto.roleId
+        return id == userDto.id
                 && (email != null ? email.equals(userDto.email) : userDto.email == null)
                 && (name != null ? name.equals(userDto.name) : userDto.name == null)
                 && (surname != null ? surname.equals(userDto.surname) : userDto.surname == null)
@@ -43,7 +40,7 @@ public class UserDto {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (int) (roleId ^ (roleId >>> 32));
+
         return result;
     }
 }

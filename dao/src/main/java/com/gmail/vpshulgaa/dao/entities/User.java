@@ -28,8 +28,6 @@ public class User implements Serializable{
     private String surname;
     @Column(name = "F_PASSWORD", length = 50)
     private String password;
-    @Column(name = "F_ROLE_ID", length = 50)
-    private long roleId;
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
     private Profile profile;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -51,7 +49,6 @@ public class User implements Serializable{
         if (!(o instanceof User)) return false;
         User user = (User) o;
         return id == user.id &&
-                roleId == user.roleId &&
                 Objects.equals(email, user.email) &&
                 Objects.equals(name, user.name) &&
                 Objects.equals(surname, user.surname) &&
@@ -61,6 +58,6 @@ public class User implements Serializable{
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, email, name, surname, password, roleId);
+        return Objects.hash(id, email, name, surname, password);
     }
 }

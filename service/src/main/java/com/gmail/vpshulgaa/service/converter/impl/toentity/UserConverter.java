@@ -25,7 +25,6 @@ public class UserConverter implements Converter<UserDto, User> {
         user.setName(dto.getName());
         user.setSurname(dto.getSurname());
         user.setPassword(dto.getPassword());
-        user.setRoleId(dto.getRoleId());
         ProfileConverter profileConverter = new ProfileConverter();
         if (dto.getProfileDto() != null) {
             Profile profile = profileConverter.toEntity(dto.getProfileDto());

@@ -1,17 +1,17 @@
-package com.gmail.vpshulgaa.dao.impl;
+package com.gmail.vpshulgaa.dao.students.dao.impl;
 
-import com.gmail.vpshulgaa.dao.util.HibernateUtil;
+import com.gmail.vpshulgaa.dao.students.dao.util.StudentsHibernateUtil;
 import java.io.Serializable;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-public abstract class GenericDaoImpl<T extends Serializable> {
+public abstract class StudentsGenericDaoImpl<T extends Serializable> {
     private Class<T> clazz;
 
-    private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+    private SessionFactory sessionFactory = StudentsHibernateUtil.getSessionFactory();
 
-    public GenericDaoImpl(Class<T> clazz) {
+    public StudentsGenericDaoImpl(Class<T> clazz) {
         this.clazz = clazz;
     }
 

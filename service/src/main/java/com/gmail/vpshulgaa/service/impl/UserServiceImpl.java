@@ -5,16 +5,15 @@ import com.gmail.vpshulgaa.dao.entities.User;
 import com.gmail.vpshulgaa.dao.impl.UserDaoImpl;
 import com.gmail.vpshulgaa.service.UserService;
 import com.gmail.vpshulgaa.service.converter.impl.todto.UserDtoConverter;
-import com.gmail.vpshulgaa.service.converter.impl.toentity.ProfileConverter;
 import com.gmail.vpshulgaa.service.converter.impl.toentity.UserConverter;
-import com.gmail.vpshulgaa.service.dto.ProfileDto;
 import com.gmail.vpshulgaa.service.dto.UserDto;
 import com.gmail.vpshulgaa.service.util.ServiceUtils;
-import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+import java.util.List;
 
 
 public class UserServiceImpl implements UserService {

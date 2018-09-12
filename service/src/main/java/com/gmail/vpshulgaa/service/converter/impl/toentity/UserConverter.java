@@ -1,13 +1,9 @@
 package com.gmail.vpshulgaa.service.converter.impl.toentity;
 
-import com.gmail.vpshulgaa.dao.entities.Comment;
-import com.gmail.vpshulgaa.dao.entities.News;
-import com.gmail.vpshulgaa.dao.entities.Profile;
-import com.gmail.vpshulgaa.dao.entities.User;
+import com.gmail.vpshulgaa.dao.entities.*;
 import com.gmail.vpshulgaa.service.converter.Converter;
-import com.gmail.vpshulgaa.service.dto.CommentDto;
-import com.gmail.vpshulgaa.service.dto.NewsDto;
-import com.gmail.vpshulgaa.service.dto.UserDto;
+import com.gmail.vpshulgaa.service.dto.*;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,24 +21,41 @@ public class UserConverter implements Converter<UserDto, User> {
         user.setName(dto.getName());
         user.setSurname(dto.getSurname());
         user.setPassword(dto.getPassword());
+
         ProfileConverter profileConverter = new ProfileConverter();
         if (dto.getProfileDto() != null) {
             Profile profile = profileConverter.toEntity(dto.getProfileDto());
             user.setProfile(profile);
             profile.setUser(user);
         }
+
         NewsConverter newsConverter = new NewsConverter();
         Set<News> news = new HashSet<>();
-        for (NewsDto newsDto : dto.getNewsDtoSet()) {
+        for (NewsDto newsDto : dto.getNews()) {
             news.add(newsConverter.toEntity(newsDto));
         }
         user.setNews(news);
-        CommentConverter commentConverter = new CommentConverter();
-        Set<Comment> comments = new HashSet<>();
-        for (CommentDto commentDto : dto.getCommentDtoSet()) {
-            comments.add(commentConverter.toEntity(commentDto));
+
+        AuditConverter auditConverter = new AuditConverter();
+        Set<Audit> audits = new HashSet<>();
+        for (AuditDto auditDto : dto.getAudits()) {
+            audits.add(auditConverter.toEntity(auditDto));
         }
-        user.setComments(comments);
+        user.setAudits(audits);
+
+        OrderConverter orderConverter = new OrderConverter();
+        Set<Order> orders = new HashSet<>();
+        for (OrderDto orderDto : dto.getOrders()) {
+            orders.add(orderConverter.toEntity(orderDto));
+        }
+        user.setOrders(orders);
+
+        RoleConverter roleConverter = new RoleConverter();
+        if (dto.getRole() != null) {
+            Role role = roleConverter.toEntity(dto.getRole());
+            user.setRole(role);
+        }
+
         return user;
     }
 

@@ -1,14 +1,13 @@
 package com.gmail.vpshulgaa.dao.entities;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
-import javax.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -28,8 +27,22 @@ public class Item implements Serializable{
     private String uniqueNumber;
     @Column(name = "F_PRICE")
     private BigDecimal price;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "F_ITEM_ID")
-    private Set<Order> orders = new HashSet<>();
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return id == item.id &&
+                Objects.equals(name, item.name) &&
+                Objects.equals(description, item.description) &&
+                Objects.equals(uniqueNumber, item.uniqueNumber) &&
+                Objects.equals(price, item.price);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, name, description, uniqueNumber, price);
+    }
 }

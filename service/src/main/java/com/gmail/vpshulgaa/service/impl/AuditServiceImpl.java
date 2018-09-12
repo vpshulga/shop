@@ -4,6 +4,9 @@ import com.gmail.vpshulgaa.dao.AuditDao;
 import com.gmail.vpshulgaa.dao.entities.Audit;
 import com.gmail.vpshulgaa.dao.impl.AuditDaoImpl;
 import com.gmail.vpshulgaa.service.AuditService;
+import com.gmail.vpshulgaa.service.converter.impl.todto.AuditDtoConverter;
+import com.gmail.vpshulgaa.service.converter.impl.toentity.AuditConverter;
+import com.gmail.vpshulgaa.service.dto.AuditDto;
 import com.gmail.vpshulgaa.service.util.ServiceUtils;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
@@ -15,14 +18,18 @@ public class AuditServiceImpl implements AuditService{
     private static final Logger logger = LogManager.getLogger(AuditServiceImpl.class);
 
     private AuditDao auditDao = new AuditDaoImpl(Audit.class);
+    private AuditConverter auditConverter = new AuditConverter();
+    private AuditDtoConverter auditDtoConverter = new AuditDtoConverter();
+
 
     @Override
-    public Audit findOne(Long id) {
-        Audit audit = null;
+    public AuditDto findOne(Long id) {
+        AuditDto auditDto = null;
         Session session = auditDao.getCurrentSession();
         try {
             Transaction transaction = ServiceUtils.getStartedTransaction(session);
-            audit = auditDao.findOne(id);
+            Audit audit = auditDao.findOne(id);
+            auditDto = auditDtoConverter.toDto(audit);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
@@ -30,23 +37,22 @@ public class AuditServiceImpl implements AuditService{
             }
             logger.error("Failed to get audit", e);
         }
-        return audit;
+        return auditDto;
     }
 
     @Override
-    public List<Audit> findAll() {
+    public List<AuditDto> findAll() {
         return null;
     }
 
     @Override
-    public void create(Audit audit) {
+    public AuditDto create(AuditDto auditDto) {
         Session session = auditDao.getCurrentSession();
         try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()){
-                transaction.begin();
-            }
+            Transaction transaction = ServiceUtils.getStartedTransaction(session);
+            Audit audit = auditConverter.toEntity(auditDto);
             auditDao.create(audit);
+            auditDto = auditDtoConverter.toDto(audit);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
@@ -54,17 +60,17 @@ public class AuditServiceImpl implements AuditService{
             }
             logger.error("Failed to save audit", e);
         }
+        return auditDto;
     }
 
     @Override
-    public void update(Audit audit) {
+    public AuditDto update(AuditDto auditDto) {
         Session session = auditDao.getCurrentSession();
         try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()){
-                transaction.begin();
-            }
+            Transaction transaction = ServiceUtils.getStartedTransaction(session);
+            Audit audit = auditConverter.toEntity(auditDto);
             auditDao.update(audit);
+            auditDto = auditDtoConverter.toDto(audit);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
@@ -72,17 +78,17 @@ public class AuditServiceImpl implements AuditService{
             }
             logger.error("Failed to update audit", e);
         }
+        return auditDto;
     }
 
     @Override
-    public void delete(Audit audit) {
+    public AuditDto delete(AuditDto auditDto) {
         Session session = auditDao.getCurrentSession();
         try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()){
-                transaction.begin();
-            }
+            Transaction transaction = ServiceUtils.getStartedTransaction(session);
+            Audit audit = auditConverter.toEntity(auditDto);
             auditDao.delete(audit);
+            auditDto = auditDtoConverter.toDto(audit);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
@@ -90,16 +96,14 @@ public class AuditServiceImpl implements AuditService{
             }
             logger.error("Failed to delete audit", e);
         }
+        return auditDto;
     }
 
     @Override
     public void deleteById(Long id) {
         Session session = auditDao.getCurrentSession();
         try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()){
-                transaction.begin();
-            }
+            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             auditDao.deleteById(id);
             transaction.commit();
         } catch (Exception e) {

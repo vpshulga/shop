@@ -1,14 +1,14 @@
 package com.gmail.vpshulgaa.dao.entities;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import javax.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @Setter
@@ -28,20 +28,25 @@ public class User implements Serializable{
     private String surname;
     @Column(name = "F_PASSWORD", length = 50)
     private String password;
+
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
     private Profile profile;
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "F_USER_ID")
     private Set<News> news = new HashSet<>();
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "F_USER_ID")
-    private Set<Comment> comments = new HashSet<>();
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "F_USER_ID")
     private Set<Audit> audits = new HashSet<>();
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "F_USER_ID")
     private Set<Order> orders = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "F_ROLE_ID")
+    private Role role;
 
     @Override
     public boolean equals(Object o) {

@@ -22,12 +22,15 @@ public class RoleConverter implements Converter<RoleDto, Role> {
         role.setId(dto.getId());
         role.setName(dto.getName());
 
-        UserConverter userConverter = new UserConverter();
-        Set<User> users = new HashSet<>();
-        for (UserDto userDto : dto.getUserDtoSet()) {
-            users.add(userConverter.toEntity(userDto));
+        PermissionConverter permissionConverter = new PermissionConverter();
+        Set<Permission> permissions = new HashSet<>();
+        for (PermissionDto permissionDto : dto.getPermissions()) {
+            permissions.add(permissionConverter.toEntity(permissionDto));
         }
-        role.setUsers(users);
+        role.setPermissions(permissions);
+        for (Permission permission : permissions) {
+            permission.getRoles().add(role);
+        }
 
         return role;
     }

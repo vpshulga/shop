@@ -13,7 +13,6 @@ public class AuditConverter implements Converter<AuditDto, Audit> {
         }
         Audit audit = new Audit();
         audit.setId(dto.getId());
-        audit.setUserId(dto.getUserId());
         audit.setEventType(dto.getEventType());
         audit.setCreated(dto.getCreated());
         return audit;

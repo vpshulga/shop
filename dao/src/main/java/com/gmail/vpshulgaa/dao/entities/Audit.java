@@ -1,10 +1,11 @@
 package com.gmail.vpshulgaa.dao.entities;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -15,8 +16,6 @@ public class Audit implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "F_ID", updatable = false, nullable = false)
     private long id;
-    @Column(name = "F_USER_ID")
-    private Long userId;
     @Column(name = "F_EVENT_TYPE", length = 30)
     private String eventType;
     @Column(name = "F_CREATED")

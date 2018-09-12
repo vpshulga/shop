@@ -20,10 +20,6 @@ public class RoleDtoConverter implements DtoConverter<RoleDto, Role> {
         roleDto.setName(entity.getName());
         UserDtoConverter userDtoConverter = new UserDtoConverter();
         Set<UserDto> userDtoSet = new HashSet<>();
-        for (User user : entity.getUsers()) {
-            userDtoSet.add(userDtoConverter.toDto(user));
-        }
-        roleDto.setUserDtoSet(userDtoSet);
         return roleDto;
     }
 

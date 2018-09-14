@@ -35,6 +35,8 @@ public class HibernateUtil {
                 settings.put(Environment.PASS, ConfigManager.getInstance().getProperty(PASSWORD));
                 settings.put(Environment.HBM2DDL_AUTO, ConfigManager.getInstance().getProperty(HBM2DDL_AUTO));
                 settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, ConfigManager.getInstance().getProperty(CURRENT_SESSION_CONTEXT_CLASS));
+                settings.put(Environment.USE_SECOND_LEVEL_CACHE, ConfigManager.getInstance().getProperty(USE_SECOND_LEVEL_CACHE));
+                settings.put(Environment.CACHE_REGION_FACTORY, ConfigManager.getInstance().getProperty(CACHE_REGION_FACTORY));
 
                 registryBuilder.applySettings(settings);
                 registry = registryBuilder.build();

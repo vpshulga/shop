@@ -1,19 +1,22 @@
 package com.gmail.vpshulgaa.dao.entities;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "T_ROLE")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Role implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +32,6 @@ public class Role implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "F_PERMISSION_ID")}
     )
     private Set<Permission> permissions = new HashSet<>();
-
 
 
     @Override

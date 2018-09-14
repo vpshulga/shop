@@ -26,5 +26,10 @@
         <servlet.version>3.0.1</servlet.version>
         <jstl.version>1.2</jstl.version>
         <lombok.version>1.16.18</lombok.version>
+        <ehcache.version>2.10.5</ehcache.version>
+        <hibernate.ehcache.version>5.3.0.Final</hibernate.ehcache.version>
+        <hibernate.validator.version>6.0.10.Final</hibernate.validator.version>
+        <javax.el.version>2.2</javax.el.version>
+        <glassfish.version>3.0.0</glassfish.version>
     </properties>
 </project>

@@ -13,6 +13,8 @@ public class ConfigManager {
     public static final String PASSWORD = "password";
     public static final String HBM2DDL_AUTO = "hibernate.hbm2ddl.auto";
     public static final String CURRENT_SESSION_CONTEXT_CLASS = "hibernate.current_session_context_class";
+    public static final String USE_SECOND_LEVEL_CACHE = "hibernate.cache.use_second_level_cache";
+    public static final String CACHE_REGION_FACTORY = "hibernate.cache.region.factory_class";
 
     public static ConfigManager getInstance() {
         if (instance == null){

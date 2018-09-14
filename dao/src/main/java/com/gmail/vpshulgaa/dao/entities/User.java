@@ -1,25 +1,32 @@
 package com.gmail.vpshulgaa.dao.entities;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "T_USER")
-public class User implements Serializable{
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "F_ID", updatable = false, nullable = false)
     private long id;
+    @NotNull
+    @Email
     @Column(name = "F_EMAIL", length = 50)
     private String email;
     @Column(name = "F_NAME", length = 50)

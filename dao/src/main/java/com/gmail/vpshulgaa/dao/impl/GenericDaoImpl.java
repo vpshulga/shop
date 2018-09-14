@@ -1,17 +1,18 @@
 package com.gmail.vpshulgaa.dao.impl;
 
+import com.gmail.vpshulgaa.dao.GenericDao;
 import com.gmail.vpshulgaa.dao.util.HibernateUtil;
 import java.io.Serializable;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-public abstract class GenericDaoImpl<T extends Serializable> {
+public abstract class GenericDaoImpl<T extends Serializable> implements GenericDao<T> {
     private Class<T> clazz;
 
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
-    public GenericDaoImpl(Class<T> clazz){
+    public GenericDaoImpl(Class<T> clazz) {
         this.clazz = clazz;
     }
 
@@ -21,7 +22,7 @@ public abstract class GenericDaoImpl<T extends Serializable> {
 
     @SuppressWarnings("unchecked")
     public List<T> findAll() {
-        return getCurrentSession().createQuery("from " +clazz.getSimpleName()).list();
+        return getCurrentSession().createQuery("from " + clazz.getSimpleName()).list();
     }
 
     public void create(T entity) {

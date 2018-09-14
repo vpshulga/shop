@@ -1,18 +1,10 @@
 package com.gmail.vpshulgaa.service;
 
 import com.gmail.vpshulgaa.dao.entities.Comment;
+import com.gmail.vpshulgaa.service.dto.CommentDto;
+
 import java.util.List;
 
-public interface CommentService {
-    Comment findOne(final Long id);
+public interface CommentService extends GenericService<CommentDto> {
 
-    List<Comment> findAll();
-
-    void create(final Comment comment);
-
-    void update(final Comment comment);
-
-    void delete(final Comment comment);
-
-    void deleteById(final Long id);
 }

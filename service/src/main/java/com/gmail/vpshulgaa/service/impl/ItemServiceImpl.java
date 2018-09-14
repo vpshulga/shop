@@ -5,6 +5,11 @@ import com.gmail.vpshulgaa.dao.entities.Item;
 import com.gmail.vpshulgaa.dao.impl.ItemDaoImpl;
 import com.gmail.vpshulgaa.service.ItemService;
 import java.util.List;
+
+import com.gmail.vpshulgaa.service.converter.impl.todto.ItemDtoConverter;
+import com.gmail.vpshulgaa.service.converter.impl.toentity.ItemConverter;
+import com.gmail.vpshulgaa.service.dto.ItemDto;
+import com.gmail.vpshulgaa.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
@@ -14,17 +19,18 @@ public class ItemServiceImpl implements ItemService{
     private static final Logger logger = LogManager.getLogger(ItemServiceImpl.class);
 
     private ItemDao itemDao = new ItemDaoImpl(Item.class);
+    private ItemConverter itemConverter = new ItemConverter();
+    private ItemDtoConverter itemDtoConverter = new ItemDtoConverter();
+
 
     @Override
-    public Item findOne(Long id) {
-        Item item = null;
+    public ItemDto findOne(Long id) {
+        ItemDto itemDto = null;
         Session session = itemDao.getCurrentSession();
         try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()){
-                transaction.begin();
-            }
-            item = itemDao.findOne(id);
+            Transaction transaction = ServiceUtils.getStartedTransaction(session);
+            Item item = itemDao.findOne(id);
+            itemDto = itemDtoConverter.toDto(item);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
@@ -32,23 +38,22 @@ public class ItemServiceImpl implements ItemService{
             }
             logger.error("Failed to get item", e);
         }
-        return item;
+        return itemDto;
     }
 
     @Override
-    public List<Item> findAll() {
+    public List<ItemDto> findAll() {
         return null;
     }
 
     @Override
-    public void create(Item item) {
+    public ItemDto create(ItemDto itemDto) {
         Session session = itemDao.getCurrentSession();
         try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()){
-                transaction.begin();
-            }
+            Transaction transaction = ServiceUtils.getStartedTransaction(session);
+            Item item = itemConverter.toEntity(itemDto);
             itemDao.create(item);
+            itemDto = itemDtoConverter.toDto(item);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
@@ -56,17 +61,17 @@ public class ItemServiceImpl implements ItemService{
             }
             logger.error("Failed to save item", e);
         }
+        return itemDto;
     }
 
     @Override
-    public void update(Item item) {
+    public ItemDto update(ItemDto itemDto) {
         Session session = itemDao.getCurrentSession();
         try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()){
-                transaction.begin();
-            }
+            Transaction transaction = ServiceUtils.getStartedTransaction(session);
+            Item item = itemConverter.toEntity(itemDto);
             itemDao.update(item);
+            itemDto = itemDtoConverter.toDto(item);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
@@ -74,17 +79,17 @@ public class ItemServiceImpl implements ItemService{
             }
             logger.error("Failed to update item", e);
         }
+        return itemDto;
     }
 
     @Override
-    public void delete(Item item) {
+    public ItemDto delete(ItemDto itemDto) {
         Session session = itemDao.getCurrentSession();
         try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()){
-                transaction.begin();
-            }
+            Transaction transaction = ServiceUtils.getStartedTransaction(session);
+            Item item = itemConverter.toEntity(itemDto);
             itemDao.delete(item);
+            itemDto = itemDtoConverter.toDto(item);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
@@ -92,16 +97,14 @@ public class ItemServiceImpl implements ItemService{
             }
             logger.error("Failed to delete item", e);
         }
+        return itemDto;
     }
 
     @Override
     public void deleteById(Long id) {
         Session session = itemDao.getCurrentSession();
         try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()){
-                transaction.begin();
-            }
+            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             itemDao.deleteById(id);
             transaction.commit();
         } catch (Exception e) {

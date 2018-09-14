@@ -1,12 +1,16 @@
 package com.gmail.vpshulgaa.dao.entities;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import javax.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "T_NEWS")
@@ -21,6 +25,26 @@ public class News implements Serializable {
     private String content;
     @Column(name = "F_CREATED")
     private LocalDateTime created;
-    @Column(name = "F_USER_ID")
-    private Long userId;
+
+    @ManyToOne
+    @JoinColumn(name = "F_USER_ID")
+    private User user;
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        News news = (News) o;
+        return id == news.id &&
+                Objects.equals(title, news.title) &&
+                Objects.equals(content, news.content) &&
+                Objects.equals(created, news.created);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, title, content, created);
+    }
 }

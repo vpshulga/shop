@@ -4,28 +4,33 @@ import com.gmail.vpshulgaa.dao.UserDao;
 import com.gmail.vpshulgaa.dao.entities.User;
 import com.gmail.vpshulgaa.dao.impl.UserDaoImpl;
 import com.gmail.vpshulgaa.service.UserService;
-import java.util.List;
+import com.gmail.vpshulgaa.service.converter.impl.todto.UserDtoConverter;
+import com.gmail.vpshulgaa.service.converter.impl.toentity.UserConverter;
+import com.gmail.vpshulgaa.service.dto.UserDto;
+import com.gmail.vpshulgaa.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+import java.util.List;
 
 
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
     private UserDao userDao = new UserDaoImpl(User.class);
+    private UserDtoConverter userDtoConverter = new UserDtoConverter();
+    private UserConverter userConverter = new UserConverter();
 
     @Override
-    public User findOne(Long id) {
-        User user = null;
+    public UserDto findOne(Long id) {
+        UserDto userDto = null;
         Session session = userDao.getCurrentSession();
         try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()){
-                transaction.begin();
-            }
-            user = userDao.findOne(id);
+            Transaction transaction = ServiceUtils.getStartedTransaction(session);
+            User user = userDao.findOne(id);
+            userDto = userDtoConverter.toDto(user);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
@@ -33,23 +38,22 @@ public class UserServiceImpl implements UserService {
             }
             logger.error("Failed to get user", e);
         }
-        return user;
+        return userDto;
     }
 
     @Override
-    public List<User> findAll() {
+    public List<UserDto> findAll() {
         return null;
     }
 
     @Override
-    public void create(User user) {
+    public UserDto create(UserDto userDto) {
         Session session = userDao.getCurrentSession();
         try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()){
-                transaction.begin();
-            }
+            Transaction transaction = ServiceUtils.getStartedTransaction(session);
+            User user = userConverter.toEntity(userDto);
             userDao.create(user);
+            userDto = userDtoConverter.toDto(user);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
@@ -57,17 +61,17 @@ public class UserServiceImpl implements UserService {
             }
             logger.error("Failed to save user", e);
         }
+        return userDto;
     }
 
     @Override
-    public void update(User user) {
+    public UserDto update(UserDto userDto) {
         Session session = userDao.getCurrentSession();
         try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()){
-                transaction.begin();
-            }
+            Transaction transaction = ServiceUtils.getStartedTransaction(session);
+            User user = userConverter.toEntity(userDto);
             userDao.update(user);
+            userDto = userDtoConverter.toDto(user);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
@@ -75,17 +79,17 @@ public class UserServiceImpl implements UserService {
             }
             logger.error("Failed to update user", e);
         }
+        return userDto;
     }
 
     @Override
-    public void delete(User user) {
+    public UserDto delete(UserDto userDto) {
         Session session = userDao.getCurrentSession();
         try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()){
-                transaction.begin();
-            }
+            Transaction transaction = ServiceUtils.getStartedTransaction(session);
+            User user = userConverter.toEntity(userDto);
             userDao.delete(user);
+            userDto = userDtoConverter.toDto(user);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
@@ -93,16 +97,14 @@ public class UserServiceImpl implements UserService {
             }
             logger.error("Failed to delete user", e);
         }
+        return userDto;
     }
 
     @Override
     public void deleteById(Long id) {
         Session session = userDao.getCurrentSession();
         try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()){
-                transaction.begin();
-            }
+            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             userDao.deleteById(id);
             transaction.commit();
         } catch (Exception e) {
@@ -114,15 +116,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByEmail(String email) {
-        User user = null;
+    public UserDto findByEmail(String email) {
+        UserDto userDto = null;
         Session session = userDao.getCurrentSession();
         try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()){
-                transaction.begin();
-            }
-            user = userDao.findByEmail(email);
+            Transaction transaction = ServiceUtils.getStartedTransaction(session);
+            User user = userDao.findByEmail(email);
+            userDto = userDtoConverter.toDto(user);
             transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
@@ -130,6 +130,6 @@ public class UserServiceImpl implements UserService {
             }
             logger.error("Failed to find user", e);
         }
-        return user;
+        return userDto;
     }
 }

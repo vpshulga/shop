@@ -21,8 +21,7 @@ public class Permission implements Serializable {
     private long id;
     @Column(name = "F_NAME", length = 30)
     private String name;
-    @ManyToMany(mappedBy = "permissions",  cascade = CascadeType.ALL)
-    private Set<Role> roles = new HashSet<>();
+
 
     @Override
     public boolean equals(Object o) {

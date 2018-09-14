@@ -1,13 +1,13 @@
 package com.gmail.vpshulgaa.dao.entities;
 
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-import javax.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -21,6 +21,7 @@ public class Role implements Serializable {
     private long id;
     @Column(name = "F_NAME", length = 30)
     private String name;
+
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
             name = "T_PERMISSION_ROLE",
@@ -28,6 +29,8 @@ public class Role implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "F_PERMISSION_ID")}
     )
     private Set<Permission> permissions = new HashSet<>();
+
+
 
     @Override
     public boolean equals(Object o) {

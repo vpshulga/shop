@@ -1,12 +1,16 @@
 package com.gmail.vpshulgaa.dao.entities;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import javax.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "T_ITEM")
@@ -24,4 +28,21 @@ public class Item implements Serializable{
     @Column(name = "F_PRICE")
     private BigDecimal price;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return id == item.id &&
+                Objects.equals(name, item.name) &&
+                Objects.equals(description, item.description) &&
+                Objects.equals(uniqueNumber, item.uniqueNumber) &&
+                Objects.equals(price, item.price);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, name, description, uniqueNumber, price);
+    }
 }

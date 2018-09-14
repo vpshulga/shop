@@ -25,9 +25,10 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "F_ID", updatable = false, nullable = false)
     private long id;
+
+    @Column(name = "F_EMAIL", length = 50)
     @NotNull
     @Email
-    @Column(name = "F_EMAIL", length = 50)
     private String email;
     @Column(name = "F_NAME", length = 50)
     private String name;

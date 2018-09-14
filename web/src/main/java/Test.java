@@ -16,7 +16,7 @@ public class Test {
         UserDto userDto = new UserDto();
         userDto.setName("v");
         userDto.setSurname("v");
-        userDto.setEmail("v");
+        userDto.setEmail("vpshulgaa@gmail.com");
         userDto.setPassword("v");
 
         ProfileDto profileDto = new ProfileDto();

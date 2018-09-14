@@ -29,8 +29,8 @@ public class NewsServiceImpl implements NewsService {
         try {
             Transaction transaction = ServiceUtils.getStartedTransaction(session);
             News news = newsDao.findOne(id);
-            transaction.commit();
             newsDto = newsDtoConverter.toDto(news);
+            transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();

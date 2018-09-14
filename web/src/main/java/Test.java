@@ -10,6 +10,8 @@ public class Test {
         UserService userService = new UserServiceImpl();
         CommentService commentService = new CommentServiceImpl();
         NewsService newsService = new NewsServiceImpl();
+        RoleService roleService = new RoleServiceImpl();
+        PermissionService permissionService = new PermissionServiceImpl();
 
         UserDto userDto = new UserDto();
         userDto.setName("v");
@@ -24,21 +26,24 @@ public class Test {
 
         userDto.setProfileDto(profileDto);
 
+        userService.create(userDto);
+
+        UserDto user1 = userService.findOne(1L);
 
         NewsDto newsDto1 = new NewsDto();
         newsDto1.setTitle("s");
         newsDto1.setContent("s");
         newsDto1.setCreated(LocalDateTime.now());
+        newsDto1.setUser(user1);
 
         NewsDto newsDto2 = new NewsDto();
         newsDto2.setTitle("s1");
         newsDto2.setContent("s2");
         newsDto2.setCreated(LocalDateTime.now());
+        newsDto2.setUser(user1);
 
-        userDto.getNews().add(newsDto1);
-        userDto.getNews().add(newsDto2);
-
-        userService.create(userDto);
+        newsService.create(newsDto1);
+        newsService.create(newsDto2);
 
         CommentDto commentDto = new CommentDto();
         commentDto.setContent("c1");
@@ -69,7 +74,7 @@ public class Test {
         commentService.create(commentDto1);
         commentService.create(commentDto2);
 
-        commentService.delete(commentService.findOne(2L));
+//        commentService.delete(commentService.findOne(2L));
 
         AuditDto a1 = new AuditDto();
         a1.setEventType("e1");
@@ -113,7 +118,6 @@ public class Test {
         itemService.create(item3);
 
         u = userService.findOne(1L);
-        OrderService orderService = new OrderServiceImpl();
         OrderDto o1 = new OrderDto();
         o1.setItem(itemService.findOne(1L));
         o1.setQuantity(10);
@@ -128,23 +132,42 @@ public class Test {
         u.getOrders().add(o2);
         userService.update(u);
 
-        RoleDto r = new RoleDto();
-        r.setName("r");
+
+        RoleDto roleDto1 = new RoleDto();
+        roleDto1.setName("r1");
+
+        RoleDto roleDto2 = new RoleDto();
+        roleDto2.setName("r2");
 
         PermissionDto p1 = new PermissionDto();
         p1.setName("p1");
-
         PermissionDto p2 = new PermissionDto();
         p2.setName("p2");
+        PermissionDto p3 = new PermissionDto();
+        p3.setName("p3");
+        PermissionDto p4 = new PermissionDto();
+        p4.setName("p4");
 
-        r.getPermissions().add(p1);
-        r.getPermissions().add(p2);
+        roleDto1.getPermissions().add(p1);
+        roleDto1.getPermissions().add(p2);
+        roleDto1.getPermissions().add(p4);
+
+        roleService.create(roleDto1);
+
+        PermissionDto permissionDto = permissionService.findOne(1L);
+
+        roleService.create(roleDto2);
+        RoleDto role2 = roleService.findOne(2L);
+        role2.getPermissions().add(permissionDto);
+        role2.getPermissions().add(p3);
+        roleService.update(role2);
+
+
+
 
         u = userService.findOne(1L);
-        RoleService roleService = new RoleServiceImpl();
-        roleService.create(r);
-        u.setRole(roleService.findOne(1L));
-
+        RoleDto role = roleService.findOne(1L);
+        u.setRole(role);
         userService.update(u);
 
 

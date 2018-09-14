@@ -16,6 +16,7 @@ public class NewsDto {
     private String title;
     private String content;
     private LocalDateTime created;
+    private UserDto user;
 
     @Override
     public boolean equals(Object o) {

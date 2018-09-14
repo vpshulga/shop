@@ -23,7 +23,10 @@ public class NewsDtoConverter implements DtoConverter<NewsDto, News> {
         newsDto.setContent(entity.getContent());
         newsDto.setCreated(entity.getCreated());
 
-
+        UserDtoConverter userDtoConverter = new UserDtoConverter();
+        if (entity.getUser() != null) {
+            newsDto.setUser(userDtoConverter.toDto(entity.getUser()));
+        }
 
         return newsDto;
     }

@@ -29,13 +29,6 @@ public class UserConverter implements Converter<UserDto, User> {
             profile.setUser(user);
         }
 
-        NewsConverter newsConverter = new NewsConverter();
-        Set<News> news = new HashSet<>();
-        for (NewsDto newsDto : dto.getNews()) {
-            news.add(newsConverter.toEntity(newsDto));
-        }
-        user.setNews(news);
-
         AuditConverter auditConverter = new AuditConverter();
         Set<Audit> audits = new HashSet<>();
         for (AuditDto auditDto : dto.getAudits()) {

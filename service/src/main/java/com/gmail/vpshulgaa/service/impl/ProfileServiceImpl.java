@@ -29,8 +29,8 @@ public class ProfileServiceImpl implements ProfileService {
         try {
             Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Profile profile = profileDao.findOne(id);
-            transaction.commit();
             profileDto = profileDtoConverter.toDto(profile);
+            transaction.commit();
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();

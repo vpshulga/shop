@@ -28,10 +28,6 @@ public class RoleConverter implements Converter<RoleDto, Role> {
             permissions.add(permissionConverter.toEntity(permissionDto));
         }
         role.setPermissions(permissions);
-        for (Permission permission : permissions) {
-            permission.getRoles().add(role);
-        }
-
         return role;
     }
 

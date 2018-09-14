@@ -1,8 +1,10 @@
 package com.gmail.vpshulgaa.service.converter.impl.todto;
 
+import com.gmail.vpshulgaa.dao.entities.Permission;
 import com.gmail.vpshulgaa.dao.entities.Role;
 import com.gmail.vpshulgaa.dao.entities.User;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
+import com.gmail.vpshulgaa.service.dto.PermissionDto;
 import com.gmail.vpshulgaa.service.dto.RoleDto;
 import com.gmail.vpshulgaa.service.dto.UserDto;
 import java.util.HashSet;
@@ -18,8 +20,14 @@ public class RoleDtoConverter implements DtoConverter<RoleDto, Role> {
         RoleDto roleDto = new RoleDto();
         roleDto.setId(entity.getId());
         roleDto.setName(entity.getName());
-        UserDtoConverter userDtoConverter = new UserDtoConverter();
-        Set<UserDto> userDtoSet = new HashSet<>();
+
+        PermissionDtoConverter permissionDtoConverter = new PermissionDtoConverter();
+        Set<PermissionDto> permissions = new HashSet<>();
+        for (Permission permission : entity.getPermissions()) {
+            permissions.add(permissionDtoConverter.toDto(permission));
+        }
+        roleDto.setPermissions(permissions);
+
         return roleDto;
     }
 

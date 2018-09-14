@@ -22,13 +22,6 @@ public class Permission implements Serializable {
     @Column(name = "F_NAME", length = 30)
     private String name;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(
-            name = "T_ROLE_PERMISSION",
-            joinColumns = {@JoinColumn(name = "F_PERMISSION_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "F_ROLE_ID")}
-    )
-    private Set<Role> roles = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {

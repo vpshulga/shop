@@ -14,6 +14,9 @@
     </modules>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <mysql.version>8.0.11</mysql.version>
         <hibernate.version>5.3.0.Final</hibernate.version>
         <apache.commons.version>3.0.1</apache.commons.version>

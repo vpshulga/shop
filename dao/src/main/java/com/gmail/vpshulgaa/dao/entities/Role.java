@@ -22,7 +22,12 @@ public class Role implements Serializable {
     @Column(name = "F_NAME", length = 30)
     private String name;
 
-    @ManyToMany(mappedBy = "roles",  cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "T_PERMISSION_ROLE",
+            joinColumns = {@JoinColumn(name = "F_ROLE_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "F_PERMISSION_ID")}
+    )
     private Set<Permission> permissions = new HashSet<>();
 
 

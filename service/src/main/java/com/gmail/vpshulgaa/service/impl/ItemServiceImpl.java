@@ -4,6 +4,9 @@ import com.gmail.vpshulgaa.dao.ItemDao;
 import com.gmail.vpshulgaa.dao.entities.Item;
 import com.gmail.vpshulgaa.dao.impl.ItemDaoImpl;
 import com.gmail.vpshulgaa.service.ItemService;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.gmail.vpshulgaa.service.converter.impl.todto.ItemDtoConverter;
@@ -113,5 +116,43 @@ public class ItemServiceImpl implements ItemService{
             }
             logger.error("Failed to delete item", e);
         }
+    }
+
+    @Override
+    public List<ItemDto> findItemsInPriceDiapason(BigDecimal start, BigDecimal finish) {
+        List<ItemDto> itemsDto = new ArrayList<>();
+        List<Item> items = new ArrayList<>();
+        Session session = itemDao.getCurrentSession();
+        try {
+            Transaction transaction = ServiceUtils.getStartedTransaction(session);
+            items = itemDao.findItemsInPriceDiapason(start, finish);
+            for (Item item : items) {
+                itemsDto.add(itemDtoConverter.toDto(item));
+            }
+            transaction.commit();
+        } catch (Exception e) {
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
+            logger.error("Failed to find items", e);
+        }
+        return itemsDto;
+    }
+
+    @Override
+    public Long countItemsInDiapason(BigDecimal start, BigDecimal finish) {
+        Long count = 0L;
+        Session session = itemDao.getCurrentSession();
+        try {
+            Transaction transaction = ServiceUtils.getStartedTransaction(session);
+            count = itemDao.countItemsInDiapason(start, finish);
+            transaction.commit();
+        } catch (Exception e) {
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
+            logger.error("Failed to find items", e);
+        }
+        return count;
     }
 }

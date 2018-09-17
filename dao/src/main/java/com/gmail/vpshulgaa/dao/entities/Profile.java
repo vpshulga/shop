@@ -13,8 +13,6 @@ import org.hibernate.annotations.Parameter;
 @NoArgsConstructor
 @Entity
 @Table(name = "T_PROFILE")
-@Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Profile implements Serializable {
     @GenericGenerator(
             name = "generator",

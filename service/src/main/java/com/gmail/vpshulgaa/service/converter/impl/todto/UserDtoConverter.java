@@ -46,6 +46,13 @@ public class UserDtoConverter implements DtoConverter<UserDto, User> {
             userDto.setRole(roleDto);
         }
 
+        DiscountDtoConverter discountDtoConverter = new DiscountDtoConverter();
+        if (entity.getDiscount() != null) {
+            DiscountDto discountDto = discountDtoConverter.toDto(entity.getDiscount());
+            userDto.setDiscount(discountDto);
+        }
+
+
         return userDto;
     }
 

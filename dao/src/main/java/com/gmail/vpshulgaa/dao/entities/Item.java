@@ -2,7 +2,7 @@ package com.gmail.vpshulgaa.dao.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Objects;
+import java.util.*;
 import javax.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,8 +15,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @NoArgsConstructor
 @Entity
 @Table(name = "T_ITEM")
-@Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Item implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +28,14 @@ public class Item implements Serializable {
     private String uniqueNumber;
     @Column(name = "F_PRICE")
     private BigDecimal price;
+
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "T_DISCOUNT_ITEM",
+            joinColumns = {@JoinColumn(name = "F_ITEM_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "F_DISCOUNT_ID")}
+    )
+    private List<Discount> discounts = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

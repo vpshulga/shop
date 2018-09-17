@@ -18,8 +18,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @NoArgsConstructor
 @Entity
 @Table(name = "T_USER")
-@Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,6 +49,10 @@ public class User implements Serializable {
     @ManyToOne
     @JoinColumn(name = "F_ROLE_ID")
     private Role role;
+
+    @ManyToOne
+    @JoinColumn(name = "F_DISCOUNT_ID")
+    private Discount discount;
 
     @Override
     public boolean equals(Object o) {

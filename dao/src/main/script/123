@@ -1,0 +1,10 @@
+CRUD permission
+list(user)(item)
+create
+update
+delete
+read
+
+Add field status to Order
+Audit - операуии над сущностями
+к среде 12.09 изучить вопросы по hibernate

@@ -12,8 +12,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @NoArgsConstructor
 @Entity
 @Table(name = "T_AUDIT")
-@Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Audit implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

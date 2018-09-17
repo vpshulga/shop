@@ -1,6 +1,11 @@
 package com.gmail.vpshulgaa.service.dto;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +20,8 @@ public class ItemDto {
     private String description;
     private String uniqueNumber;
     private BigDecimal price;
+
+    private List<DiscountDto> discounts = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

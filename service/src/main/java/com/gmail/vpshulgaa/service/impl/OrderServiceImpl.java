@@ -4,24 +4,23 @@ import com.gmail.vpshulgaa.dao.OrderDao;
 import com.gmail.vpshulgaa.dao.entities.Order;
 import com.gmail.vpshulgaa.dao.impl.OrderDaoImpl;
 import com.gmail.vpshulgaa.service.OrderService;
-import java.util.List;
-
 import com.gmail.vpshulgaa.service.converter.impl.todto.OrderDtoConverter;
 import com.gmail.vpshulgaa.service.converter.impl.toentity.OrderConverter;
 import com.gmail.vpshulgaa.service.dto.OrderDto;
 import com.gmail.vpshulgaa.service.util.ServiceUtils;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService {
     private static final Logger logger = LogManager.getLogger(OrderServiceImpl.class);
 
     private OrderDao orderDao = new OrderDaoImpl(Order.class);
     private OrderConverter orderConverter = new OrderConverter();
     private OrderDtoConverter orderDtoConverter = new OrderDtoConverter();
-
 
     @Override
     public OrderDto findOne(Long id) {
@@ -113,5 +112,26 @@ public class OrderServiceImpl implements OrderService{
             }
             logger.error("Failed to delete order", e);
         }
+    }
+
+    @Override
+    public List<OrderDto> findOrdersByUserId(Long userId) {
+        List<OrderDto> ordersDto = new ArrayList<>();
+        List<Order> orders;
+        Session session = orderDao.getCurrentSession();
+        try {
+            Transaction transaction = ServiceUtils.getStartedTransaction(session);
+            orders = orderDao.findordersByUserId(userId);
+            for (Order order : orders) {
+                ordersDto.add(orderDtoConverter.toDto(order));
+            }
+            transaction.commit();
+        } catch (Exception e) {
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
+            logger.error("Failed to find orders", e);
+        }
+        return ordersDto;
     }
 }

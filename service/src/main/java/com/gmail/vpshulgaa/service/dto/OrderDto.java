@@ -1,9 +1,6 @@
 package com.gmail.vpshulgaa.service.dto;
 
 import java.time.LocalDateTime;
-
-import com.gmail.vpshulgaa.dao.entities.Item;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,6 +13,7 @@ public class OrderDto {
     private LocalDateTime created;
     private Integer quantity;
     private ItemDto item;
+    private UserDto user;
 
     @Override
     public boolean equals(Object o) {

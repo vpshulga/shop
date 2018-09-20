@@ -4,12 +4,11 @@ import com.gmail.vpshulgaa.dao.CommentDao;
 import com.gmail.vpshulgaa.dao.entities.Comment;
 import com.gmail.vpshulgaa.dao.impl.CommentDaoImpl;
 import com.gmail.vpshulgaa.service.CommentService;
-import java.util.List;
-
 import com.gmail.vpshulgaa.service.converter.impl.todto.CommentDtoConverter;
 import com.gmail.vpshulgaa.service.converter.impl.toentity.CommentConverter;
 import com.gmail.vpshulgaa.service.dto.CommentDto;
 import com.gmail.vpshulgaa.service.util.ServiceUtils;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
@@ -21,7 +20,6 @@ public class CommentServiceImpl implements CommentService {
     private CommentDao commentDao = new CommentDaoImpl(Comment.class);
     private CommentConverter commentConverter = new CommentConverter();
     private CommentDtoConverter commentDtoConverter = new CommentDtoConverter();
-
 
     @Override
     public CommentDto findOne(Long id) {

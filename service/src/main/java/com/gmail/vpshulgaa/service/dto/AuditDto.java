@@ -1,7 +1,6 @@
 package com.gmail.vpshulgaa.service.dto;
 
 import java.time.LocalDateTime;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

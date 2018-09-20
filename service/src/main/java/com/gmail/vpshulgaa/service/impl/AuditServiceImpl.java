@@ -14,13 +14,12 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-public class AuditServiceImpl implements AuditService{
+public class AuditServiceImpl implements AuditService {
     private static final Logger logger = LogManager.getLogger(AuditServiceImpl.class);
 
     private AuditDao auditDao = new AuditDaoImpl(Audit.class);
     private AuditConverter auditConverter = new AuditConverter();
     private AuditDtoConverter auditDtoConverter = new AuditDtoConverter();
-
 
     @Override
     public AuditDto findOne(Long id) {

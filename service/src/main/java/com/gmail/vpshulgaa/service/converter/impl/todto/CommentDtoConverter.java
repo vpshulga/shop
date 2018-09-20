@@ -5,10 +5,12 @@ import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.CommentDto;
 import com.gmail.vpshulgaa.service.dto.NewsDto;
 import com.gmail.vpshulgaa.service.dto.UserDto;
-
 import java.util.List;
 
 public class CommentDtoConverter implements DtoConverter<CommentDto, Comment> {
+    private NewsDtoConverter newsDtoConverter = new NewsDtoConverter();
+    private UserDtoConverter userDtoConverter = new UserDtoConverter();
+
     @Override
     public CommentDto toDto(Comment entity) {
         if (entity == null) {
@@ -19,18 +21,15 @@ public class CommentDtoConverter implements DtoConverter<CommentDto, Comment> {
         commentDto.setContent(entity.getContent());
         commentDto.setCreated(entity.getCreated());
 
-        NewsDtoConverter newsDtoConverter = new NewsDtoConverter();
         if (entity.getNews() != null) {
             NewsDto newsDto = newsDtoConverter.toDto(entity.getNews());
             commentDto.setNews(newsDto);
         }
 
-        UserDtoConverter userDtoConverter = new UserDtoConverter();
         if (entity.getUser() != null) {
             UserDto userDto = userDtoConverter.toDto(entity.getUser());
             commentDto.setUser(userDto);
         }
-
 
         return commentDto;
     }

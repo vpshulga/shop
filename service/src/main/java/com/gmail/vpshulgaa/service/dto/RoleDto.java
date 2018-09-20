@@ -1,11 +1,10 @@
 package com.gmail.vpshulgaa.service.dto;
 
+import java.util.HashSet;
+import java.util.Set;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -14,7 +13,6 @@ public class RoleDto {
     private long id;
     private String name;
     private Set<PermissionDto> permissions = new HashSet<>();
-
 
     @Override
     public boolean equals(Object o) {

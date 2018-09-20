@@ -5,8 +5,6 @@ import javax.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Getter
 @Setter
@@ -20,7 +18,6 @@ public class Permission implements Serializable {
     private long id;
     @Column(name = "F_NAME", length = 30)
     private String name;
-
 
     @Override
     public boolean equals(Object o) {

@@ -8,12 +8,11 @@ import com.gmail.vpshulgaa.service.converter.impl.todto.UserDtoConverter;
 import com.gmail.vpshulgaa.service.converter.impl.toentity.UserConverter;
 import com.gmail.vpshulgaa.service.dto.UserDto;
 import com.gmail.vpshulgaa.service.util.ServiceUtils;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
-import java.util.List;
 
 
 public class UserServiceImpl implements UserService {

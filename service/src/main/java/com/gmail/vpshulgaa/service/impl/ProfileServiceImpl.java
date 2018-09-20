@@ -21,7 +21,6 @@ public class ProfileServiceImpl implements ProfileService {
     private ProfileDtoConverter profileDtoConverter = new ProfileDtoConverter();
     private ProfileConverter profileConverter = new ProfileConverter();
 
-
     @Override
     public ProfileDto findOne(Long id) {
         ProfileDto profileDto = null;

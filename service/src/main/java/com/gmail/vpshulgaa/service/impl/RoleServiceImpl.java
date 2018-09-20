@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-public class RoleServiceImpl implements RoleService{
+public class RoleServiceImpl implements RoleService {
     private static final Logger logger = LogManager.getLogger(RoleServiceImpl.class);
 
     private RoleDao roleDao = new RoleDaoImpl(Role.class);

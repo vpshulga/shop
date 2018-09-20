@@ -5,13 +5,12 @@ import com.gmail.vpshulgaa.dao.entities.Item;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.dto.DiscountDto;
 import com.gmail.vpshulgaa.service.dto.ItemDto;
-
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-public class ItemConverter implements Converter<ItemDto, Item>{
+public class ItemConverter implements Converter<ItemDto, Item> {
+    private DiscountConverter discountConverter = new DiscountConverter();
+
     @Override
     public Item toEntity(ItemDto dto) {
         if (dto == null) {
@@ -24,7 +23,6 @@ public class ItemConverter implements Converter<ItemDto, Item>{
         item.setUniqueNumber(dto.getUniqueNumber());
         item.setPrice(dto.getPrice());
 
-        DiscountConverter discountConverter = new DiscountConverter();
         List<Discount> discounts = new ArrayList<>();
         for (DiscountDto discountDto : dto.getDiscounts()) {
             discounts.add(discountConverter.toEntity(discountDto));

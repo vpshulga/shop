@@ -1,5 +1,6 @@
 package com.gmail.vpshulgaa.dao.entities;
 
+import com.gmail.vpshulgaa.dao.enums.Status;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -7,8 +8,6 @@ import javax.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Getter
 @Setter
@@ -24,10 +23,17 @@ public class Order implements Serializable {
     private LocalDateTime created;
     @Column(name = "F_QUANTITY")
     private Integer quantity;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "F_STATUS")
+    private Status status = Status.NEW;
 
     @ManyToOne
     @JoinColumn(name = "F_ITEM_ID")
     private Item item;
+
+    @ManyToOne
+    @JoinColumn(name = "F_USER_ID")
+    private User user;
 
     @Override
     public boolean equals(Object o) {

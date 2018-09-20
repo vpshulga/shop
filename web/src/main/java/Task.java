@@ -26,9 +26,10 @@ public class Task {
         setDiscountToUser();
         createOrders();
         showInfoAboutOrders();
+        findItemsByDiscount(BigDecimal.valueOf(10));
     }
 
-    private static void createItems(){
+    private static void createItems() {
         ItemService itemService = new ItemServiceImpl();
         Random random = new Random();
         for (int i = 1; i <= 30; i++) {
@@ -41,7 +42,7 @@ public class Task {
         }
     }
 
-    private static void createDiscounts(){
+    private static void createDiscounts() {
         Random random = new Random();
         int year = 2019;
         DiscountService discountService = new DiscountServiceImpl();
@@ -97,7 +98,7 @@ public class Task {
         userService.create(userDto);
     }
 
-    private static void setDiscountToUser(){
+    private static void setDiscountToUser() {
         UserService userService = new UserServiceImpl();
         DiscountService discountService = new DiscountServiceImpl();
         UserDto user = userService.findOne(1L);
@@ -105,7 +106,7 @@ public class Task {
         userService.update(user);
     }
 
-    private static void createOrders(){
+    private static void createOrders() {
         Random random = new Random();
         UserService userService = new UserServiceImpl();
         OrderService orderService = new OrderServiceImpl();
@@ -118,20 +119,18 @@ public class Task {
             orderDto.setItem(item);
             Long qantity = itemService.countItemsInDiapason(BigDecimal.valueOf(250), BigDecimal.valueOf(450));
             orderDto.setQuantity(Math.toIntExact(qantity));
-            orderService.create(orderDto);
             UserDto user = userService.findOne(1L);
-            OrderDto order = orderService.findOne((long) i);
-            user.getOrders().add(order);
-            userService.update(user);
+            orderDto.setUser(user);
+            orderService.create(orderDto);
         }
     }
 
-    private static void showInfoAboutOrders(){
+    private static void showInfoAboutOrders() {
         UserService userService = new UserServiceImpl();
         OrderService orderService = new OrderServiceImpl();
         StringBuilder sb = new StringBuilder();
         UserDto user = userService.findOne(1L);
-        for (OrderDto order : user.getOrders()) {
+        for (OrderDto order : orderService.findOrdersByUserId(1L)) {
             BigDecimal price = order.getItem().getPrice().multiply(BigDecimal.valueOf(order.getQuantity()));
             BigDecimal discountsForItem = BigDecimal.valueOf(0);
             for (DiscountDto discountDto : order.getItem().getDiscounts()) {
@@ -150,7 +149,14 @@ public class Task {
                     .append(priceWithDiscount).append("\n");
         }
         System.out.println(sb);
+    }
 
+    private static void findItemsByDiscount(BigDecimal percent) {
+        ItemService itemService = new ItemServiceImpl();
+        List<ItemDto> items = itemService.findItemsByDiscount(percent);
+        for (ItemDto item : items) {
+            System.out.println(item.getName());
+        }
     }
 
 }

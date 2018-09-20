@@ -4,27 +4,24 @@ import com.gmail.vpshulgaa.dao.ItemDao;
 import com.gmail.vpshulgaa.dao.entities.Item;
 import com.gmail.vpshulgaa.dao.impl.ItemDaoImpl;
 import com.gmail.vpshulgaa.service.ItemService;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.gmail.vpshulgaa.service.converter.impl.todto.ItemDtoConverter;
 import com.gmail.vpshulgaa.service.converter.impl.toentity.ItemConverter;
 import com.gmail.vpshulgaa.service.dto.ItemDto;
 import com.gmail.vpshulgaa.service.util.ServiceUtils;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-public class ItemServiceImpl implements ItemService{
+public class ItemServiceImpl implements ItemService {
     private static final Logger logger = LogManager.getLogger(ItemServiceImpl.class);
 
     private ItemDao itemDao = new ItemDaoImpl(Item.class);
     private ItemConverter itemConverter = new ItemConverter();
     private ItemDtoConverter itemDtoConverter = new ItemDtoConverter();
-
 
     @Override
     public ItemDto findOne(Long id) {
@@ -121,11 +118,32 @@ public class ItemServiceImpl implements ItemService{
     @Override
     public List<ItemDto> findItemsInPriceDiapason(BigDecimal start, BigDecimal finish) {
         List<ItemDto> itemsDto = new ArrayList<>();
-        List<Item> items = new ArrayList<>();
+        List<Item> items;
         Session session = itemDao.getCurrentSession();
         try {
             Transaction transaction = ServiceUtils.getStartedTransaction(session);
             items = itemDao.findItemsInPriceDiapason(start, finish);
+            for (Item item : items) {
+                itemsDto.add(itemDtoConverter.toDto(item));
+            }
+            transaction.commit();
+        } catch (Exception e) {
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
+            logger.error("Failed to find items", e);
+        }
+        return itemsDto;
+    }
+
+    @Override
+    public List<ItemDto> findItemsByDiscount(BigDecimal discount) {
+        List<ItemDto> itemsDto = new ArrayList<>();
+        List<Item> items;
+        Session session = itemDao.getCurrentSession();
+        try {
+            Transaction transaction = ServiceUtils.getStartedTransaction(session);
+            items = itemDao.findItemsByDiscount(discount);
             for (Item item : items) {
                 itemsDto.add(itemDtoConverter.toDto(item));
             }

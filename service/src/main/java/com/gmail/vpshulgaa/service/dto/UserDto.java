@@ -1,11 +1,11 @@
 package com.gmail.vpshulgaa.service.dto;
 
+import java.util.HashSet;
+import java.util.Set;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,7 +17,6 @@ public class UserDto {
     private String password;
     private ProfileDto profileDto;
     private Set<AuditDto> audits = new HashSet<>();
-    private Set<OrderDto> orders = new HashSet<>();
     private RoleDto role;
     private DiscountDto discount;
 

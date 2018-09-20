@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.query.Query;
 
 
-public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao{
+public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
     private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
 
     public UserDaoImpl(Class<User> clazz) {

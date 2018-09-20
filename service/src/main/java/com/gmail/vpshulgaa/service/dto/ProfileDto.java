@@ -1,7 +1,5 @@
 package com.gmail.vpshulgaa.service.dto;
 
-import com.gmail.vpshulgaa.dao.entities.User;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

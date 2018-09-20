@@ -10,8 +10,6 @@ import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Getter
 @Setter
@@ -34,6 +32,8 @@ public class User implements Serializable {
     private String surname;
     @Column(name = "F_PASSWORD", length = 50)
     private String password;
+    @Column(name = "F_IS_DISABLED")
+    private boolean isDisabled = false;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
     private Profile profile;
@@ -41,10 +41,6 @@ public class User implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "F_USER_ID")
     private Set<Audit> audits = new HashSet<>();
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "F_USER_ID")
-    private Set<Order> orders = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "F_ROLE_ID")

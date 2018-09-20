@@ -2,11 +2,15 @@ package com.gmail.vpshulgaa.service.converter.impl.toentity;
 
 import com.gmail.vpshulgaa.dao.entities.Item;
 import com.gmail.vpshulgaa.dao.entities.Order;
+import com.gmail.vpshulgaa.dao.entities.User;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.dto.OrderDto;
 import java.util.List;
 
-public class OrderConverter implements Converter<OrderDto, Order>{
+public class OrderConverter implements Converter<OrderDto, Order> {
+    private ItemConverter itemConverter = new ItemConverter();
+    private UserConverter userConverter = new UserConverter();
+
     @Override
     public Order toEntity(OrderDto dto) {
         if (dto == null) {
@@ -16,10 +20,15 @@ public class OrderConverter implements Converter<OrderDto, Order>{
         order.setId(dto.getId());
         order.setCreated(dto.getCreated());
         order.setQuantity(dto.getQuantity());
-        ItemConverter itemConverter = new ItemConverter();
+
         if (dto.getItem() != null) {
             Item item = itemConverter.toEntity(dto.getItem());
             order.setItem(item);
+        }
+
+        if (dto.getUser() != null) {
+            User user = userConverter.toEntity(dto.getUser());
+            order.setUser(user);
         }
         return order;
     }

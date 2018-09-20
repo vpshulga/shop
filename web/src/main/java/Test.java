@@ -128,9 +128,6 @@ public class Test {
         o2.setQuantity(4);
         o2.setCreated(LocalDateTime.now());
 
-        u.getOrders().add(o1);
-        u.getOrders().add(o2);
-        userService.update(u);
 
 
         RoleDto roleDto1 = new RoleDto();

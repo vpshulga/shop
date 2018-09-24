@@ -1,7 +1,6 @@
 package com.gmail.vpshulgaa.config.initializer;
 
 import com.gmail.vpshulgaa.config.AppConfig;
-import com.gmail.vpshulgaa.config.WebConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class AppWebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {

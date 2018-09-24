@@ -3,12 +3,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <jsp:include page="/WEB-INF/pages/util/head.jsp"/>
+    <jsp:include page="util/head.jsp"/>
     <title>Login page</title>
 </head>
 <body>
 <div class="container">
-    <jsp:include page="/WEB-INF/pages/util/logo.jsp"/>
+    <jsp:include page="util/logo.jsp"/>
     <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-4 shadow-lg bg-white rounded">
@@ -35,6 +35,6 @@
     </div>
 </div>
 
-<jsp:include page="/WEB-INF/pages/util/js.jsp"/>
+<jsp:include page="util/js.jsp"/>
 </body>
 </html>

@@ -13,11 +13,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ProfileServiceImpl implements ProfileService {
     private static final Logger logger = LogManager.getLogger(ProfileServiceImpl.class);
 
-    private ProfileDao profileDao = new ProfileDaoImpl(Profile.class);
+    private ProfileDao profileDao = new ProfileDaoImpl();
     private ProfileDtoConverter profileDtoConverter = new ProfileDtoConverter();
     private ProfileConverter profileConverter = new ProfileConverter();
 

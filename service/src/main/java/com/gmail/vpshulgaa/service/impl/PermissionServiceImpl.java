@@ -13,11 +13,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PermissionServiceImpl implements PermissionService {
     private static final Logger logger = LogManager.getLogger(PermissionServiceImpl.class);
 
-    private PermissionDao permissionDao = new PermissionDaoImpl(Permission.class);
+    private PermissionDao permissionDao = new PermissionDaoImpl();
     private PermissionDtoConverter permissionDtoConverter = new PermissionDtoConverter();
     private PermissionConverter permissionConverter = new PermissionConverter();
 

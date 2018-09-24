@@ -5,8 +5,11 @@ import com.gmail.vpshulgaa.dao.entities.News;
 import com.gmail.vpshulgaa.dao.entities.User;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.dto.CommentDto;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
+@Component
 public class CommentConverter implements Converter<CommentDto, Comment> {
     private UserConverter userConverter = new UserConverter();
     private NewsConverter newsConverter = new NewsConverter();

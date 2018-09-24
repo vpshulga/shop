@@ -3,8 +3,11 @@ package com.gmail.vpshulgaa.service.converter.impl.toentity;
 import com.gmail.vpshulgaa.dao.entities.News;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.dto.NewsDto;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
+@Component
 public class NewsConverter implements Converter<NewsDto, News> {
 
     private UserConverter userConverter = new UserConverter();

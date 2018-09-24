@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
 
 public abstract class GenericDaoImpl<T extends Serializable> implements GenericDao<T> {
     private Class<T> clazz;

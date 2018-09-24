@@ -13,12 +13,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Service;
 
 
+@Service
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
-    private UserDao userDao = new UserDaoImpl(User.class);
+    private UserDao userDao = new UserDaoImpl();
     private UserDtoConverter userDtoConverter = new UserDtoConverter();
     private UserConverter userConverter = new UserConverter();
 

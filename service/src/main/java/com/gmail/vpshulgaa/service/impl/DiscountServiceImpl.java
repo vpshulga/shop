@@ -13,11 +13,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Service;
 
+@Service
 public class DiscountServiceImpl implements DiscountService {
     private static final Logger logger = LogManager.getLogger(DiscountServiceImpl.class);
 
-    private DiscountDao discountDao = new DiscountDaoImpl(Discount.class);
+    private DiscountDao discountDao = new DiscountDaoImpl();
     private DiscountConverter discountConverter = new DiscountConverter();
     private DiscountDtoConverter discountDtoConverter = new DiscountDtoConverter();
 

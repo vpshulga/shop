@@ -3,8 +3,11 @@ package com.gmail.vpshulgaa.service.converter.impl.toentity;
 import com.gmail.vpshulgaa.dao.entities.Audit;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.dto.AuditDto;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
+@Component
 public class AuditConverter implements Converter<AuditDto, Audit> {
     @Override
     public Audit toEntity(AuditDto dto) {

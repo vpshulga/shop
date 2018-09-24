@@ -13,11 +13,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AuditServiceImpl implements AuditService {
     private static final Logger logger = LogManager.getLogger(AuditServiceImpl.class);
 
-    private AuditDao auditDao = new AuditDaoImpl(Audit.class);
+    private AuditDao auditDao = new AuditDaoImpl();
     private AuditConverter auditConverter = new AuditConverter();
     private AuditDtoConverter auditDtoConverter = new AuditDtoConverter();
 

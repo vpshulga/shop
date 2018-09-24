@@ -4,10 +4,13 @@ import com.gmail.vpshulgaa.dao.entities.Audit;
 import com.gmail.vpshulgaa.dao.entities.User;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.*;
+import org.springframework.stereotype.Component;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Component
 public class UserDtoConverter implements DtoConverter<UserDto, User> {
 
     private ProfileDtoConverter profileDtoConverter = new ProfileDtoConverter();

@@ -14,11 +14,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Service;
 
+@Service
 public class OrderServiceImpl implements OrderService {
     private static final Logger logger = LogManager.getLogger(OrderServiceImpl.class);
 
-    private OrderDao orderDao = new OrderDaoImpl(Order.class);
+    private OrderDao orderDao = new OrderDaoImpl();
     private OrderConverter orderConverter = new OrderConverter();
     private OrderDtoConverter orderDtoConverter = new OrderDtoConverter();
 

@@ -5,9 +5,12 @@ import com.gmail.vpshulgaa.dao.entities.Item;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.DiscountDto;
 import com.gmail.vpshulgaa.service.dto.ItemDto;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class ItemDtoConverter implements DtoConverter<ItemDto, Item> {
 
     private DiscountDtoConverter discountDtoConverter = new DiscountDtoConverter();

@@ -5,10 +5,13 @@ import com.gmail.vpshulgaa.dao.entities.Role;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.PermissionDto;
 import com.gmail.vpshulgaa.service.dto.RoleDto;
+import org.springframework.stereotype.Component;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Component
 public class RoleDtoConverter implements DtoConverter<RoleDto, Role> {
     private PermissionDtoConverter permissionDtoConverter = new PermissionDtoConverter();
 

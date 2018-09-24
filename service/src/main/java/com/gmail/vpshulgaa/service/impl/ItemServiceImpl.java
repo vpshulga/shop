@@ -15,11 +15,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ItemServiceImpl implements ItemService {
     private static final Logger logger = LogManager.getLogger(ItemServiceImpl.class);
 
-    private ItemDao itemDao = new ItemDaoImpl(Item.class);
+    private ItemDao itemDao = new ItemDaoImpl();
     private ItemConverter itemConverter = new ItemConverter();
     private ItemDtoConverter itemDtoConverter = new ItemDtoConverter();
 

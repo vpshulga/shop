@@ -3,8 +3,11 @@ package com.gmail.vpshulgaa.service.converter.impl.toentity;
 import com.gmail.vpshulgaa.dao.entities.Permission;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.dto.PermissionDto;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
+@Component
 public class PermissionConverter implements Converter<PermissionDto, Permission> {
     @Override
     public Permission toEntity(PermissionDto dto) {

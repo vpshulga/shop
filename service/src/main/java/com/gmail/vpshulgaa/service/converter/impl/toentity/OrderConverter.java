@@ -5,8 +5,11 @@ import com.gmail.vpshulgaa.dao.entities.Order;
 import com.gmail.vpshulgaa.dao.entities.User;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.dto.OrderDto;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
+@Component
 public class OrderConverter implements Converter<OrderDto, Order> {
     private ItemConverter itemConverter = new ItemConverter();
     private UserConverter userConverter = new UserConverter();

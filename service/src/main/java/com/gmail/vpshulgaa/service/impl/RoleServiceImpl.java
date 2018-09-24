@@ -13,11 +13,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Service;
 
+@Service
 public class RoleServiceImpl implements RoleService {
     private static final Logger logger = LogManager.getLogger(RoleServiceImpl.class);
 
-    private RoleDao roleDao = new RoleDaoImpl(Role.class);
+    private RoleDao roleDao = new RoleDaoImpl();
     private RoleDtoConverter roleDtoConverter = new RoleDtoConverter();
     private RoleConverter roleConverter = new RoleConverter();
 

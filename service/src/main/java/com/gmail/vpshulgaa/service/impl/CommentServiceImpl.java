@@ -4,6 +4,8 @@ import com.gmail.vpshulgaa.dao.CommentDao;
 import com.gmail.vpshulgaa.dao.entities.Comment;
 import com.gmail.vpshulgaa.dao.impl.CommentDaoImpl;
 import com.gmail.vpshulgaa.service.CommentService;
+import com.gmail.vpshulgaa.service.converter.Converter;
+import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.converter.impl.todto.CommentDtoConverter;
 import com.gmail.vpshulgaa.service.converter.impl.toentity.CommentConverter;
 import com.gmail.vpshulgaa.service.dto.CommentDto;
@@ -13,15 +15,26 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CommentServiceImpl implements CommentService {
     private static final Logger logger = LogManager.getLogger(CommentServiceImpl.class);
 
-    private CommentDao commentDao = new CommentDaoImpl();
-    private CommentConverter commentConverter = new CommentConverter();
-    private CommentDtoConverter commentDtoConverter = new CommentDtoConverter();
+    private final CommentDao commentDao;
+    private final Converter<CommentDto, Comment> commentConverter;
+    private final DtoConverter<CommentDto, Comment> commentDtoConverter;
+
+    @Autowired
+    public CommentServiceImpl(CommentDao commentDao,
+                              @Qualifier("commentConverter") Converter<CommentDto, Comment> commentConverter,
+                              @Qualifier("commentDtoConverter") DtoConverter<CommentDto, Comment> commentDtoConverter) {
+        this.commentDao = commentDao;
+        this.commentConverter = commentConverter;
+        this.commentDtoConverter = commentDtoConverter;
+    }
 
     @Override
     public CommentDto findOne(Long id) {

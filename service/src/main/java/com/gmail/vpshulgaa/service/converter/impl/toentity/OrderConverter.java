@@ -4,15 +4,26 @@ import com.gmail.vpshulgaa.dao.entities.Item;
 import com.gmail.vpshulgaa.dao.entities.Order;
 import com.gmail.vpshulgaa.dao.entities.User;
 import com.gmail.vpshulgaa.service.converter.Converter;
+import com.gmail.vpshulgaa.service.dto.ItemDto;
 import com.gmail.vpshulgaa.service.dto.OrderDto;
+import com.gmail.vpshulgaa.service.dto.UserDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
+@Component("orderConverter")
 public class OrderConverter implements Converter<OrderDto, Order> {
-    private ItemConverter itemConverter = new ItemConverter();
-    private UserConverter userConverter = new UserConverter();
+    private final Converter<ItemDto, Item> itemConverter;
+    private final Converter<UserDto, User> userConverter;
+
+    @Autowired
+    public OrderConverter(@Qualifier("itemConverter") Converter<ItemDto, Item> itemConverter,
+                          @Qualifier("userConverter") Converter<UserDto, User> userConverter) {
+        this.itemConverter = itemConverter;
+        this.userConverter = userConverter;
+    }
 
     @Override
     public Order toEntity(OrderDto dto) {

@@ -1,15 +1,25 @@
 package com.gmail.vpshulgaa.service.converter.impl.todto;
 
 import com.gmail.vpshulgaa.dao.entities.News;
+import com.gmail.vpshulgaa.dao.entities.User;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.NewsDto;
+import com.gmail.vpshulgaa.service.dto.UserDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
+@Component("newsDtoConverter")
 public class NewsDtoConverter implements DtoConverter<NewsDto, News> {
-    private UserDtoConverter userDtoConverter = new UserDtoConverter();
+
+    private final DtoConverter<UserDto, User> userDtoConverter;
+
+    @Autowired
+    public NewsDtoConverter(@Qualifier("userDtoConverter") DtoConverter<UserDto, User> userDtoConverter) {
+        this.userDtoConverter = userDtoConverter;
+    }
 
     @Override
     public NewsDto toDto(News entity) {

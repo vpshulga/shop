@@ -4,6 +4,8 @@ import com.gmail.vpshulgaa.dao.UserDao;
 import com.gmail.vpshulgaa.dao.entities.User;
 import com.gmail.vpshulgaa.dao.impl.UserDaoImpl;
 import com.gmail.vpshulgaa.service.UserService;
+import com.gmail.vpshulgaa.service.converter.Converter;
+import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.converter.impl.todto.UserDtoConverter;
 import com.gmail.vpshulgaa.service.converter.impl.toentity.UserConverter;
 import com.gmail.vpshulgaa.service.dto.UserDto;
@@ -13,6 +15,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 
@@ -20,9 +24,18 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
-    private UserDao userDao = new UserDaoImpl();
-    private UserDtoConverter userDtoConverter = new UserDtoConverter();
-    private UserConverter userConverter = new UserConverter();
+    private final UserDao userDao;
+    private final DtoConverter<UserDto, User> userDtoConverter;
+    private final Converter<UserDto, User> userConverter;
+
+    @Autowired
+    public UserServiceImpl(UserDao userDao,
+                           @Qualifier("userDtoConverter") DtoConverter<UserDto, User> userDtoConverter,
+                           @Qualifier("userConverter") Converter<UserDto, User> userConverter) {
+        this.userDao = userDao;
+        this.userDtoConverter = userDtoConverter;
+        this.userConverter = userConverter;
+    }
 
     @Override
     public UserDto findOne(Long id) {

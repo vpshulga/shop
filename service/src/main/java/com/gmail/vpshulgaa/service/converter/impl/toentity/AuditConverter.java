@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
+@Component("auditConverter")
 public class AuditConverter implements Converter<AuditDto, Audit> {
     @Override
     public Audit toEntity(AuditDto dto) {

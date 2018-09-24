@@ -1,22 +1,34 @@
 package com.gmail.vpshulgaa.service.converter.impl.todto;
 
-import com.gmail.vpshulgaa.dao.entities.Audit;
-import com.gmail.vpshulgaa.dao.entities.User;
+import com.gmail.vpshulgaa.dao.entities.*;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Component
+@Component("userDtoConverter")
 public class UserDtoConverter implements DtoConverter<UserDto, User> {
 
-    private ProfileDtoConverter profileDtoConverter = new ProfileDtoConverter();
-    private AuditDtoConverter auditDtoConverter = new AuditDtoConverter();
-    private RoleDtoConverter roleDtoConverter = new RoleDtoConverter();
-    private DiscountDtoConverter discountDtoConverter = new DiscountDtoConverter();
+    private final DtoConverter<ProfileDto, Profile> profileDtoConverter;
+    private final DtoConverter<AuditDto, Audit> auditDtoConverter;
+    private final DtoConverter<RoleDto, Role> roleDtoConverter;
+    private final DtoConverter<DiscountDto, Discount> discountDtoConverter;
+
+    @Autowired
+    public UserDtoConverter(@Qualifier("profileDtoConverter") DtoConverter<ProfileDto, Profile> profileDtoConverter,
+                            @Qualifier("auditDtoConverter") DtoConverter<AuditDto, Audit> auditDtoConverter,
+                            @Qualifier("roleDtoConverter") DtoConverter<RoleDto, Role> roleDtoConverter,
+                            @Qualifier("discountDtoConverter") DtoConverter<DiscountDto, Discount> discountDtoConverter) {
+        this.profileDtoConverter = profileDtoConverter;
+        this.auditDtoConverter = auditDtoConverter;
+        this.roleDtoConverter = roleDtoConverter;
+        this.discountDtoConverter = discountDtoConverter;
+    }
 
     @Override
     public UserDto toDto(User entity) {

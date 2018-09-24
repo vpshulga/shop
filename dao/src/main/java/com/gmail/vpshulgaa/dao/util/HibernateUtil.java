@@ -1,6 +1,6 @@
 package com.gmail.vpshulgaa.dao.util;
 
-import com.gmail.vpshulgaa.dao.config.ConfigManager;
+import com.gmail.vpshulgaa.dao.config.DatabaseProperties;
 import com.gmail.vpshulgaa.dao.entities.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,31 +12,36 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Environment;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import static com.gmail.vpshulgaa.dao.config.ConfigManager.*;
-
+@Component
 public class HibernateUtil {
     private static final Logger logger = LogManager.getLogger(HibernateUtil.class);
 
-    private static StandardServiceRegistry registry;
-    private static SessionFactory sessionFactory;
+    private final DatabaseProperties databaseProperties;
 
-    private HibernateUtil() {
+    private StandardServiceRegistry registry;
+    private SessionFactory sessionFactory;
+
+    @Autowired
+    private HibernateUtil(DatabaseProperties databaseProperties) {
+        this.databaseProperties = databaseProperties;
     }
 
-    public static SessionFactory getSessionFactory() {
+    public SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             try {
                 StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder();
                 Map<String, String> settings = new HashMap<>();
-                settings.put(Environment.DRIVER, ConfigManager.getInstance().getProperty(DRIVER));
-                settings.put(Environment.URL, ConfigManager.getInstance().getProperty(URL));
-                settings.put(Environment.USER, ConfigManager.getInstance().getProperty(USER));
-                settings.put(Environment.PASS, ConfigManager.getInstance().getProperty(PASSWORD));
-                settings.put(Environment.HBM2DDL_AUTO, ConfigManager.getInstance().getProperty(HBM2DDL_AUTO));
-                settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, ConfigManager.getInstance().getProperty(CURRENT_SESSION_CONTEXT_CLASS));
-                settings.put(Environment.USE_SECOND_LEVEL_CACHE, ConfigManager.getInstance().getProperty(USE_SECOND_LEVEL_CACHE));
-                settings.put(Environment.CACHE_REGION_FACTORY, ConfigManager.getInstance().getProperty(CACHE_REGION_FACTORY));
+                settings.put(Environment.DRIVER, databaseProperties.getDriver());
+                settings.put(Environment.URL, databaseProperties.getUrl());
+                settings.put(Environment.USER, databaseProperties.getUser());
+                settings.put(Environment.PASS, databaseProperties.getPassword());
+                settings.put(Environment.HBM2DDL_AUTO, databaseProperties.getHbm2ddl());
+                settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, databaseProperties.getCurrentSessionContextClass());
+                settings.put(Environment.USE_SECOND_LEVEL_CACHE, databaseProperties.getUseSecondLevelCache());
+                settings.put(Environment.CACHE_REGION_FACTORY, databaseProperties.getFactoryClass());
 
                 registryBuilder.applySettings(settings);
                 registry = registryBuilder.build();

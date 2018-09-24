@@ -2,20 +2,32 @@ package com.gmail.vpshulgaa.service.converter.impl.toentity;
 
 import com.gmail.vpshulgaa.dao.entities.*;
 import com.gmail.vpshulgaa.service.converter.Converter;
-import com.gmail.vpshulgaa.service.dto.AuditDto;
-import com.gmail.vpshulgaa.service.dto.UserDto;
+import com.gmail.vpshulgaa.service.dto.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Component
+@Component("userConverter")
 public class UserConverter implements Converter<UserDto, User> {
-    private ProfileConverter profileConverter = new ProfileConverter();
-    private AuditConverter auditConverter = new AuditConverter();
-    private RoleConverter roleConverter = new RoleConverter();
-    private DiscountConverter discountConverter = new DiscountConverter();
+    private final Converter<ProfileDto, Profile> profileConverter;
+    private final Converter<AuditDto, Audit> auditConverter;
+    private final Converter<RoleDto, Role> roleConverter;
+    private final Converter<DiscountDto, Discount> discountConverter;
+
+    @Autowired
+    public UserConverter(@Qualifier("profileConverter") Converter<ProfileDto, Profile> profileConverter,
+                         @Qualifier("auditConverter") Converter<AuditDto, Audit> auditConverter,
+                         @Qualifier("roleConverter") Converter<RoleDto, Role> roleConverter,
+                         @Qualifier("discountConverter") Converter<DiscountDto, Discount> discountConverter) {
+        this.profileConverter = profileConverter;
+        this.auditConverter = auditConverter;
+        this.roleConverter = roleConverter;
+        this.discountConverter = discountConverter;
+    }
 
     @Override
     public User toEntity(UserDto dto) {

@@ -5,15 +5,22 @@ import com.gmail.vpshulgaa.dao.entities.Role;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.dto.PermissionDto;
 import com.gmail.vpshulgaa.service.dto.RoleDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Component
+@Component("roleConverter")
 public class RoleConverter implements Converter<RoleDto, Role> {
-    private PermissionConverter permissionConverter = new PermissionConverter();
+    private final Converter<PermissionDto, Permission> permissionConverter;
+
+    @Autowired
+    public RoleConverter(@Qualifier("permissionConverter") Converter<PermissionDto, Permission> permissionConverter) {
+        this.permissionConverter = permissionConverter;
+    }
 
     @Override
     public Role toEntity(RoleDto dto) {

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
+@Component("discountConverter")
 public class DiscountConverter implements Converter<DiscountDto, Discount> {
     @Override
     public Discount toEntity(DiscountDto dto) {

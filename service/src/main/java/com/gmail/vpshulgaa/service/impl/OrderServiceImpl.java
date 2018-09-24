@@ -4,6 +4,8 @@ import com.gmail.vpshulgaa.dao.OrderDao;
 import com.gmail.vpshulgaa.dao.entities.Order;
 import com.gmail.vpshulgaa.dao.impl.OrderDaoImpl;
 import com.gmail.vpshulgaa.service.OrderService;
+import com.gmail.vpshulgaa.service.converter.Converter;
+import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.converter.impl.todto.OrderDtoConverter;
 import com.gmail.vpshulgaa.service.converter.impl.toentity.OrderConverter;
 import com.gmail.vpshulgaa.service.dto.OrderDto;
@@ -14,15 +16,26 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class OrderServiceImpl implements OrderService {
     private static final Logger logger = LogManager.getLogger(OrderServiceImpl.class);
 
-    private OrderDao orderDao = new OrderDaoImpl();
-    private OrderConverter orderConverter = new OrderConverter();
-    private OrderDtoConverter orderDtoConverter = new OrderDtoConverter();
+    private final OrderDao orderDao;
+    private final Converter<OrderDto, Order> orderConverter;
+    private final DtoConverter<OrderDto, Order> orderDtoConverter;
+
+    @Autowired
+    public OrderServiceImpl(OrderDao orderDao,
+                            @Qualifier("orderConverter") Converter<OrderDto, Order> orderConverter,
+                            @Qualifier("orderDtoConverter") DtoConverter<OrderDto, Order> orderDtoConverter) {
+        this.orderDao = orderDao;
+        this.orderConverter = orderConverter;
+        this.orderDtoConverter = orderDtoConverter;
+    }
 
     @Override
     public OrderDto findOne(Long id) {

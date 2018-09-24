@@ -4,25 +4,39 @@ import com.gmail.vpshulgaa.dao.NewsDao;
 import com.gmail.vpshulgaa.dao.entities.News;
 import com.gmail.vpshulgaa.dao.impl.NewsDaoImpl;
 import com.gmail.vpshulgaa.service.NewsService;
+import com.gmail.vpshulgaa.service.converter.Converter;
+import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.converter.impl.todto.NewsDtoConverter;
 import com.gmail.vpshulgaa.service.converter.impl.toentity.NewsConverter;
 import com.gmail.vpshulgaa.service.dto.NewsDto;
 import com.gmail.vpshulgaa.service.util.ServiceUtils;
+
 import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class NewsServiceImpl implements NewsService {
 
     private static final Logger logger = LogManager.getLogger(NewsServiceImpl.class);
+    private final NewsDao newsDao;
+    private final DtoConverter<NewsDto, News> newsDtoConverter;
+    private final Converter<NewsDto, News> newsConverter;
 
-    private NewsDao newsDao = new NewsDaoImpl();
-    private NewsDtoConverter newsDtoConverter = new NewsDtoConverter();
-    private NewsConverter newsConverter = new NewsConverter();
+    @Autowired
+    public NewsServiceImpl(NewsDao newsDao,
+                           @Qualifier("newsConverter") Converter<NewsDto, News> newsConverter,
+                           @Qualifier("newsDtoConverter") DtoConverter<NewsDto, News> newsDtoConverter) {
+        this.newsConverter = newsConverter;
+        this.newsDao = newsDao;
+        this.newsDtoConverter = newsDtoConverter;
+    }
 
     @Override
     public NewsDto findOne(Long id) {

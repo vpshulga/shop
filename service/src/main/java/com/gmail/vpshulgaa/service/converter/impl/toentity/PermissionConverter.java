@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
+@Component("permissionConverter")
 public class PermissionConverter implements Converter<PermissionDto, Permission> {
     @Override
     public Permission toEntity(PermissionDto dto) {

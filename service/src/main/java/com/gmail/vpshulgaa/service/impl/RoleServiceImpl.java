@@ -4,6 +4,8 @@ import com.gmail.vpshulgaa.dao.RoleDao;
 import com.gmail.vpshulgaa.dao.entities.Role;
 import com.gmail.vpshulgaa.dao.impl.RoleDaoImpl;
 import com.gmail.vpshulgaa.service.RoleService;
+import com.gmail.vpshulgaa.service.converter.Converter;
+import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.converter.impl.todto.RoleDtoConverter;
 import com.gmail.vpshulgaa.service.converter.impl.toentity.RoleConverter;
 import com.gmail.vpshulgaa.service.dto.RoleDto;
@@ -13,15 +15,26 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RoleServiceImpl implements RoleService {
     private static final Logger logger = LogManager.getLogger(RoleServiceImpl.class);
 
-    private RoleDao roleDao = new RoleDaoImpl();
-    private RoleDtoConverter roleDtoConverter = new RoleDtoConverter();
-    private RoleConverter roleConverter = new RoleConverter();
+    private final RoleDao roleDao;
+    private final DtoConverter<RoleDto, Role> roleDtoConverter;
+    private final Converter<RoleDto, Role> roleConverter;
+
+    @Autowired
+    public RoleServiceImpl(RoleDao roleDao,
+                           @Qualifier("roleDtoConverter") DtoConverter<RoleDto, Role> roleDtoConverter,
+                           @Qualifier("roleConverter") Converter<RoleDto, Role> roleConverter) {
+        this.roleDao = roleDao;
+        this.roleDtoConverter = roleDtoConverter;
+        this.roleConverter = roleConverter;
+    }
 
     @Override
     public RoleDto findOne(Long id) {

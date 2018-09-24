@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
+@Component("profileDtoConverter")
 public class ProfileDtoConverter implements DtoConverter<ProfileDto, Profile> {
     @Override
     public ProfileDto toDto(Profile entity) {

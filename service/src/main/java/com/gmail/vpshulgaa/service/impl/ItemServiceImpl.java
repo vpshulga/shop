@@ -4,6 +4,8 @@ import com.gmail.vpshulgaa.dao.ItemDao;
 import com.gmail.vpshulgaa.dao.entities.Item;
 import com.gmail.vpshulgaa.dao.impl.ItemDaoImpl;
 import com.gmail.vpshulgaa.service.ItemService;
+import com.gmail.vpshulgaa.service.converter.Converter;
+import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.converter.impl.todto.ItemDtoConverter;
 import com.gmail.vpshulgaa.service.converter.impl.toentity.ItemConverter;
 import com.gmail.vpshulgaa.service.dto.ItemDto;
@@ -15,15 +17,25 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ItemServiceImpl implements ItemService {
     private static final Logger logger = LogManager.getLogger(ItemServiceImpl.class);
+    private final ItemDao itemDao;
+    private final Converter<ItemDto, Item> itemConverter;
+    private final DtoConverter<ItemDto, Item> itemDtoConverter;
 
-    private ItemDao itemDao = new ItemDaoImpl();
-    private ItemConverter itemConverter = new ItemConverter();
-    private ItemDtoConverter itemDtoConverter = new ItemDtoConverter();
+    @Autowired
+    public ItemServiceImpl(ItemDao itemDao,
+                           @Qualifier("itemConverter") Converter<ItemDto, Item> itemConverter,
+                           @Qualifier("itemDtoConverter") DtoConverter<ItemDto, Item> itemDtoConverter) {
+        this.itemDao = itemDao;
+        this.itemConverter = itemConverter;
+        this.itemDtoConverter = itemDtoConverter;
+    }
 
     @Override
     public ItemDto findOne(Long id) {

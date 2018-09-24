@@ -4,6 +4,8 @@ import com.gmail.vpshulgaa.dao.PermissionDao;
 import com.gmail.vpshulgaa.dao.entities.Permission;
 import com.gmail.vpshulgaa.dao.impl.PermissionDaoImpl;
 import com.gmail.vpshulgaa.service.PermissionService;
+import com.gmail.vpshulgaa.service.converter.Converter;
+import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.converter.impl.todto.PermissionDtoConverter;
 import com.gmail.vpshulgaa.service.converter.impl.toentity.PermissionConverter;
 import com.gmail.vpshulgaa.service.dto.PermissionDto;
@@ -13,15 +15,25 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PermissionServiceImpl implements PermissionService {
     private static final Logger logger = LogManager.getLogger(PermissionServiceImpl.class);
+    private final PermissionDao permissionDao;
+    private final DtoConverter<PermissionDto, Permission> permissionDtoConverter;
+    private final Converter<PermissionDto, Permission> permissionConverter;
 
-    private PermissionDao permissionDao = new PermissionDaoImpl();
-    private PermissionDtoConverter permissionDtoConverter = new PermissionDtoConverter();
-    private PermissionConverter permissionConverter = new PermissionConverter();
+    @Autowired
+    public PermissionServiceImpl(PermissionDao permissionDao,
+                                 @Qualifier("permissionDtoConverter") DtoConverter<PermissionDto, Permission> permissionDtoConverter,
+                                 @Qualifier("permissionConverter") Converter<PermissionDto, Permission> permissionConverter) {
+        this.permissionDao = permissionDao;
+        this.permissionDtoConverter = permissionDtoConverter;
+        this.permissionConverter = permissionConverter;
+    }
 
     @Override
     public PermissionDto findOne(Long id) {

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -68,6 +69,10 @@ public class UserConverter implements Converter<UserDto, User> {
 
     @Override
     public List<User> toEntityList(List<UserDto> list) {
-        return null;
+        List<User> users = new ArrayList<>();
+        for (UserDto userDto : list) {
+            users.add(toEntity(userDto));
+        }
+        return users;
     }
 }

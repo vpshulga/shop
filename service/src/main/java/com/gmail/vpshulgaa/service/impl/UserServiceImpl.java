@@ -10,6 +10,8 @@ import com.gmail.vpshulgaa.service.converter.impl.todto.UserDtoConverter;
 import com.gmail.vpshulgaa.service.converter.impl.toentity.UserConverter;
 import com.gmail.vpshulgaa.service.dto.UserDto;
 import com.gmail.vpshulgaa.service.util.ServiceUtils;
+
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -57,7 +59,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> findAll() {
-        return null;
+        List<UserDto> users = new ArrayList<>();
+        Session session = userDao.getCurrentSession();
+        try {
+            Transaction transaction = ServiceUtils.getStartedTransaction(session);
+            users = userDtoConverter.toDtoList(userDao.findAll());
+            transaction.commit();
+        } catch (Exception e) {
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
+            logger.error("Failed to get users", e);
+        }
+        return users;
     }
 
     @Override

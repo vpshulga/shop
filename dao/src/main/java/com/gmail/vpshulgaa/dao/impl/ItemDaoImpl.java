@@ -43,4 +43,21 @@ public class ItemDaoImpl extends GenericDaoImpl<Item> implements ItemDao {
         return (Long) query.uniqueResult();
     }
 
+    @Override
+    public Long countOfItems() {
+        String hql = "select count(*) from Item as i";
+        Query query = getCurrentSession().createQuery(hql);
+        return (Long) query.uniqueResult();
+    }
+
+    @Override
+    public List<Item> findItemsByPage(Long page, int maxResults) {
+        String hql = "from Item as i";
+        Query query = getCurrentSession().createQuery(hql);
+        int startPosition = (int) ((page - 1) * maxResults);
+        query.setFirstResult(startPosition);
+        query.setMaxResults(maxResults);
+        return query.list();
+    }
+
 }

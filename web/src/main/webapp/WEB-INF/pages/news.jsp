@@ -1,9 +1,10 @@
+
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <jsp:include page="commons/header.jsp"/>
-    <title>Users page</title>
+    <title>News page</title>
 </head>
 <body>
 <div class="container">
@@ -12,10 +13,10 @@
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8">
-            <form action="${pageContext.request.contextPath}/users" method="post">
+            <form action="${pageContext.request.contextPath}/news" method="post">
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="${pageContext.request.contextPath}/users/create" class="btn btn-primary" aria-pressed="true" role="button">ADD</a>
+                        <a href="${pageContext.request.contextPath}/news/create" class="btn btn-primary" aria-pressed="true" role="button">ADD</a>
                         <button type="submit" class="btn btn-primary">DELETE</button>
                     </div>
                 </div>
@@ -25,21 +26,18 @@
                             <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">FirstName</th>
-                                <th scope="col">LastName</th>
-                                <th scope="col">Role</th>
-                                <th scope="col">Actions</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Created</th>
+                                <th scope="col">Creator</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${users}" var="user">
+                            <c:forEach items="${news}" var="news">
                                 <tr>
-                                    <th scope="row"><input type="checkbox" name="ids" value="${user.id}"></th>
-                                    <td>${user.email}</td>
-                                    <td>${user.name}</td>
-                                    <td>${user.surname}</td>
-                                    <td>${user.role}</td>
+                                    <th scope="row"><input type="checkbox" name="ids" value="${news.id}"></th>
+                                    <td><a href="${pageContext.request.contextPath}/news/${news.id}">${news.title}</a></td>
+                                    <td>${news.created}</td>
+                                    <td>${news.user.name}</td>
                                     <td>
                                         <a href="${pageContext.request.contextPath}/users" class="btn btn-primary" aria-pressed="true"
                                            role="button">UPDATE</a>

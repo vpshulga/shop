@@ -187,4 +187,42 @@ public class ItemServiceImpl implements ItemService {
         }
         return count;
     }
+
+    @Override
+    public Long countOfItems() {
+        Long count = 0L;
+        Session session = itemDao.getCurrentSession();
+        try {
+            Transaction transaction = ServiceUtils.getStartedTransaction(session);
+            count = itemDao.countOfItems();
+            transaction.commit();
+        } catch (Exception e) {
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
+            logger.error("Failed to find items", e);
+        }
+        return count;
+    }
+
+    @Override
+    public List<ItemDto> findItemsByPage(Long page, int maxResults) {
+        List<ItemDto> itemsDto = new ArrayList<>();
+        List<Item> items;
+        Session session = itemDao.getCurrentSession();
+        try {
+            Transaction transaction = ServiceUtils.getStartedTransaction(session);
+            items = itemDao.findItemsByPage(page, maxResults);
+            for (Item item : items) {
+                itemsDto.add(itemDtoConverter.toDto(item));
+            }
+            transaction.commit();
+        } catch (Exception e) {
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
+            logger.error("Failed to find items", e);
+        }
+        return itemsDto;
+    }
 }

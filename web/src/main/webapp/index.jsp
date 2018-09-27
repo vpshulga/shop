@@ -1,38 +1,34 @@
-<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <jsp:include page="/WEB-INF/pages/util/head.jsp"/>
-    <title>Login page</title>
+    <jsp:include page="/WEB-INF/pages/commons/header.jsp"/>
+    <title>Shop</title>
 </head>
 <body>
-<div class="container">
-    <jsp:include page="/WEB-INF/pages/util/logo.jsp"/>
-    <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4 shadow-lg bg-white rounded">
-            <c:if test="${not empty error}">
-                <div class="alert alert-danger" role="alert">
-                    <c:out value="${error}"/>
-                </div>
-            </c:if>
-            <form action="${pageContext.request.contextPath}/dispatcher?command=login" method="post">
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" name="email" value="${email}" class="form-control" id="exampleInputEmail1"
-                           placeholder="Enter email">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input type="password" name="password" value="${password}" class="form-control" id="exampleInputPassword1"
-                           placeholder="Password">
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-        </div>
-        <div class="col-md-4"></div>
+<div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+        Информация для главной страницыИнформация для главной страницы
+        Информация для главной страницы
+        Информация для главной страницы
+        м
+        Информация для главной страницы
+        Информация для главной страницы
+        Информация для главной страницыИнформация для главной страницыИнформация для главной страницы
+        Информация для главной страницы
+        Информация для главной страницы
+        Информация для главной страницы
+        Информация для главной страницы
+        Информация для главной страницыИнформация для главной страницыИнформация для главной страницы
+        Информация для главной страницыИнформация для главной страницыИнформация для главной страницы
+        Информация для главной страницы
+        Информация для главной страницыИнформация для главной страницы
+        Информация для главной страницы
+        Информация для главной страницы
     </div>
+    <div class="col-sm-2"></div>
 </div>
 
 <jsp:include page="/WEB-INF/pages/util/js.jsp"/>

@@ -15,4 +15,16 @@ public class ServiceUtils {
         }
         return transaction;
     }
+
+    public static Long countOfPages(Long countOfEntities, int maxResults){
+        Long countOfPages = 0L;
+        if (countOfEntities > 0 && countOfEntities <= maxResults) {
+            countOfPages = 1L;
+        } else if (countOfEntities % maxResults == 0) {
+            countOfPages = countOfEntities / maxResults;
+        } else {
+            countOfPages = countOfEntities / maxResults + 1;
+        }
+        return countOfPages;
+    }
 }

@@ -10,4 +10,8 @@ public interface ItemService extends GenericService<ItemDto> {
     List<ItemDto> findItemsByDiscount(BigDecimal discount);
 
     Long countItemsInDiapason(BigDecimal start, BigDecimal finish);
+
+    Long countOfItems();
+
+    List<ItemDto> findItemsByPage(Long page, int maxResults);
 }

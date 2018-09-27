@@ -11,6 +11,7 @@ import com.gmail.vpshulgaa.service.converter.impl.toentity.NewsConverter;
 import com.gmail.vpshulgaa.service.dto.NewsDto;
 import com.gmail.vpshulgaa.service.util.ServiceUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -128,5 +129,43 @@ public class NewsServiceImpl implements NewsService {
             }
             logger.error("Failed to delete news", e);
         }
+    }
+
+    @Override
+    public Long countOfNews() {
+        Long count = 0L;
+        Session session = newsDao.getCurrentSession();
+        try {
+            Transaction transaction = ServiceUtils.getStartedTransaction(session);
+            count = newsDao.countOfNews();
+            transaction.commit();
+        } catch (Exception e) {
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
+            logger.error("Failed to find news", e);
+        }
+        return count;
+    }
+
+    @Override
+    public List<NewsDto> findNewsByPage(Long page, int maxResults) {
+        List<NewsDto> newsDtos = new ArrayList<>();
+        List<News> newsList;
+        Session session = newsDao.getCurrentSession();
+        try {
+            Transaction transaction = ServiceUtils.getStartedTransaction(session);
+            newsList = newsDao.findNewsByPage(page, maxResults);
+            for (News news : newsList) {
+                newsDtos.add(newsDtoConverter.toDto(news));
+            }
+            transaction.commit();
+        } catch (Exception e) {
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
+            logger.error("Failed to find news", e);
+        }
+        return newsDtos;
     }
 }

@@ -18,8 +18,10 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class PermissionServiceImpl implements PermissionService {
     private static final Logger logger = LogManager.getLogger(PermissionServiceImpl.class);
     private final PermissionDao permissionDao;
@@ -38,16 +40,10 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public PermissionDto findOne(Long id) {
         PermissionDto permissionDto = null;
-        Session session = permissionDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Permission permission = permissionDao.findOne(id);
             permissionDto = permissionDtoConverter.toDto(permission);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to get permission", e);
         }
         return permissionDto;
@@ -60,17 +56,11 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public PermissionDto create(PermissionDto permissionDto) {
-        Session session = permissionDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Permission permission = permissionConverter.toEntity(permissionDto);
             permissionDao.create(permission);
             permissionDto = permissionDtoConverter.toDto(permission);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to save permission", e);
         }
         return permissionDto;
@@ -78,17 +68,11 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public PermissionDto update(PermissionDto permissionDto) {
-        Session session = permissionDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Permission permission = permissionConverter.toEntity(permissionDto);
             permissionDao.update(permission);
             permissionDto = permissionDtoConverter.toDto(permission);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to update permission", e);
         }
         return permissionDto;
@@ -96,17 +80,11 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public PermissionDto delete(PermissionDto permissionDto) {
-        Session session = permissionDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Permission permission = permissionConverter.toEntity(permissionDto);
             permissionDao.delete(permission);
             permissionDto = permissionDtoConverter.toDto(permission);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to delete permission", e);
         }
         return permissionDto;
@@ -114,15 +92,9 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public void deleteById(Long id) {
-        Session session = permissionDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             permissionDao.deleteById(id);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to delete permission", e);
         }
     }

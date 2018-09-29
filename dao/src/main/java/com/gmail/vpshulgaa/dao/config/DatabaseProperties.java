@@ -24,6 +24,16 @@ public class DatabaseProperties {
     //hibernate
     private String currentSessionContextClass;
     private String hbm2ddl;
+    private String showSql;
+    private String hibernateDialect;
+
+    //Hikari connection pool
+    private String dataSourceClass;
+    private int maxPoolSize;
+    private String cachePreparedStatements;
+    private String cachePreparedStatementsSize;
+    private String cachePreparedStatementsSqlLimit;
+    private String useServerPreparedStatements;
 
     @Autowired
     public DatabaseProperties(Environment environment) {
@@ -42,6 +52,15 @@ public class DatabaseProperties {
 
         this.currentSessionContextClass = environment.getProperty("hibernate.current_session_context_class");
         this.hbm2ddl = environment.getProperty("hibernate.hbm2ddl.auto");
+        this.showSql = environment.getProperty("hibernate.show_sql");
+        this.hibernateDialect = environment.getProperty("hibernate.dialect");
+
+        this.dataSourceClass = environment.getProperty("pool.data.source.class");
+        this.maxPoolSize = Integer.parseInt(environment.getProperty("pool.max.size"));
+        this.cachePreparedStatements = environment.getProperty("pool.cache.prepared.statements");
+        this.cachePreparedStatementsSize = environment.getProperty("pool.cache.prepared.statements.size");
+        this.cachePreparedStatementsSqlLimit = environment.getProperty("pool.cache.prepared.statements.sql.limit");
+        this.useServerPreparedStatements = environment.getProperty("pool.use.server.prepared.statements");
     }
 
     public String getDriver() {
@@ -74,5 +93,37 @@ public class DatabaseProperties {
 
     public String getHbm2ddl() {
         return hbm2ddl;
+    }
+
+    public String getShowSql() {
+        return showSql;
+    }
+
+    public String getHibernateDialect() {
+        return hibernateDialect;
+    }
+
+    public String getDataSourceClass() {
+        return dataSourceClass;
+    }
+
+    public int getMaxPoolSize() {
+        return maxPoolSize;
+    }
+
+    public String getCachePreparedStatements() {
+        return cachePreparedStatements;
+    }
+
+    public String getCachePreparedStatementsSize() {
+        return cachePreparedStatementsSize;
+    }
+
+    public String getCachePreparedStatementsSqlLimit() {
+        return cachePreparedStatementsSqlLimit;
+    }
+
+    public String getUseServerPreparedStatements() {
+        return useServerPreparedStatements;
     }
 }

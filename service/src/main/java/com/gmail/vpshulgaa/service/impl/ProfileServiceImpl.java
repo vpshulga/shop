@@ -18,8 +18,10 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class ProfileServiceImpl implements ProfileService {
     private static final Logger logger = LogManager.getLogger(ProfileServiceImpl.class);
 
@@ -39,16 +41,10 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public ProfileDto findOne(Long id) {
         ProfileDto profileDto = null;
-        Session session = profileDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Profile profile = profileDao.findOne(id);
             profileDto = profileDtoConverter.toDto(profile);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to get profile", e);
         }
         return profileDto;
@@ -61,17 +57,11 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public ProfileDto create(ProfileDto profileDto) {
-        Session session = profileDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Profile profile = profileConverter.toEntity(profileDto);
             profileDao.create(profile);
             profileDto = profileDtoConverter.toDto(profile);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to save profile", e);
         }
         return profileDto;
@@ -79,17 +69,11 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public ProfileDto update(ProfileDto profileDto) {
-        Session session = profileDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Profile profile = profileConverter.toEntity(profileDto);
             profileDao.update(profile);
             profileDto = profileDtoConverter.toDto(profile);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to update profile", e);
         }
         return profileDto;
@@ -97,17 +81,11 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public ProfileDto delete(ProfileDto profileDto) {
-        Session session = profileDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Profile profile = profileConverter.toEntity(profileDto);
             profileDao.delete(profile);
             profileDto = profileDtoConverter.toDto(profile);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to delete profile", e);
         }
         return profileDto;
@@ -115,15 +93,9 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public void deleteById(Long id) {
-        Session session = profileDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             profileDao.deleteById(id);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to delete profile", e);
         }
     }

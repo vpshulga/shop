@@ -20,9 +20,11 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
@@ -42,16 +44,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto findOne(Long id) {
         UserDto userDto = null;
-        Session session = userDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             User user = userDao.findOne(id);
             userDto = userDtoConverter.toDto(user);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to get user", e);
         }
         return userDto;
@@ -60,15 +56,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> findAll() {
         List<UserDto> users = new ArrayList<>();
-        Session session = userDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             users = userDtoConverter.toDtoList(userDao.findAll());
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to get users", e);
         }
         return users;
@@ -76,17 +66,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto create(UserDto userDto) {
-        Session session = userDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             User user = userConverter.toEntity(userDto);
             userDao.create(user);
             userDto = userDtoConverter.toDto(user);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to save user", e);
         }
         return userDto;
@@ -94,17 +78,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto update(UserDto userDto) {
-        Session session = userDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             User user = userConverter.toEntity(userDto);
             userDao.update(user);
             userDto = userDtoConverter.toDto(user);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to update user", e);
         }
         return userDto;
@@ -112,17 +90,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto delete(UserDto userDto) {
-        Session session = userDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             User user = userConverter.toEntity(userDto);
             userDao.delete(user);
             userDto = userDtoConverter.toDto(user);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to delete user", e);
         }
         return userDto;
@@ -130,15 +102,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteById(Long id) {
-        Session session = userDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             userDao.deleteById(id);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to delete user", e);
         }
     }
@@ -146,16 +112,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto findByEmail(String email) {
         UserDto userDto = null;
-        Session session = userDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             User user = userDao.findByEmail(email);
             userDto = userDtoConverter.toDto(user);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to find user", e);
         }
         return userDto;

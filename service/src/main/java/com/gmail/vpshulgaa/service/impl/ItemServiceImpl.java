@@ -20,8 +20,10 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class ItemServiceImpl implements ItemService {
     private static final Logger logger = LogManager.getLogger(ItemServiceImpl.class);
     private final ItemDao itemDao;
@@ -40,16 +42,10 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public ItemDto findOne(Long id) {
         ItemDto itemDto = null;
-        Session session = itemDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Item item = itemDao.findOne(id);
             itemDto = itemDtoConverter.toDto(item);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to get item", e);
         }
         return itemDto;
@@ -62,17 +58,11 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemDto create(ItemDto itemDto) {
-        Session session = itemDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Item item = itemConverter.toEntity(itemDto);
             itemDao.create(item);
             itemDto = itemDtoConverter.toDto(item);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to save item", e);
         }
         return itemDto;
@@ -80,17 +70,11 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemDto update(ItemDto itemDto) {
-        Session session = itemDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Item item = itemConverter.toEntity(itemDto);
             itemDao.update(item);
             itemDto = itemDtoConverter.toDto(item);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to update item", e);
         }
         return itemDto;
@@ -98,17 +82,11 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemDto delete(ItemDto itemDto) {
-        Session session = itemDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Item item = itemConverter.toEntity(itemDto);
             itemDao.delete(item);
             itemDto = itemDtoConverter.toDto(item);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to delete item", e);
         }
         return itemDto;
@@ -116,15 +94,9 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void deleteById(Long id) {
-        Session session = itemDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             itemDao.deleteById(id);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to delete item", e);
         }
     }
@@ -133,18 +105,12 @@ public class ItemServiceImpl implements ItemService {
     public List<ItemDto> findItemsInPriceDiapason(BigDecimal start, BigDecimal finish) {
         List<ItemDto> itemsDto = new ArrayList<>();
         List<Item> items;
-        Session session = itemDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             items = itemDao.findItemsInPriceDiapason(start, finish);
             for (Item item : items) {
                 itemsDto.add(itemDtoConverter.toDto(item));
             }
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to find items", e);
         }
         return itemsDto;
@@ -154,18 +120,12 @@ public class ItemServiceImpl implements ItemService {
     public List<ItemDto> findItemsByDiscount(BigDecimal discount) {
         List<ItemDto> itemsDto = new ArrayList<>();
         List<Item> items;
-        Session session = itemDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             items = itemDao.findItemsByDiscount(discount);
             for (Item item : items) {
                 itemsDto.add(itemDtoConverter.toDto(item));
             }
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to find items", e);
         }
         return itemsDto;
@@ -174,15 +134,9 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Long countItemsInDiapason(BigDecimal start, BigDecimal finish) {
         Long count = 0L;
-        Session session = itemDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             count = itemDao.countItemsInDiapason(start, finish);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to find items", e);
         }
         return count;
@@ -191,15 +145,9 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Long countOfItems() {
         Long count = 0L;
-        Session session = itemDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             count = itemDao.countOfItems();
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to find items", e);
         }
         return count;
@@ -209,18 +157,12 @@ public class ItemServiceImpl implements ItemService {
     public List<ItemDto> findItemsByPage(Long page, int maxResults) {
         List<ItemDto> itemsDto = new ArrayList<>();
         List<Item> items;
-        Session session = itemDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             items = itemDao.findItemsByPage(page, maxResults);
             for (Item item : items) {
                 itemsDto.add(itemDtoConverter.toDto(item));
             }
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to find items", e);
         }
         return itemsDto;

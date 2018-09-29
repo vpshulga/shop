@@ -35,7 +35,7 @@
         </div>
     </div>
     <ul class="pagination">
-        <c:forEach var="page" items="${pages}" varStatus="status">
+        <c:forEach var="page" begin="1" end="${pages}">
             <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/items?page=${page}">${page}</a></li>
         </c:forEach>
     </ul>

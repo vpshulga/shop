@@ -32,12 +32,8 @@ public class ItemController {
     public String getItems(@RequestParam(value = "page", defaultValue = "1") Long page,
             ModelMap modelMap) {
         Long pagesCount = ServiceUtils.countOfPages(itemService.countOfItems(), COUNT_OF_ITEMS_ON_PAGE);
-        List<Long> pages = new ArrayList<>();
-        for (int i = 1; i <= pagesCount; i++) {
-            pages.add((long) i);
-        }
         List<ItemDto> items = itemService.findItemsByPage(page, COUNT_OF_ITEMS_ON_PAGE);
-        modelMap.addAttribute("pages", pages);
+        modelMap.addAttribute("pages", pagesCount);
         modelMap.addAttribute("items", items);
         return pageProperties.getItemsPagePath();
     }

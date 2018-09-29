@@ -18,8 +18,10 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class AuditServiceImpl implements AuditService {
     private static final Logger logger = LogManager.getLogger(AuditServiceImpl.class);
     private final AuditDao auditDao;
@@ -39,16 +41,10 @@ public class AuditServiceImpl implements AuditService {
     @Override
     public AuditDto findOne(Long id) {
         AuditDto auditDto = null;
-        Session session = auditDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Audit audit = auditDao.findOne(id);
             auditDto = auditDtoConverter.toDto(audit);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to get audit", e);
         }
         return auditDto;
@@ -61,17 +57,11 @@ public class AuditServiceImpl implements AuditService {
 
     @Override
     public AuditDto create(AuditDto auditDto) {
-        Session session = auditDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Audit audit = auditConverter.toEntity(auditDto);
             auditDao.create(audit);
             auditDto = auditDtoConverter.toDto(audit);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to save audit", e);
         }
         return auditDto;
@@ -79,17 +69,11 @@ public class AuditServiceImpl implements AuditService {
 
     @Override
     public AuditDto update(AuditDto auditDto) {
-        Session session = auditDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Audit audit = auditConverter.toEntity(auditDto);
             auditDao.update(audit);
             auditDto = auditDtoConverter.toDto(audit);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to update audit", e);
         }
         return auditDto;
@@ -97,17 +81,11 @@ public class AuditServiceImpl implements AuditService {
 
     @Override
     public AuditDto delete(AuditDto auditDto) {
-        Session session = auditDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Audit audit = auditConverter.toEntity(auditDto);
             auditDao.delete(audit);
             auditDto = auditDtoConverter.toDto(audit);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to delete audit", e);
         }
         return auditDto;
@@ -115,15 +93,9 @@ public class AuditServiceImpl implements AuditService {
 
     @Override
     public void deleteById(Long id) {
-        Session session = auditDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             auditDao.deleteById(id);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to delete audit", e);
         }
     }

@@ -18,8 +18,10 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class DiscountServiceImpl implements DiscountService {
     private static final Logger logger = LogManager.getLogger(DiscountServiceImpl.class);
 
@@ -37,16 +39,10 @@ public class DiscountServiceImpl implements DiscountService {
     @Override
     public DiscountDto findOne(Long id) {
         DiscountDto discountDto = null;
-        Session session = discountDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Discount discount = discountDao.findOne(id);
             discountDto = discountDtoConverter.toDto(discount);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to get discount", e);
         }
         return discountDto;
@@ -59,17 +55,11 @@ public class DiscountServiceImpl implements DiscountService {
 
     @Override
     public DiscountDto create(DiscountDto discountDto) {
-        Session session = discountDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Discount discount = discountConverter.toEntity(discountDto);
             discountDao.create(discount);
             discountDto = discountDtoConverter.toDto(discount);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to save discount", e);
         }
         return discountDto;
@@ -77,17 +67,11 @@ public class DiscountServiceImpl implements DiscountService {
 
     @Override
     public DiscountDto update(DiscountDto discountDto) {
-        Session session = discountDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Discount discount = discountConverter.toEntity(discountDto);
             discountDao.update(discount);
             discountDto = discountDtoConverter.toDto(discount);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to update discount", e);
         }
         return discountDto;
@@ -95,17 +79,11 @@ public class DiscountServiceImpl implements DiscountService {
 
     @Override
     public DiscountDto delete(DiscountDto discountDto) {
-        Session session = discountDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Discount discount = discountConverter.toEntity(discountDto);
             discountDao.delete(discount);
             discountDto = discountDtoConverter.toDto(discount);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to delete discount", e);
         }
         return discountDto;
@@ -113,15 +91,9 @@ public class DiscountServiceImpl implements DiscountService {
 
     @Override
     public void deleteById(Long id) {
-        Session session = discountDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             discountDao.deleteById(id);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to delete discount", e);
         }
     }

@@ -18,8 +18,10 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class RoleServiceImpl implements RoleService {
     private static final Logger logger = LogManager.getLogger(RoleServiceImpl.class);
 
@@ -39,16 +41,10 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleDto findOne(Long id) {
         RoleDto roleDto = null;
-        Session session = roleDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Role role = roleDao.findOne(id);
             roleDto = roleDtoConverter.toDto(role);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to get role", e);
         }
         return roleDto;
@@ -61,17 +57,11 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleDto create(RoleDto roleDto) {
-        Session session = roleDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Role role = roleConverter.toEntity(roleDto);
             roleDao.create(role);
             roleDto = roleDtoConverter.toDto(role);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to save role", e);
         }
         return roleDto;
@@ -79,17 +69,11 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleDto update(RoleDto roleDto) {
-        Session session = roleDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Role role = roleConverter.toEntity(roleDto);
             roleDao.update(role);
             roleDto = roleDtoConverter.toDto(role);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to update role", e);
         }
         return roleDto;
@@ -97,17 +81,11 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleDto delete(RoleDto roleDto) {
-        Session session = roleDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Role role = roleConverter.toEntity(roleDto);
             roleDao.delete(role);
             roleDto = roleDtoConverter.toDto(role);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to delete role", e);
         }
         return roleDto;
@@ -115,15 +93,9 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void deleteById(Long id) {
-        Session session = roleDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             roleDao.deleteById(id);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to delete role", e);
         }
     }

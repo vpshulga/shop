@@ -19,8 +19,10 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class OrderServiceImpl implements OrderService {
     private static final Logger logger = LogManager.getLogger(OrderServiceImpl.class);
 
@@ -40,16 +42,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderDto findOne(Long id) {
         OrderDto orderDto = null;
-        Session session = orderDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Order order = orderDao.findOne(id);
             orderDto = orderDtoConverter.toDto(order);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to get order", e);
         }
         return orderDto;
@@ -62,17 +58,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDto create(OrderDto orderDto) {
-        Session session = orderDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Order order = orderConverter.toEntity(orderDto);
             orderDao.create(order);
             orderDto = orderDtoConverter.toDto(order);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to save order", e);
         }
         return orderDto;
@@ -80,17 +70,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDto update(OrderDto orderDto) {
-        Session session = orderDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Order order = orderConverter.toEntity(orderDto);
             orderDao.update(order);
             orderDto = orderDtoConverter.toDto(order);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to update order", e);
         }
         return orderDto;
@@ -98,17 +82,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDto delete(OrderDto orderDto) {
-        Session session = orderDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Order order = orderConverter.toEntity(orderDto);
             orderDao.delete(order);
             orderDto = orderDtoConverter.toDto(order);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to delete order", e);
         }
         return orderDto;
@@ -116,15 +94,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void deleteById(Long id) {
-        Session session = orderDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             orderDao.deleteById(id);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to delete order", e);
         }
     }
@@ -133,18 +105,12 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderDto> findOrdersByUserId(Long userId) {
         List<OrderDto> ordersDto = new ArrayList<>();
         List<Order> orders;
-        Session session = orderDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             orders = orderDao.findordersByUserId(userId);
             for (Order order : orders) {
                 ordersDto.add(orderDtoConverter.toDto(order));
             }
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to find orders", e);
         }
         return ordersDto;

@@ -18,8 +18,10 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class CommentServiceImpl implements CommentService {
     private static final Logger logger = LogManager.getLogger(CommentServiceImpl.class);
 
@@ -39,16 +41,10 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public CommentDto findOne(Long id) {
         CommentDto commentDto = null;
-        Session session = commentDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Comment comment = commentDao.findOne(id);
             commentDto = commentDtoConverter.toDto(comment);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to get comment", e);
         }
         return commentDto;
@@ -61,17 +57,11 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDto create(CommentDto commentDto) {
-        Session session = commentDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Comment comment = commentConverter.toEntity(commentDto);
             commentDao.create(comment);
             commentDto = commentDtoConverter.toDto(comment);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to save comment", e);
         }
         return commentDto;
@@ -79,17 +69,11 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDto update(CommentDto commentDto) {
-        Session session = commentDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Comment comment = commentConverter.toEntity(commentDto);
             commentDao.update(comment);
             commentDto = commentDtoConverter.toDto(comment);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to update comment", e);
         }
         return commentDto;
@@ -97,17 +81,11 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDto delete(CommentDto commentDto) {
-        Session session = commentDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             Comment comment = commentConverter.toEntity(commentDto);
             commentDao.delete(comment);
             commentDto = commentDtoConverter.toDto(comment);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to delete comment", e);
         }
         return commentDto;
@@ -115,15 +93,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void deleteById(Long id) {
-        Session session = commentDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             commentDao.deleteById(id);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to delete comment", e);
         }
     }

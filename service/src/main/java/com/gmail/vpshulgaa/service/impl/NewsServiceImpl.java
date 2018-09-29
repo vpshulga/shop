@@ -21,8 +21,10 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class NewsServiceImpl implements NewsService {
 
     private static final Logger logger = LogManager.getLogger(NewsServiceImpl.class);
@@ -42,16 +44,10 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public NewsDto findOne(Long id) {
         NewsDto newsDto = null;
-        Session session = newsDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             News news = newsDao.findOne(id);
             newsDto = newsDtoConverter.toDto(news);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to get news", e);
         }
         return newsDto;
@@ -64,17 +60,11 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public NewsDto create(NewsDto newsDto) {
-        Session session = newsDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             News news = newsConverter.toEntity(newsDto);
             newsDao.create(news);
             newsDto = newsDtoConverter.toDto(news);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to save news", e);
         }
         return newsDto;
@@ -82,17 +72,11 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public NewsDto update(NewsDto newsDto) {
-        Session session = newsDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             News news = newsConverter.toEntity(newsDto);
             newsDao.update(news);
             newsDto = newsDtoConverter.toDto(news);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to update news", e);
         }
         return newsDto;
@@ -100,17 +84,11 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public NewsDto delete(NewsDto newsDto) {
-        Session session = newsDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             News news = newsConverter.toEntity(newsDto);
             newsDao.delete(news);
             newsDto = newsDtoConverter.toDto(news);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to delete news", e);
         }
         return newsDto;
@@ -118,15 +96,9 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public void deleteById(Long id) {
-        Session session = newsDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             newsDao.deleteById(id);
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to delete news", e);
         }
     }
@@ -134,15 +106,9 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public Long countOfNews() {
         Long count = 0L;
-        Session session = newsDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             count = newsDao.countOfNews();
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to find news", e);
         }
         return count;
@@ -152,18 +118,12 @@ public class NewsServiceImpl implements NewsService {
     public List<NewsDto> findNewsByPage(Long page, int maxResults) {
         List<NewsDto> newsDtos = new ArrayList<>();
         List<News> newsList;
-        Session session = newsDao.getCurrentSession();
         try {
-            Transaction transaction = ServiceUtils.getStartedTransaction(session);
             newsList = newsDao.findNewsByPage(page, maxResults);
             for (News news : newsList) {
                 newsDtos.add(newsDtoConverter.toDto(news));
             }
-            transaction.commit();
         } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
             logger.error("Failed to find news", e);
         }
         return newsDtos;

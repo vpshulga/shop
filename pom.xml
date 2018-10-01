@@ -35,6 +35,7 @@
         <slf4j.version>1.6.2</slf4j.version>
         <spring.version>5.0.9.RELEASE</spring.version>
         <hikari.version>3.2.0</hikari.version>
+        <liquidbase.version>3.6.2</liquidbase.version>
     </properties>
 
     <dependencies>

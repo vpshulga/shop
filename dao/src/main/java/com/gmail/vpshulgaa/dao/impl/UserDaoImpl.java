@@ -2,6 +2,7 @@ package com.gmail.vpshulgaa.dao.impl;
 
 import com.gmail.vpshulgaa.dao.UserDao;
 import com.gmail.vpshulgaa.dao.entities.User;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.query.Query;
@@ -22,5 +23,12 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
         query.setParameter("email", email);
 
         return (User) query.uniqueResult();
+    }
+
+    @Override
+    public List<User> findEnabledUsers() {
+        String hql = "from User as u where u.isDisabled=false";
+        Query query = getCurrentSession().createQuery(hql);
+        return query.list();
     }
 }

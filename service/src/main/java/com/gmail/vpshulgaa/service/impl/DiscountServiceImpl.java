@@ -2,32 +2,27 @@ package com.gmail.vpshulgaa.service.impl;
 
 import com.gmail.vpshulgaa.dao.DiscountDao;
 import com.gmail.vpshulgaa.dao.entities.Discount;
-import com.gmail.vpshulgaa.dao.impl.DiscountDaoImpl;
 import com.gmail.vpshulgaa.service.DiscountService;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
-import com.gmail.vpshulgaa.service.converter.impl.todto.DiscountDtoConverter;
-import com.gmail.vpshulgaa.service.converter.impl.toentity.DiscountConverter;
 import com.gmail.vpshulgaa.service.dto.DiscountDto;
-import com.gmail.vpshulgaa.service.util.ServiceUtils;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class DiscountServiceImpl implements DiscountService {
     private static final Logger logger = LogManager.getLogger(DiscountServiceImpl.class);
 
     private final DiscountDao discountDao;
     private final Converter<DiscountDto, Discount> discountConverter;
-    private final DtoConverter<DiscountDto,Discount> discountDtoConverter;
+    private final DtoConverter<DiscountDto, Discount> discountDtoConverter;
 
     @Autowired
     public DiscountServiceImpl(DiscountDao discountDao, @Qualifier("discountConverter") Converter<DiscountDto, Discount> discountConverter, @Qualifier("discountDtoConverter") DtoConverter<DiscountDto, Discount> discountDtoConverter) {
@@ -37,6 +32,7 @@ public class DiscountServiceImpl implements DiscountService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public DiscountDto findOne(Long id) {
         DiscountDto discountDto = null;
         try {
@@ -49,11 +45,13 @@ public class DiscountServiceImpl implements DiscountService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public List<DiscountDto> findAll() {
         return null;
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public DiscountDto create(DiscountDto discountDto) {
         try {
             Discount discount = discountConverter.toEntity(discountDto);
@@ -66,6 +64,7 @@ public class DiscountServiceImpl implements DiscountService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public DiscountDto update(DiscountDto discountDto) {
         try {
             Discount discount = discountConverter.toEntity(discountDto);
@@ -78,6 +77,7 @@ public class DiscountServiceImpl implements DiscountService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public DiscountDto delete(DiscountDto discountDto) {
         try {
             Discount discount = discountConverter.toEntity(discountDto);
@@ -90,6 +90,7 @@ public class DiscountServiceImpl implements DiscountService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void deleteById(Long id) {
         try {
             discountDao.deleteById(id);

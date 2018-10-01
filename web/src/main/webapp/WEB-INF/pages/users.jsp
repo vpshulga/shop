@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8">
-            <form action="${pageContext.request.contextPath}/users" method="post">
+            <form action="${pageContext.request.contextPath}/users/delete" method="post">
                 <div class="row">
                     <div class="col-md-12">
                         <a href="${pageContext.request.contextPath}/users/create" class="btn btn-primary" aria-pressed="true" role="button">ADD</a>
@@ -41,7 +41,7 @@
                                     <td>${user.surname}</td>
                                     <td>${user.role}</td>
                                     <td>
-                                        <a href="${pageContext.request.contextPath}/users" class="btn btn-primary" aria-pressed="true"
+                                        <a href="${pageContext.request.contextPath}/users/${user.id}" class="btn btn-primary" aria-pressed="true"
                                            role="button">UPDATE</a>
                                     </td>
                                 </tr>

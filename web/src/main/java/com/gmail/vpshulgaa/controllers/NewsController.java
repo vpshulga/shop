@@ -1,8 +1,10 @@
 package com.gmail.vpshulgaa.controllers;
 
 import com.gmail.vpshulgaa.config.PageProperties;
+import com.gmail.vpshulgaa.service.CommentService;
 import com.gmail.vpshulgaa.service.NewsService;
 import com.gmail.vpshulgaa.service.UserService;
+import com.gmail.vpshulgaa.service.dto.CommentDto;
 import com.gmail.vpshulgaa.service.dto.NewsDto;
 import com.gmail.vpshulgaa.service.util.ServiceUtils;
 import java.time.LocalDateTime;
@@ -21,12 +23,14 @@ public class NewsController {
     private final NewsService newsService;
     private final PageProperties pageProperties;
     private final UserService userService;
+    private final CommentService commentService;
 
     @Autowired
-    public NewsController(NewsService newsService, PageProperties pageProperties, UserService userService) {
+    public NewsController(NewsService newsService, PageProperties pageProperties, UserService userService, CommentService commentService) {
         this.newsService = newsService;
         this.pageProperties = pageProperties;
         this.userService = userService;
+        this.commentService = commentService;
     }
 
     @GetMapping
@@ -53,7 +57,11 @@ public class NewsController {
     public String getOneNews(@PathVariable Long id,
                              ModelMap modelMap) {
         NewsDto news = newsService.findOne(id);
+        CommentDto comment =  new CommentDto();
+        List<CommentDto> comments = commentService.findCommentsByNewsId(id);
+        modelMap.addAttribute("comments", comments);
         modelMap.addAttribute("news", news);
+        modelMap.addAttribute("comment", comment);
         return pageProperties.getOneNewsPagePath();
     }
 
@@ -66,6 +74,21 @@ public class NewsController {
         newsService.create(news);
         modelMap.addAttribute("news", news);
         return "redirect:/news";
+    }
+
+    @PostMapping(value = "/{news_id}")
+    public String createComment(@ModelAttribute CommentDto comment,
+                                ModelMap modelMap, @PathVariable("news_id") Long news_id) {
+        NewsDto news = newsService.findOne(news_id);
+        comment.setUser(userService.findOne(1L));
+        comment.setNews(news);
+        comment.setCreated(LocalDateTime.now());
+        commentService.create(comment);
+        List<CommentDto> comments = commentService.findCommentsByNewsId(news_id);
+        modelMap.addAttribute("comment", comment);
+        modelMap.addAttribute("comments", comments);
+        modelMap.addAttribute("news", news);
+        return pageProperties.getOneNewsPagePath();
     }
 
 }

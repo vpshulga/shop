@@ -11,7 +11,8 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 @ComponentScan(basePackages = {"com.gmail.vpshulgaa.dao",
         "com.gmail.vpshulgaa.service",
         "com.gmail.vpshulgaa.config",
-        "com.gmail.vpshulgaa.controllers"})
+        "com.gmail.vpshulgaa.controllers",
+        "com.gmail.vpshulgaa.validators"})
 public class AppConfig {
 
     @Bean

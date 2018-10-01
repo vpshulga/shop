@@ -2,27 +2,22 @@ package com.gmail.vpshulgaa.service.impl;
 
 import com.gmail.vpshulgaa.dao.OrderDao;
 import com.gmail.vpshulgaa.dao.entities.Order;
-import com.gmail.vpshulgaa.dao.impl.OrderDaoImpl;
 import com.gmail.vpshulgaa.service.OrderService;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
-import com.gmail.vpshulgaa.service.converter.impl.todto.OrderDtoConverter;
-import com.gmail.vpshulgaa.service.converter.impl.toentity.OrderConverter;
 import com.gmail.vpshulgaa.service.dto.OrderDto;
-import com.gmail.vpshulgaa.service.util.ServiceUtils;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class OrderServiceImpl implements OrderService {
     private static final Logger logger = LogManager.getLogger(OrderServiceImpl.class);
 
@@ -40,6 +35,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public OrderDto findOne(Long id) {
         OrderDto orderDto = null;
         try {
@@ -52,11 +48,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public List<OrderDto> findAll() {
         return null;
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public OrderDto create(OrderDto orderDto) {
         try {
             Order order = orderConverter.toEntity(orderDto);
@@ -69,6 +67,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public OrderDto update(OrderDto orderDto) {
         try {
             Order order = orderConverter.toEntity(orderDto);
@@ -81,6 +80,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public OrderDto delete(OrderDto orderDto) {
         try {
             Order order = orderConverter.toEntity(orderDto);
@@ -93,6 +93,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void deleteById(Long id) {
         try {
             orderDao.deleteById(id);
@@ -102,6 +103,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public List<OrderDto> findOrdersByUserId(Long userId) {
         List<OrderDto> ordersDto = new ArrayList<>();
         List<Order> orders;

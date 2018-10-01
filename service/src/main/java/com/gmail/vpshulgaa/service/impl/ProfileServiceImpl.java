@@ -2,26 +2,21 @@ package com.gmail.vpshulgaa.service.impl;
 
 import com.gmail.vpshulgaa.dao.ProfileDao;
 import com.gmail.vpshulgaa.dao.entities.Profile;
-import com.gmail.vpshulgaa.dao.impl.ProfileDaoImpl;
 import com.gmail.vpshulgaa.service.ProfileService;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
-import com.gmail.vpshulgaa.service.converter.impl.todto.ProfileDtoConverter;
-import com.gmail.vpshulgaa.service.converter.impl.toentity.ProfileConverter;
 import com.gmail.vpshulgaa.service.dto.ProfileDto;
-import com.gmail.vpshulgaa.service.util.ServiceUtils;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class ProfileServiceImpl implements ProfileService {
     private static final Logger logger = LogManager.getLogger(ProfileServiceImpl.class);
 
@@ -39,6 +34,7 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public ProfileDto findOne(Long id) {
         ProfileDto profileDto = null;
         try {
@@ -51,11 +47,13 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public List<ProfileDto> findAll() {
         return null;
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public ProfileDto create(ProfileDto profileDto) {
         try {
             Profile profile = profileConverter.toEntity(profileDto);
@@ -68,6 +66,7 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public ProfileDto update(ProfileDto profileDto) {
         try {
             Profile profile = profileConverter.toEntity(profileDto);
@@ -80,6 +79,7 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public ProfileDto delete(ProfileDto profileDto) {
         try {
             Profile profile = profileConverter.toEntity(profileDto);
@@ -92,6 +92,7 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void deleteById(Long id) {
         try {
             profileDao.deleteById(id);

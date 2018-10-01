@@ -19,6 +19,7 @@ public class UserDto {
     private Set<AuditDto> audits = new HashSet<>();
     private RoleDto role;
     private DiscountDto discount;
+    private boolean isDisabled;
 
     @Override
     public boolean equals(Object o) {

@@ -2,26 +2,21 @@ package com.gmail.vpshulgaa.service.impl;
 
 import com.gmail.vpshulgaa.dao.RoleDao;
 import com.gmail.vpshulgaa.dao.entities.Role;
-import com.gmail.vpshulgaa.dao.impl.RoleDaoImpl;
 import com.gmail.vpshulgaa.service.RoleService;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
-import com.gmail.vpshulgaa.service.converter.impl.todto.RoleDtoConverter;
-import com.gmail.vpshulgaa.service.converter.impl.toentity.RoleConverter;
 import com.gmail.vpshulgaa.service.dto.RoleDto;
-import com.gmail.vpshulgaa.service.util.ServiceUtils;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class RoleServiceImpl implements RoleService {
     private static final Logger logger = LogManager.getLogger(RoleServiceImpl.class);
 
@@ -39,6 +34,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public RoleDto findOne(Long id) {
         RoleDto roleDto = null;
         try {
@@ -51,11 +47,13 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public List<RoleDto> findAll() {
         return null;
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public RoleDto create(RoleDto roleDto) {
         try {
             Role role = roleConverter.toEntity(roleDto);
@@ -68,6 +66,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public RoleDto update(RoleDto roleDto) {
         try {
             Role role = roleConverter.toEntity(roleDto);
@@ -80,6 +79,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public RoleDto delete(RoleDto roleDto) {
         try {
             Role role = roleConverter.toEntity(roleDto);
@@ -92,6 +92,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void deleteById(Long id) {
         try {
             roleDao.deleteById(id);

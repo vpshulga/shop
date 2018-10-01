@@ -2,28 +2,23 @@ package com.gmail.vpshulgaa.service.impl;
 
 import com.gmail.vpshulgaa.dao.ItemDao;
 import com.gmail.vpshulgaa.dao.entities.Item;
-import com.gmail.vpshulgaa.dao.impl.ItemDaoImpl;
 import com.gmail.vpshulgaa.service.ItemService;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
-import com.gmail.vpshulgaa.service.converter.impl.todto.ItemDtoConverter;
-import com.gmail.vpshulgaa.service.converter.impl.toentity.ItemConverter;
 import com.gmail.vpshulgaa.service.dto.ItemDto;
-import com.gmail.vpshulgaa.service.util.ServiceUtils;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class ItemServiceImpl implements ItemService {
     private static final Logger logger = LogManager.getLogger(ItemServiceImpl.class);
     private final ItemDao itemDao;
@@ -40,6 +35,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public ItemDto findOne(Long id) {
         ItemDto itemDto = null;
         try {
@@ -52,11 +48,13 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public List<ItemDto> findAll() {
         return null;
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public ItemDto create(ItemDto itemDto) {
         try {
             Item item = itemConverter.toEntity(itemDto);
@@ -69,6 +67,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public ItemDto update(ItemDto itemDto) {
         try {
             Item item = itemConverter.toEntity(itemDto);
@@ -81,6 +80,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public ItemDto delete(ItemDto itemDto) {
         try {
             Item item = itemConverter.toEntity(itemDto);
@@ -93,6 +93,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void deleteById(Long id) {
         try {
             itemDao.deleteById(id);
@@ -102,6 +103,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public List<ItemDto> findItemsInPriceDiapason(BigDecimal start, BigDecimal finish) {
         List<ItemDto> itemsDto = new ArrayList<>();
         List<Item> items;
@@ -117,6 +119,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public List<ItemDto> findItemsByDiscount(BigDecimal discount) {
         List<ItemDto> itemsDto = new ArrayList<>();
         List<Item> items;
@@ -132,6 +135,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public Long countItemsInDiapason(BigDecimal start, BigDecimal finish) {
         Long count = 0L;
         try {
@@ -143,6 +147,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public Long countOfItems() {
         Long count = 0L;
         try {
@@ -154,6 +159,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public List<ItemDto> findItemsByPage(Long page, int maxResults) {
         List<ItemDto> itemsDto = new ArrayList<>();
         List<Item> items;

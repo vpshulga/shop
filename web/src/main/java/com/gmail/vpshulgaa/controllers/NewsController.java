@@ -2,10 +2,12 @@ package com.gmail.vpshulgaa.controllers;
 
 import com.gmail.vpshulgaa.config.PageProperties;
 import com.gmail.vpshulgaa.service.CommentService;
+import com.gmail.vpshulgaa.service.ItemService;
 import com.gmail.vpshulgaa.service.NewsService;
 import com.gmail.vpshulgaa.service.UserService;
 import com.gmail.vpshulgaa.service.dto.CommentDto;
 import com.gmail.vpshulgaa.service.dto.NewsDto;
+import com.gmail.vpshulgaa.service.impl.ItemServiceImpl;
 import com.gmail.vpshulgaa.service.util.ServiceUtils;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,6 +26,8 @@ public class NewsController {
     private final PageProperties pageProperties;
     private final UserService userService;
     private final CommentService commentService;
+    @Autowired
+    private ItemService itemService;
 
     @Autowired
     public NewsController(NewsService newsService, PageProperties pageProperties, UserService userService, CommentService commentService) {
@@ -36,6 +40,7 @@ public class NewsController {
     @GetMapping
     public String getNews(@RequestParam(value = "page", defaultValue = "1") Long page,
                           ModelMap modelMap) {
+        itemService.createFromXml("D:/item.xml");
         Long pagesCount = ServiceUtils.countOfPages(newsService.countOfNews(), COUNT_OF_NEWS_ON_PAGE);
         List<NewsDto> news = newsService.findNewsByPage(page, COUNT_OF_NEWS_ON_PAGE);
         modelMap.addAttribute("pages", pagesCount);

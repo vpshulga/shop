@@ -296,13 +296,19 @@
 
     <changeSet author="vpshulga (generated)" id="1538415787316-42">
         <insert tableName="t_user">
-            <column name="F_ID" value="1" />
-            <column name="F_EMAIL" value="admin@gmail.com" />
+            <column name="F_ID" value="1"/>
+            <column name="F_EMAIL" value="admin@gmail.com"/>
             <column name="F_IS_DISABLED" valueBoolean="false"/>
-            <column name="F_NAME" value="Admin" />
-            <column name="F_SURNAME" value="Admin" />
-            <column name="F_PASSWORD" value="pass" />
-            <column name="F_ROLE_ID" value="1" />
+            <column name="F_NAME" value="Admin"/>
+            <column name="F_SURNAME" value="Admin"/>
+            <column name="F_PASSWORD" value="pass"/>
+            <column name="F_ROLE_ID" value="1"/>
         </insert>
+    </changeSet>
+
+    <changeSet author="vpshulga (generated)" id="1538415787316-43">
+        <addUniqueConstraint columnNames="F_U_NUMBER"
+                             constraintName="uid"
+                             tableName="t_item"/>
     </changeSet>
 </databaseChangeLog>

@@ -6,9 +6,15 @@ import com.gmail.vpshulgaa.service.ItemService;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.ItemDto;
+import com.gmail.vpshulgaa.service.dto.XmlItemsDto;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -172,5 +178,26 @@ public class ItemServiceImpl implements ItemService {
             logger.error("Failed to find items", e);
         }
         return itemsDto;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public void createFromXml(String fileName) {
+        try {
+            JAXBContext context = JAXBContext.newInstance(XmlItemsDto.class);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            XmlItemsDto xmlItemsDto = (XmlItemsDto) unmarshaller.unmarshal(new FileReader(fileName));
+            List<ItemDto> itemsDto = xmlItemsDto.getItems();
+
+            for (ItemDto itemDto : itemsDto) {
+                Item item = itemConverter.toEntity(itemDto);
+                itemDao.create(item);
+            }
+
+        } catch (Exception e) {
+            logger.error("Failed to create items", e);
+        }
+
+
     }
 }

@@ -25,6 +25,14 @@
             <form:label path="password">Password:</form:label>
             <form:input path="password" class="form-control" placeholder="Password" />
         </div>
+        <div class="form-group">
+            <form:label path="address">Address:</form:label>
+            <form:input path="address" class="form-control" placeholder="Address" />
+        </div>
+        <div class="form-group">
+            <form:label path="telephone">Telephone:</form:label>
+            <form:input path="telephone" class="form-control" placeholder="Telephone" />
+        </div>
         <button type="submit" class="btn btn-primary">Create</button>
     </form:form>
 </body>

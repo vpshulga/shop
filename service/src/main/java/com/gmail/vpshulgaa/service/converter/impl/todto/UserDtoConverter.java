@@ -45,7 +45,7 @@ public class UserDtoConverter implements DtoConverter<UserDto, User> {
         userDto.setDisabled(entity.isDisabled());
         if (entity.getProfile() != null) {
             ProfileDto profileDto = profileDtoConverter.toDto(entity.getProfile());
-            userDto.setProfileDto(profileDto);
+            userDto.setProfile(profileDto);
         }
 
         Set<AuditDto> audits = new HashSet<>();

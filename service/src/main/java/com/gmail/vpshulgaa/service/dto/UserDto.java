@@ -15,7 +15,7 @@ public class UserDto {
     private String name;
     private String surname;
     private String password;
-    private ProfileDto profileDto;
+    private ProfileDto profile;
     private Set<AuditDto> audits = new HashSet<>();
     private RoleDto role;
     private DiscountDto discount;

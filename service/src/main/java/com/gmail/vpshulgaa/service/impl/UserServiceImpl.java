@@ -1,11 +1,16 @@
 package com.gmail.vpshulgaa.service.impl;
 
 import com.gmail.vpshulgaa.dao.UserDao;
+import com.gmail.vpshulgaa.dao.entities.Role;
 import com.gmail.vpshulgaa.dao.entities.User;
+import com.gmail.vpshulgaa.dao.enums.Roles;
+import com.gmail.vpshulgaa.service.RoleService;
 import com.gmail.vpshulgaa.service.UserService;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
+import com.gmail.vpshulgaa.service.dto.RoleDto;
 import com.gmail.vpshulgaa.service.dto.UserDto;
+import com.gmail.vpshulgaa.service.dto.UserProfileDto;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
@@ -25,14 +30,26 @@ public class UserServiceImpl implements UserService {
     private final UserDao userDao;
     private final DtoConverter<UserDto, User> userDtoConverter;
     private final Converter<UserDto, User> userConverter;
+    private final Converter<UserProfileDto, User> userProfileConverter;
+    private final DtoConverter<UserProfileDto, User> userProfileDtoConverter;
+    private final Converter<RoleDto, Role> roleConverter;
+    private final RoleService roleService;
 
     @Autowired
     public UserServiceImpl(UserDao userDao,
                            @Qualifier("userDtoConverter") DtoConverter<UserDto, User> userDtoConverter,
-                           @Qualifier("userConverter") Converter<UserDto, User> userConverter) {
+                           @Qualifier("userConverter") Converter<UserDto, User> userConverter,
+                           @Qualifier("userProfileConverter") Converter<UserProfileDto, User> userProfileConverter,
+                           @Qualifier("userProfileDtoConverter") DtoConverter<UserProfileDto, User> userProfileDtoConverter,
+                           @Qualifier("roleConverter") Converter<RoleDto, Role> roleConverter,
+                           RoleService roleService) {
         this.userDao = userDao;
         this.userDtoConverter = userDtoConverter;
         this.userConverter = userConverter;
+        this.userProfileConverter = userProfileConverter;
+        this.userProfileDtoConverter = userProfileDtoConverter;
+        this.roleConverter = roleConverter;
+        this.roleService = roleService;
     }
 
     @Override
@@ -62,11 +79,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public UserDto create(UserDto userDto) {
+    public UserProfileDto create(UserProfileDto userDto) {
         try {
-            User user = userConverter.toEntity(userDto);
+            User user = userProfileConverter.toEntity(userDto);
+            Role role = roleConverter.toEntity(roleService.findByName(Roles.USER));
+            user.setRole(role);
             userDao.create(user);
-            userDto = userDtoConverter.toDto(user);
+            userDto = userProfileDtoConverter.toDto(user);
         } catch (Exception e) {
             logger.error("Failed to save user", e);
         }

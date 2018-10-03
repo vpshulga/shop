@@ -43,8 +43,8 @@ public class UserConverter implements Converter<UserDto, User> {
         user.setPassword(dto.getPassword());
         user.setDisabled(dto.isDisabled());
 
-        if (dto.getProfileDto() != null) {
-            Profile profile = profileConverter.toEntity(dto.getProfileDto());
+        if (dto.getProfile() != null) {
+            Profile profile = profileConverter.toEntity(dto.getProfile());
             user.setProfile(profile);
             profile.setUser(user);
         }

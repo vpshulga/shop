@@ -2,10 +2,12 @@ package com.gmail.vpshulgaa.service.impl;
 
 import com.gmail.vpshulgaa.dao.RoleDao;
 import com.gmail.vpshulgaa.dao.entities.Role;
+import com.gmail.vpshulgaa.dao.enums.Roles;
 import com.gmail.vpshulgaa.service.RoleService;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.RoleDto;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -49,7 +51,13 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public List<RoleDto> findAll() {
-        return null;
+        List<RoleDto> roles = new ArrayList<>();
+        try {
+            roles = roleDtoConverter.toDtoList(roleDao.findAll());
+        } catch (Exception e) {
+            logger.error("Failed to get users", e);
+        }
+        return roles;
     }
 
     @Override
@@ -99,5 +107,18 @@ public class RoleServiceImpl implements RoleService {
         } catch (Exception e) {
             logger.error("Failed to delete role", e);
         }
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public RoleDto findByName(Roles name) {
+        RoleDto roleDto = null;
+        try {
+            Role role = roleDao.findByName(name);
+            roleDto = roleDtoConverter.toDto(role);
+        } catch (Exception e) {
+            logger.error("Failed to get role", e);
+        }
+        return roleDto;
     }
 }

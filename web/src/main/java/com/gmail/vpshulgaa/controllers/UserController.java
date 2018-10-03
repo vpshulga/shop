@@ -1,8 +1,12 @@
 package com.gmail.vpshulgaa.controllers;
 
 import com.gmail.vpshulgaa.config.PageProperties;
+import com.gmail.vpshulgaa.service.ProfileService;
+import com.gmail.vpshulgaa.service.RoleService;
 import com.gmail.vpshulgaa.service.UserService;
+import com.gmail.vpshulgaa.service.dto.RoleDto;
 import com.gmail.vpshulgaa.service.dto.UserDto;
+import com.gmail.vpshulgaa.service.dto.UserProfileDto;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,12 +22,19 @@ public class UserController {
     private final PageProperties pageProperties;
     private final UserService userService;
     private final Validator userValidator;
+    private final RoleService roleService;
+    private final ProfileService profileService;
 
     @Autowired
-    public UserController(PageProperties pageProperties, UserService userService, @Qualifier("userValidator") Validator userValidator) {
+    public UserController(PageProperties pageProperties, UserService userService,
+                          @Qualifier("userValidator") Validator userValidator,
+                          RoleService roleService,
+                          ProfileService profileService) {
         this.pageProperties = pageProperties;
         this.userService = userService;
         this.userValidator = userValidator;
+        this.roleService = roleService;
+        this.profileService = profileService;
     }
 
     @GetMapping
@@ -35,19 +46,21 @@ public class UserController {
 
     @GetMapping(value = "/create")
     public String addUserPage(ModelMap modelMap) {
-        modelMap.addAttribute("user", new UserDto());
+        modelMap.addAttribute("user", new UserProfileDto());
         return pageProperties.getCreateUserPagePath();
     }
 
     @GetMapping(value = "/{id}")
     public String updateUserPage(ModelMap modelMap, @PathVariable("id") Long id) {
         UserDto user = userService.findOne(id);
+        List<RoleDto> roles = roleService.findAll();
         modelMap.addAttribute("user", user);
+        modelMap.addAttribute("roles", roles);
         return pageProperties.getUpdateUserPagePath();
     }
 
     @PostMapping
-    public String createUser(@ModelAttribute UserDto user,
+    public String createUser(@ModelAttribute UserProfileDto user,
                              BindingResult result,
                              ModelMap modelMap) {
         userValidator.validate(user, result);
@@ -66,8 +79,11 @@ public class UserController {
                              BindingResult result,
                              ModelMap modelMap, @PathVariable("id") Long id) {
         user.setId(id);
+        user.getProfile().setUserId(id);
         userService.update(user);
+        List<RoleDto> roles = roleService.findAll();
         modelMap.addAttribute("user", user);
+        modelMap.addAttribute("roles", roles);
         return "redirect:/users";
     }
 

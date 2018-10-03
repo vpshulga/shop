@@ -1,10 +1,23 @@
 package com.gmail.vpshulgaa.service;
 
+import com.gmail.vpshulgaa.service.dto.DiscountDto;
 import com.gmail.vpshulgaa.service.dto.ItemDto;
 import java.math.BigDecimal;
 import java.util.List;
 
-public interface ItemService extends GenericService<ItemDto> {
+public interface ItemService {
+    ItemDto findOne(final Long id);
+
+    List<ItemDto> findAll();
+
+    ItemDto create(final ItemDto dto);
+
+    ItemDto update(final ItemDto dto);
+
+    ItemDto delete(final ItemDto dto);
+
+    void deleteById(final Long id);
+
     List<ItemDto> findItemsInPriceDiapason(BigDecimal start, BigDecimal finish);
 
     List<ItemDto> findItemsByDiscount(BigDecimal discount);

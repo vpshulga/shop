@@ -5,6 +5,7 @@ import com.gmail.vpshulgaa.dao.entities.Role;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.PermissionDto;
 import com.gmail.vpshulgaa.service.dto.RoleDto;
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -42,6 +43,10 @@ public class RoleDtoConverter implements DtoConverter<RoleDto, Role> {
 
     @Override
     public List<RoleDto> toDtoList(List<Role> list) {
-        return null;
+        List<RoleDto> roles = new ArrayList<>();
+        for (Role role : list) {
+            roles.add(toDto(role));
+        }
+        return roles;
     }
 }

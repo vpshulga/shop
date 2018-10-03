@@ -20,12 +20,26 @@
     <div class="form-group">
         <form:input type="hidden" path="email" class="form-control" placeholder="Email" />
     </div>
-    <div class="form-group">
-        <form:input type="hidden" path="role.id" class="form-control" placeholder="role" />
-    </div>
+
     <div class="form-group">
         <form:label path="password">Password:</form:label>
         <form:input path="password" class="form-control" placeholder="Password" />
+    </div>
+    <div class="form-group">
+        <form:label path="profile.address">Address:</form:label>
+        <form:input path="profile.address" class="form-control" placeholder="Address" />
+    </div>
+    <div class="form-group">
+        <form:label path="profile.telephone">Telephone:</form:label>
+        <form:input path="profile.telephone" class="form-control" placeholder="Telephone" />
+    </div>
+    <div class="form-group">
+        <form:label path="role.id">Role:</form:label>
+        <form:select path="role.id">
+            <c:forEach items="${roles}" var="role">
+                <form:option value="${role.id}">${role.name}</form:option>
+            </c:forEach>
+        </form:select>
     </div>
     <button type="submit" class="btn btn-primary">Update</button>
 </form:form>

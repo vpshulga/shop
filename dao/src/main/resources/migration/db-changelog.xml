@@ -109,7 +109,7 @@
             <column autoIncrement="true" name="F_ID" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="F_NAME" type="VARCHAR(30)"/>
+            <column name="F_NAME" type="VARCHAR(255)"/>
         </createTable>
     </changeSet>
     <changeSet author="vpshulga (generated)" id="1538415787316-12">
@@ -222,7 +222,7 @@
     <changeSet author="vpshulga (generated)" id="1538415787316-30">
         <addForeignKeyConstraint baseColumnNames="F_NEWS_ID" baseTableName="t_comment"
                                  constraintName="FKeniu19lguym67ac3regewvpcw" deferrable="false"
-                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION"
                                  referencedColumnNames="F_ID" referencedTableName="t_news" validate="true"/>
     </changeSet>
     <changeSet author="vpshulga (generated)" id="1538415787316-31">
@@ -255,14 +255,54 @@
                                  initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
                                  referencedColumnNames="F_ID" referencedTableName="t_user" validate="true"/>
     </changeSet>
+
     <changeSet author="vpshulga (generated)" id="1538415787316-36">
+        <insert tableName="t_role">
+            <column name="F_ID" value="1"/>
+            <column name="F_NAME" value="ADMIN"/>
+        </insert>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538415787316-37">
+        <insert tableName="t_role">
+            <column name="F_ID" value="2"/>
+            <column name="F_NAME" value="USER"/>
+        </insert>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538415787316-38">
+        <insert tableName="t_role">
+            <column name="F_ID" value="3"/>
+            <column name="F_NAME" value="SECURITY_USER"/>
+        </insert>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538415787316-39">
+        <insert tableName="t_role">
+            <column name="F_ID" value="4"/>
+            <column name="F_NAME" value="SALE_USER"/>
+        </insert>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538415787316-40">
+        <insert tableName="t_role">
+            <column name="F_ID" value="5"/>
+            <column name="F_NAME" value="CUSTOMER_USER"/>
+        </insert>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538415787316-41">
+        <insert tableName="t_role">
+            <column name="F_ID" value="6"/>
+            <column name="F_NAME" value="API_USER"/>
+        </insert>
+    </changeSet>
+
+
+    <changeSet author="vpshulga (generated)" id="1538415787316-42">
         <insert tableName="t_user">
             <column name="F_ID" value="1" />
             <column name="F_EMAIL" value="admin@gmail.com" />
             <column name="F_IS_DISABLED" valueBoolean="false"/>
             <column name="F_NAME" value="Admin" />
-            <column name="F_SURNAME" value="Adminov" />
+            <column name="F_SURNAME" value="Admin" />
             <column name="F_PASSWORD" value="pass" />
+            <column name="F_ROLE_ID" value="1" />
         </insert>
     </changeSet>
 </databaseChangeLog>

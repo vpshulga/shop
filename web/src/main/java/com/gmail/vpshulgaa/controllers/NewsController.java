@@ -37,12 +37,8 @@ public class NewsController {
     public String getNews(@RequestParam(value = "page", defaultValue = "1") Long page,
                           ModelMap modelMap) {
         Long pagesCount = ServiceUtils.countOfPages(newsService.countOfNews(), COUNT_OF_NEWS_ON_PAGE);
-        List<Long> pages = new ArrayList<>();
-        for (int i = 1; i <= pagesCount; i++) {
-            pages.add((long) i);
-        }
         List<NewsDto> news = newsService.findNewsByPage(page, COUNT_OF_NEWS_ON_PAGE);
-        modelMap.addAttribute("pages", pages);
+        modelMap.addAttribute("pages", pagesCount);
         modelMap.addAttribute("news", news);
         return pageProperties.getNewsPagePath();
     }
@@ -70,7 +66,6 @@ public class NewsController {
                              BindingResult result,
                              ModelMap modelMap) {
         news.setUser(userService.findOne(1L));
-        news.setCreated(LocalDateTime.now());
         newsService.create(news);
         modelMap.addAttribute("news", news);
         return "redirect:/news";
@@ -82,13 +77,39 @@ public class NewsController {
         NewsDto news = newsService.findOne(news_id);
         comment.setUser(userService.findOne(1L));
         comment.setNews(news);
-        comment.setCreated(LocalDateTime.now());
         commentService.create(comment);
         List<CommentDto> comments = commentService.findCommentsByNewsId(news_id);
         modelMap.addAttribute("comment", comment);
         modelMap.addAttribute("comments", comments);
         modelMap.addAttribute("news", news);
         return pageProperties.getOneNewsPagePath();
+    }
+
+    @GetMapping(value = "/{id}/update")
+    public String updateNewsPage(@PathVariable Long id,
+                             ModelMap modelMap) {
+        NewsDto news = newsService.findOne(id);
+        modelMap.addAttribute("news", news);
+        return pageProperties.getUpdateNewsPagePath();
+    }
+
+    @PostMapping(value = "/{id}/update")
+    public String updateNews(@ModelAttribute NewsDto news,
+                             BindingResult result,
+                             ModelMap modelMap,
+                             @PathVariable("id") Long id) {
+        news.setId(id);
+        newsService.update(news);
+        modelMap.addAttribute("news", news);
+        return "redirect:/news";
+    }
+
+    @PostMapping("/delete")
+    public String deleteNews(@RequestParam("ids") Long[] ids) {
+        for (Long id : ids) {
+            newsService.deleteById(id);
+        }
+        return "redirect:/news";
     }
 
 }

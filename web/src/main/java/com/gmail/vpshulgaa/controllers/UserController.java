@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/{id}")
-    public String addUserPage(ModelMap modelMap, @PathVariable("id") Long id) {
+    public String updateUserPage(ModelMap modelMap, @PathVariable("id") Long id) {
         UserDto user = userService.findOne(id);
         modelMap.addAttribute("user", user);
         return pageProperties.getUpdateUserPagePath();

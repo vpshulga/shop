@@ -3,7 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html lang="en">
 <head>
-    <jsp:include page="commons/header.jsp"/>
+    <jsp:include page="../commons/header.jsp"/>
     <title>Create news</title>
 </head>
 <body>

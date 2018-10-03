@@ -18,6 +18,7 @@ public class PageProperties {
     private String updateUserPagePath;
     private String newsPagePath;
     private String createNewsPagePath;
+    private String updateNewsPagePath;
     private String oneNewsPagePath;
 
 
@@ -38,6 +39,7 @@ public class PageProperties {
         this.updateUserPagePath = environment.getProperty("update.user.page.path");
         this.newsPagePath = environment.getProperty("news.page.path");
         this.createNewsPagePath = environment.getProperty("create.news.page.path");
+        this.updateNewsPagePath = environment.getProperty("update.news.page.path");
         this.oneNewsPagePath = environment.getProperty("one.news.page.path");
     }
 
@@ -71,6 +73,10 @@ public class PageProperties {
 
     public String getCreateNewsPagePath() {
         return createNewsPagePath;
+    }
+
+    public String getUpdateNewsPagePath() {
+        return updateNewsPagePath;
     }
 
     public String getOneNewsPagePath() {

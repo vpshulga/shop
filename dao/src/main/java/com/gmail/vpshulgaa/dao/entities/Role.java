@@ -1,5 +1,6 @@
 package com.gmail.vpshulgaa.dao.entities;
 
+import com.gmail.vpshulgaa.dao.enums.Roles;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,8 +19,9 @@ public class Role implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "F_ID", updatable = false, nullable = false)
     private long id;
-    @Column(name = "F_NAME", length = 30)
-    private String name;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "F_NAME")
+    private Roles name;
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(

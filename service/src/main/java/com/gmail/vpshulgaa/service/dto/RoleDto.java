@@ -1,5 +1,6 @@
 package com.gmail.vpshulgaa.service.dto;
 
+import com.gmail.vpshulgaa.dao.enums.Roles;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class RoleDto {
     private long id;
-    private String name;
+    private Roles name;
     private Set<PermissionDto> permissions = new HashSet<>();
 
     @Override

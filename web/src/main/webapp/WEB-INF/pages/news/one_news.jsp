@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <jsp:include page="commons/header.jsp"/>
+    <jsp:include page="../commons/header.jsp"/>
     <title>News</title>
     <style type="text/css">
         DIV {
@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="container">
-    <jsp:include page="util/logo.jsp"/>
+    <jsp:include page="../util/logo.jsp"/>
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6"><h3>${news.title}</h3></div>
@@ -34,8 +34,8 @@
             <form:form action="${pageContext.request.contextPath}/news/${news.id}" modelAttribute="comment"
                        method="post">
                 <div class="form-group">
-                    <form:label path="content">Content:</form:label>
-                    <form:textarea path="content" class="form-control" placeholder="Content"/>
+                    <form:label path="content">Comment:</form:label>
+                    <form:textarea path="content" class="form-control" placeholder="Comment"/>
                 </div>
                 <button type="submit" class="btn btn-primary">comment</button>
             </form:form>
@@ -57,6 +57,6 @@
     </div>
 </div>
 
-<jsp:include page="util/js.jsp"/>
+<jsp:include page="../util/js.jsp"/>
 </body>
 </html>

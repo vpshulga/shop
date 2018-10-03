@@ -6,6 +6,7 @@ import com.gmail.vpshulgaa.service.NewsService;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.NewsDto;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
@@ -57,6 +58,7 @@ public class NewsServiceImpl implements NewsService {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public NewsDto create(NewsDto newsDto) {
         try {
+            newsDto.setCreated(LocalDateTime.now());
             News news = newsConverter.toEntity(newsDto);
             newsDao.create(news);
             newsDto = newsDtoConverter.toDto(news);

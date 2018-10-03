@@ -6,6 +6,7 @@ import com.gmail.vpshulgaa.service.CommentService;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.CommentDto;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
@@ -57,6 +58,7 @@ public class CommentServiceImpl implements CommentService {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public CommentDto create(CommentDto commentDto) {
         try {
+            commentDto.setCreated(LocalDateTime.now());
             Comment comment = commentConverter.toEntity(commentDto);
             commentDao.create(comment);
             commentDto = commentDtoConverter.toDto(comment);

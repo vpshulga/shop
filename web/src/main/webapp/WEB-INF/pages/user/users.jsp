@@ -2,12 +2,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <jsp:include page="commons/header.jsp"/>
+    <jsp:include page="../commons/header.jsp"/>
     <title>Users page</title>
 </head>
 <body>
 <div class="container">
-    <jsp:include page="util/logo.jsp"/>
+    <jsp:include page="../util/logo.jsp"/>
 
     <div class="row">
         <div class="col-md-2"></div>
@@ -39,7 +39,7 @@
                                     <td>${user.email}</td>
                                     <td>${user.name}</td>
                                     <td>${user.surname}</td>
-                                    <td>${user.role}</td>
+                                    <td>${user.role.name}</td>
                                     <td>
                                         <a href="${pageContext.request.contextPath}/users/${user.id}" class="btn btn-primary" aria-pressed="true"
                                            role="button">UPDATE</a>
@@ -56,6 +56,6 @@
     </div>
 </div>
 
-<jsp:include page="util/js.jsp"/>
+<jsp:include page="../util/js.jsp"/>
 </body>
 </html>

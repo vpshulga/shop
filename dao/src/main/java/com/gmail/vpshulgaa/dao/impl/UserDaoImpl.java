@@ -18,7 +18,7 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
 
     @Override
     public User findByEmail(String email) {
-        String hql = "from User as U where U.email=:email";
+        String hql = "from User as u where u.email=:email";
         Query query = getCurrentSession().createQuery(hql);
         query.setParameter("email", email);
 

@@ -40,21 +40,21 @@ public class AppSuccessHandler implements AuthenticationSuccessHandler {
     }
 
     private String determineTargetUrl(Authentication authentication) {
-        boolean isUser = false;
+        boolean isCustomerUser = false;
         boolean isAdmin = false;
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         for (GrantedAuthority grantedAuthority : authorities) {
-            if (grantedAuthority.getAuthority().equals("VIEW_DOCUMENTS")) {
-                isUser = true;
+            if (grantedAuthority.getAuthority().equals("CUSTOMER_USER_PERMISSION")) {
+                isCustomerUser = true;
                 break;
-            } else if (grantedAuthority.getAuthority().equals("VIEW_USERS")) {
+            } else if (grantedAuthority.getAuthority().equals("ADMIN_PERMISSION")) {
                 isAdmin = true;
                 break;
             }
         }
 
-        if (isUser) {
+        if (isCustomerUser) {
             return "/news";
         } else if (isAdmin) {
             return "/users";

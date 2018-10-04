@@ -38,6 +38,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/login**").permitAll()
                 .antMatchers("/resources/**").permitAll()
+                .antMatchers("/users/create").permitAll()
+                .anyRequest().fullyAuthenticated()
                 .and()
                 .formLogin()
                 .usernameParameter("email")
@@ -51,13 +53,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout")
+                .permitAll()
                 .and()
                 .csrf().disable();
     }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(12);
     }
 
     @Bean

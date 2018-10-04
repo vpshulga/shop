@@ -30,7 +30,7 @@ public class User implements Serializable {
     private String name;
     @Column(name = "F_SURNAME", length = 50)
     private String surname;
-    @Column(name = "F_PASSWORD", length = 50)
+    @Column(name = "F_PASSWORD")
     private String password;
     @Column(name = "F_IS_DISABLED")
     private boolean isDisabled = false;

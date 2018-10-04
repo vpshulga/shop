@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<items>
+    <items>
+        <item>
+            <description>descr</description>
+            <id>0</id>
+            <name>name</name>
+            <price>10001</price>
+            <uniqueNumber>un</uniqueNumber>
+        </item>
+        <item>
+            <description>descr1</description>
+            <id>0</id>
+            <name>name1</name>
+            <price>10001</price>
+            <uniqueNumber>un1</uniqueNumber>
+        </item>
+    </items>
+</items>

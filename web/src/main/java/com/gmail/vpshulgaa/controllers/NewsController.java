@@ -7,12 +7,16 @@ import com.gmail.vpshulgaa.service.NewsService;
 import com.gmail.vpshulgaa.service.UserService;
 import com.gmail.vpshulgaa.service.dto.CommentDto;
 import com.gmail.vpshulgaa.service.dto.NewsDto;
+import com.gmail.vpshulgaa.service.dto.UserDto;
+import com.gmail.vpshulgaa.service.dto.UserPrincipal;
 import com.gmail.vpshulgaa.service.impl.ItemServiceImpl;
 import com.gmail.vpshulgaa.service.util.ServiceUtils;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -40,7 +44,11 @@ public class NewsController {
     @GetMapping
     public String getNews(@RequestParam(value = "page", defaultValue = "1") Long page,
                           ModelMap modelMap) {
-        itemService.createFromXml("D:/item.xml");
+//        itemService.createFromXml("D:/item.xml");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrincipal user = (UserPrincipal) authentication.getPrincipal();
+        UserDto userDto = userService.findOne(user.getId());
+        System.out.println(userDto.getProfile().getAddress());
         Long pagesCount = ServiceUtils.countOfPages(newsService.countOfNews(), COUNT_OF_NEWS_ON_PAGE);
         List<NewsDto> news = newsService.findNewsByPage(page, COUNT_OF_NEWS_ON_PAGE);
         modelMap.addAttribute("pages", pagesCount);

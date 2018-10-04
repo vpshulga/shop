@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
     public UserProfileDto create(UserProfileDto userDto) {
         try {
             User user = userProfileConverter.toEntity(userDto);
-            Role role = roleConverter.toEntity(roleService.findByName(Roles.USER));
+            Role role = roleConverter.toEntity(roleService.findByName(Roles.CUSTOMER_USER));
             user.setRole(role);
             userDao.create(user);
             userDto = userProfileDtoConverter.toDto(user);

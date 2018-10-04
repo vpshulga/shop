@@ -48,6 +48,7 @@ public class DatabaseConfig {
     public SpringLiquibase springLiquibase(DataSource dataSource){
         SpringLiquibase liquibase = new SpringLiquibase();
         liquibase.setDataSource(dataSource);
+        liquibase.setDropFirst(Boolean.TRUE);
         liquibase.setChangeLog("classpath:migration/db-changelog.xml");
         return liquibase;
     }

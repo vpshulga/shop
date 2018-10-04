@@ -10,6 +10,7 @@ import com.gmail.vpshulgaa.service.dto.UserProfileDto;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -38,6 +39,7 @@ public class UserController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN_PERMISSION')")
     public String getUsers(ModelMap modelMap) {
         List<UserDto> users = userService.findEnabledUsers();
         modelMap.addAttribute("users", users);

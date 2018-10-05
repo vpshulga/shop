@@ -2,10 +2,12 @@ package com.gmail.vpshulgaa.service.impl;
 
 import com.gmail.vpshulgaa.dao.OrderDao;
 import com.gmail.vpshulgaa.dao.entities.Order;
+import com.gmail.vpshulgaa.dao.enums.Status;
 import com.gmail.vpshulgaa.service.OrderService;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.OrderDto;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
@@ -58,6 +60,8 @@ public class OrderServiceImpl implements OrderService {
     public OrderDto create(OrderDto orderDto) {
         try {
             Order order = orderConverter.toEntity(orderDto);
+            order.setStatus(Status.NEW);
+            order.setCreated(LocalDateTime.now());
             orderDao.create(order);
             orderDto = orderDtoConverter.toDto(order);
         } catch (Exception e) {

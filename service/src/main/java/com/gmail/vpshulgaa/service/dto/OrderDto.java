@@ -1,5 +1,6 @@
 package com.gmail.vpshulgaa.service.dto;
 
+import com.gmail.vpshulgaa.dao.enums.Status;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -7,6 +8,7 @@ public class OrderDto {
     private long id;
     private LocalDateTime created;
     private Integer quantity;
+    private Status status;
     private ItemDto item;
     private UserDto user;
 
@@ -51,6 +53,14 @@ public class OrderDto {
 
     public void setUser(UserDto user) {
         this.user = user;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     @Override

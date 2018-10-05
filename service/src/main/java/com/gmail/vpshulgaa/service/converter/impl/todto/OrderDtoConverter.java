@@ -34,6 +34,7 @@ public class OrderDtoConverter implements DtoConverter<OrderDto, Order> {
         orderDto.setId(entity.getId());
         orderDto.setCreated(entity.getCreated());
         orderDto.setQuantity(entity.getQuantity());
+        orderDto.setStatus(entity.getStatus());
 
         if (entity.getItem() != null) {
             ItemDto itemDto = itemDtoConverter.toDto(entity.getItem());

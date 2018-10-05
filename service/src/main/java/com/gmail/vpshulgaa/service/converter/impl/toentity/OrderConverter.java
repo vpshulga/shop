@@ -33,6 +33,7 @@ public class OrderConverter implements Converter<OrderDto, Order> {
         order.setId(dto.getId());
         order.setCreated(dto.getCreated());
         order.setQuantity(dto.getQuantity());
+        order.setStatus(dto.getStatus());
 
         if (dto.getItem() != null) {
             Item item = itemConverter.toEntity(dto.getItem());

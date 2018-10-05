@@ -37,7 +37,6 @@ public class NewsController {
     @GetMapping
     public String getNews(@RequestParam(value = "page", defaultValue = "1") Long page,
                           ModelMap modelMap) {
-//        itemService.createFromXml("D:/item.xml");
         Long pagesCount = ServiceUtils.countOfPages(newsService.countOfNews(), COUNT_OF_NEWS_ON_PAGE);
         List<NewsDto> news = newsService.findNewsByPage(page, COUNT_OF_NEWS_ON_PAGE);
         modelMap.addAttribute("pages", pagesCount);

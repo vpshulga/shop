@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +11,14 @@
     <jsp:include page="util/logo.jsp"/>
     <div class="row">
         <div class="col-md-12">
+            <div class="col-md-12">
+                <form action="${pageContext.request.contextPath}/items" method="post" enctype="multipart/form-data">
+                    <security:authorize access="isAuthenticated()">
+                        <input type="file" name="xmlFile" accept="text/xml">
+                        <button type="submit" class="btn btn-primary">upload</button>
+                    </security:authorize>
+                </form>
+            </div>
             <table class="table">
                 <thead>
                 <tr>
@@ -36,7 +45,8 @@
     </div>
     <ul class="pagination">
         <c:forEach var="page" begin="1" end="${pages}">
-            <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/items?page=${page}">${page}</a></li>
+            <li class="page-item"><a class="page-link"
+                                     href="${pageContext.request.contextPath}/items?page=${page}">${page}</a></li>
         </c:forEach>
     </ul>
 </div>

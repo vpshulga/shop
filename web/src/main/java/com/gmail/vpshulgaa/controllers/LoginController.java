@@ -3,18 +3,12 @@ package com.gmail.vpshulgaa.controllers;
 import com.gmail.vpshulgaa.config.PageProperties;
 import com.gmail.vpshulgaa.service.UserService;
 import com.gmail.vpshulgaa.service.dto.UserDto;
-import com.gmail.vpshulgaa.service.dto.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller

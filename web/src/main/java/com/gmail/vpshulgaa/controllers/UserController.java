@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyAuthority('ADMIN_PERMISSION')")
+    @PreAuthorize("hasAuthority('SHOW_USERS')")
     public String getUsers(ModelMap modelMap) {
         List<UserDto> users = userService.findEnabledUsers();
         modelMap.addAttribute("users", users);
@@ -67,7 +67,7 @@ public class UserController {
                              ModelMap modelMap) {
         userValidator.validate(user, result);
 
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             modelMap.addAttribute("user", user);
             return pageProperties.getCreateUserPagePath();
         }

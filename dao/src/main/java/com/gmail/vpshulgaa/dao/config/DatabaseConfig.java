@@ -2,6 +2,8 @@ package com.gmail.vpshulgaa.dao.config;
 
 import com.gmail.vpshulgaa.dao.entities.*;
 import com.zaxxer.hikari.HikariDataSource;
+import java.util.Properties;
+import javax.sql.DataSource;
 import liquibase.integration.spring.SpringLiquibase;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +13,6 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import javax.sql.DataSource;
-import java.util.Properties;
 
 import static org.hibernate.cfg.AvailableSettings.*;
 
@@ -45,10 +44,9 @@ public class DatabaseConfig {
     }
 
     @Bean
-    public SpringLiquibase springLiquibase(DataSource dataSource){
+    public SpringLiquibase springLiquibase(DataSource dataSource) {
         SpringLiquibase liquibase = new SpringLiquibase();
         liquibase.setDataSource(dataSource);
-        liquibase.setDropFirst(Boolean.TRUE);
         liquibase.setChangeLog("classpath:migration/db-changelog.xml");
         return liquibase;
     }

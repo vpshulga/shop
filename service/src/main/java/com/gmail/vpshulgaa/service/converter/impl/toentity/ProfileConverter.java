@@ -3,9 +3,8 @@ package com.gmail.vpshulgaa.service.converter.impl.toentity;
 import com.gmail.vpshulgaa.dao.entities.Profile;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.dto.ProfileDto;
-import org.springframework.stereotype.Component;
-
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 @Component("profileConverter")
 public class ProfileConverter implements Converter<ProfileDto, Profile> {

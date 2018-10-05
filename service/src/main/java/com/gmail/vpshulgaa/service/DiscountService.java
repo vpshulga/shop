@@ -3,7 +3,7 @@ package com.gmail.vpshulgaa.service;
 import com.gmail.vpshulgaa.service.dto.DiscountDto;
 import java.util.List;
 
-public interface DiscountService{
+public interface DiscountService {
     DiscountDto findOne(final Long id);
 
     List<DiscountDto> findAll();

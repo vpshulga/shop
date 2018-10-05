@@ -2,12 +2,11 @@ package com.gmail.vpshulgaa.service.dto;
 
 import com.gmail.vpshulgaa.dao.entities.Permission;
 import com.gmail.vpshulgaa.dao.entities.User;
+import java.util.Collection;
+import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.Collection;
-import java.util.List;
 
 public class UserPrincipal implements UserDetails {
 

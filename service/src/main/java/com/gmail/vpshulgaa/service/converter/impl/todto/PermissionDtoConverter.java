@@ -3,9 +3,8 @@ package com.gmail.vpshulgaa.service.converter.impl.todto;
 import com.gmail.vpshulgaa.dao.entities.Permission;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.PermissionDto;
-import org.springframework.stereotype.Component;
-
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 @Component("permissionDtoConverter")
 public class PermissionDtoConverter implements DtoConverter<PermissionDto, Permission> {

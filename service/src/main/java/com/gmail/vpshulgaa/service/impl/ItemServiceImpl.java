@@ -7,13 +7,12 @@ import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.ItemDto;
 import com.gmail.vpshulgaa.service.dto.XmlItemsDto;
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.FileReader;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -182,17 +182,20 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public void createFromXml(String fileName) {
+    public void createFromXml(MultipartFile file) {
         try {
             JAXBContext context = JAXBContext.newInstance(XmlItemsDto.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
-            XmlItemsDto xmlItemsDto = (XmlItemsDto) unmarshaller.unmarshal(new FileReader(fileName));
+            File tmpFile = new File("tmp.xml");
+            file.transferTo(tmpFile);
+            XmlItemsDto xmlItemsDto = (XmlItemsDto) unmarshaller.unmarshal(new FileReader(tmpFile));
             List<ItemDto> itemsDto = xmlItemsDto.getItems();
 
             for (ItemDto itemDto : itemsDto) {
                 Item item = itemConverter.toEntity(itemDto);
                 itemDao.create(item);
             }
+            tmpFile.delete();
 
         } catch (Exception e) {
             logger.error("Failed to create items", e);

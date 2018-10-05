@@ -12,7 +12,8 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
         "com.gmail.vpshulgaa.service",
         "com.gmail.vpshulgaa.config",
         "com.gmail.vpshulgaa.controllers",
-        "com.gmail.vpshulgaa.validators"})
+        "com.gmail.vpshulgaa.validators",
+        "com.gmail.vpshulgaa.handlers"})
 public class AppConfig {
 
     @Bean

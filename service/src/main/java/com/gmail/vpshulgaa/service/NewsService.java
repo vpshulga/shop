@@ -19,6 +19,4 @@ public interface NewsService {
     Long countOfNews();
 
     List<NewsDto> findNewsByPage(Long page, int maxResults);
-
-
 }

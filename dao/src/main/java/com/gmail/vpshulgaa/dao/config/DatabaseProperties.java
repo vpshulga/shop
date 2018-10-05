@@ -1,10 +1,9 @@
 package com.gmail.vpshulgaa.dao.config;
 
+import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
 
 @Component
 public class DatabaseProperties {
@@ -41,7 +40,7 @@ public class DatabaseProperties {
     }
 
     @PostConstruct
-    public void initialize(){
+    public void initialize() {
         this.driver = environment.getProperty("driver");
         this.url = environment.getProperty("url");
         this.user = environment.getProperty("user");

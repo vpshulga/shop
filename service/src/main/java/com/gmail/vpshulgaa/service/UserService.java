@@ -4,7 +4,7 @@ import com.gmail.vpshulgaa.service.dto.UserDto;
 import com.gmail.vpshulgaa.service.dto.UserProfileDto;
 import java.util.List;
 
-public interface UserService{
+public interface UserService {
     UserDto findOne(final Long id);
 
     List<UserDto> findAll();

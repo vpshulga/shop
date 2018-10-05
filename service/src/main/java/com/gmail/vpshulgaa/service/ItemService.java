@@ -3,6 +3,7 @@ package com.gmail.vpshulgaa.service;
 import com.gmail.vpshulgaa.service.dto.ItemDto;
 import java.math.BigDecimal;
 import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface ItemService {
     ItemDto findOne(final Long id);
@@ -27,5 +28,5 @@ public interface ItemService {
 
     List<ItemDto> findItemsByPage(Long page, int maxResults);
 
-    void createFromXml(String fileName);
+    void createFromXml(MultipartFile file);
 }

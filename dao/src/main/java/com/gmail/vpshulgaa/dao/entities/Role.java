@@ -3,15 +3,10 @@ package com.gmail.vpshulgaa.dao.entities;
 import com.gmail.vpshulgaa.dao.enums.Roles;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
 @Entity
 @Table(name = "T_ROLE")
 public class Role implements Serializable {
@@ -31,21 +26,44 @@ public class Role implements Serializable {
     )
     private Set<Permission> permissions = new HashSet<>();
 
+    public Role() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Roles getName() {
+        return name;
+    }
+
+    public void setName(Roles name) {
+        this.name = name;
+    }
+
+    public Set<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(Set<Permission> permissions) {
+        this.permissions = permissions;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Role)) return false;
-
+        if (o == null || getClass() != o.getClass()) return false;
         Role role = (Role) o;
-
-        return id == role.id && (name != null ? name.equals(role.name) : role.name == null);
+        return id == role.id &&
+                name == role.name;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        return result;
+        return Objects.hash(id, name);
     }
 }

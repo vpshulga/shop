@@ -1,6 +1,6 @@
 package com.gmail.vpshulgaa.config;
 
-import com.gmail.vpshulgaa.controllers.handlers.AppSuccessHandler;
+import com.gmail.vpshulgaa.handlers.AppSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;

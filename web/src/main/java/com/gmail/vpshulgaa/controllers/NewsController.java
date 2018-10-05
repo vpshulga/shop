@@ -7,16 +7,9 @@ import com.gmail.vpshulgaa.service.NewsService;
 import com.gmail.vpshulgaa.service.UserService;
 import com.gmail.vpshulgaa.service.dto.CommentDto;
 import com.gmail.vpshulgaa.service.dto.NewsDto;
-import com.gmail.vpshulgaa.service.dto.UserDto;
-import com.gmail.vpshulgaa.service.dto.UserPrincipal;
-import com.gmail.vpshulgaa.service.impl.ItemServiceImpl;
 import com.gmail.vpshulgaa.service.util.ServiceUtils;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -45,10 +38,6 @@ public class NewsController {
     public String getNews(@RequestParam(value = "page", defaultValue = "1") Long page,
                           ModelMap modelMap) {
 //        itemService.createFromXml("D:/item.xml");
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserPrincipal user = (UserPrincipal) authentication.getPrincipal();
-        UserDto userDto = userService.findOne(user.getId());
-        System.out.println(userDto.getProfile().getAddress());
         Long pagesCount = ServiceUtils.countOfPages(newsService.countOfNews(), COUNT_OF_NEWS_ON_PAGE);
         List<NewsDto> news = newsService.findNewsByPage(page, COUNT_OF_NEWS_ON_PAGE);
         modelMap.addAttribute("pages", pagesCount);
@@ -66,7 +55,7 @@ public class NewsController {
     public String getOneNews(@PathVariable Long id,
                              ModelMap modelMap) {
         NewsDto news = newsService.findOne(id);
-        CommentDto comment =  new CommentDto();
+        CommentDto comment = new CommentDto();
         List<CommentDto> comments = commentService.findCommentsByNewsId(id);
         modelMap.addAttribute("comments", comments);
         modelMap.addAttribute("news", news);
@@ -100,7 +89,7 @@ public class NewsController {
 
     @GetMapping(value = "/{id}/update")
     public String updateNewsPage(@PathVariable Long id,
-                             ModelMap modelMap) {
+                                 ModelMap modelMap) {
         NewsDto news = newsService.findOne(id);
         modelMap.addAttribute("news", news);
         return pageProperties.getUpdateNewsPagePath();

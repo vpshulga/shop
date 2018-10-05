@@ -1,13 +1,8 @@
 package com.gmail.vpshulgaa.service.dto;
 
 import java.time.LocalDateTime;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.util.Objects;
 
-@Getter
-@Setter
-@NoArgsConstructor
 public class CommentDto {
     private long id;
     private String content;
@@ -15,22 +10,61 @@ public class CommentDto {
     private UserDto user;
     private NewsDto news;
 
+    public CommentDto() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    public UserDto getUser() {
+        return user;
+    }
+
+    public void setUser(UserDto user) {
+        this.user = user;
+    }
+
+    public NewsDto getNews() {
+        return news;
+    }
+
+    public void setNews(NewsDto news) {
+        this.news = news;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         CommentDto that = (CommentDto) o;
-
-        return id == that.id && (content != null ? content.equals(that.content) : that.content == null)
-                && (created != null ? created.equals(that.created) : that.created == null);
+        return id == that.id &&
+                Objects.equals(content, that.content) &&
+                Objects.equals(created, that.created);
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (content != null ? content.hashCode() : 0);
-        result = 31 * result + (created != null ? created.hashCode() : 0);
-        return result;
+        return Objects.hash(id, content, created);
     }
 }

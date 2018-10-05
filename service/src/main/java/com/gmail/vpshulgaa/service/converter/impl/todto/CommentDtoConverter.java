@@ -7,11 +7,10 @@ import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.CommentDto;
 import com.gmail.vpshulgaa.service.dto.NewsDto;
 import com.gmail.vpshulgaa.service.dto.UserDto;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component("commentDtoConverter")
 public class CommentDtoConverter implements DtoConverter<CommentDto, Comment> {

@@ -9,13 +9,13 @@
             <a class="navbar-brand" href="${pageContext.request.contextPath}">Shop</a>
         </div>
         <ul class="nav navbar-nav">
-            <li><a href="${pageContext.request.contextPath}/items">Items</a></li>
-            <li><a href="${pageContext.request.contextPath}/users">Users</a></li>
-            <li><a href="${pageContext.request.contextPath}/news">News</a></li>
+            <li><a href="${pageContext.request.contextPath}/web/items">Items</a></li>
+            <li><a href="${pageContext.request.contextPath}/web/users">Users</a></li>
+            <li><a href="${pageContext.request.contextPath}/web/news">News</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="${pageContext.request.contextPath}/users/create"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="${pageContext.request.contextPath}/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            <li><a href="${pageContext.request.contextPath}/web/users/create"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="${pageContext.request.contextPath}/web/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
         </ul>
     </div>
 </nav>

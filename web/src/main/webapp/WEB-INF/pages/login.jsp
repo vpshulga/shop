@@ -13,7 +13,7 @@
     <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-4 shadow-lg bg-white rounded">
-            <form action="${pageContext.request.contextPath}/login" method="post">
+            <form action="${pageContext.request.contextPath}/web/login" method="post">
                 <div class="form-group">
                     <label for="email">Email address</label>
                     <input type="email" name="email" class="form-control" id="email"

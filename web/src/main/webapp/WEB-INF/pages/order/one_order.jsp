@@ -33,7 +33,7 @@
     </div>
 </div>
 <form:errors path="*" cssClass="error"/>
-<form:form action="${pageContext.request.contextPath}/orders/create" modelAttribute="order" method="post">
+<form:form action="${pageContext.request.contextPath}/web/orders/create" modelAttribute="order" method="post">
     <div class="form-group">
         <form:label path="quantity">Quantity</form:label>
         <form:input path="quantity" class="form-control" placeholder="Quantity"/>

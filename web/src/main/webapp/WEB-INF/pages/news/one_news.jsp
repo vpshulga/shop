@@ -31,7 +31,7 @@
         <div class="col-md-3"></div>
         <div class="col-md-6">
             <form:errors path="*" cssClass="error"/>
-            <form:form action="${pageContext.request.contextPath}/news/${news.id}" modelAttribute="comment"
+            <form:form action="${pageContext.request.contextPath}/web/news/${news.id}" modelAttribute="comment"
                        method="post">
                 <div class="form-group">
                     <form:label path="content">Comment:</form:label>

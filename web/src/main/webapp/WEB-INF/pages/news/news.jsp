@@ -13,11 +13,11 @@
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8">
-            <form action="${pageContext.request.contextPath}/news/delete" method="post">
+            <form action="${pageContext.request.contextPath}/web/news/delete" method="post">
                 <div class="row">
                     <div class="col-md-12">
                         <security:authorize access="hasRole('CREATE_NEWS')">
-                            <a href="${pageContext.request.contextPath}/news/create" class="btn btn-primary"
+                            <a href="${pageContext.request.contextPath}/web/news/create" class="btn btn-primary"
                                aria-pressed="true" role="button">ADD</a>
                             <button type="submit" class="btn btn-primary">DELETE</button>
                         </security:authorize>
@@ -38,13 +38,13 @@
                             <c:forEach items="${news}" var="news">
                                 <tr>
                                     <th scope="row"><input type="checkbox" name="ids" value="${news.id}"></th>
-                                    <td><a href="${pageContext.request.contextPath}/news/${news.id}">${news.title}</a>
+                                    <td><a href="${pageContext.request.contextPath}/web/news/${news.id}">${news.title}</a>
                                     </td>
                                     <td>${news.created.dayOfMonth}-${news.created.monthValue}-${news.created.year}
                                             ${news.created.hour}:${news.created.minute}</td>
                                     <td>${news.user.name}</td>
                                     <td>
-                                        <a href="${pageContext.request.contextPath}/news/${news.id}/update"
+                                        <a href="${pageContext.request.contextPath}/web/news/${news.id}/update"
                                            class="btn btn-primary"
                                            aria-pressed="true"
                                            role="button">UPDATE</a>

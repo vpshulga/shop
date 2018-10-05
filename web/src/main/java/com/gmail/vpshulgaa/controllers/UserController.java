@@ -18,7 +18,7 @@ import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("/web/users")
 public class UserController {
     private final PageProperties pageProperties;
     private final UserService userService;
@@ -61,7 +61,7 @@ public class UserController {
         return pageProperties.getUpdateUserPagePath();
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public String createUser(@ModelAttribute UserProfileDto user,
                              BindingResult result,
                              ModelMap modelMap) {
@@ -73,7 +73,7 @@ public class UserController {
         }
         userService.create(user);
         modelMap.addAttribute("user", user);
-        return "redirect:/users";
+        return "redirect:/web/users";
     }
 
     @PostMapping(value = "/{id}")
@@ -96,7 +96,7 @@ public class UserController {
             user.setDisabled(true);
             userService.update(user);
         }
-        return "redirect:/users";
+        return "redirect:/web/users";
     }
 
 }

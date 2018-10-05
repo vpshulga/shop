@@ -12,18 +12,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/login")
+@RequestMapping("/web/login")
 public class LoginController {
     private final PageProperties pageProperties;
-    @Autowired
-    private UserService userService;
-    private final UserDetailsService userDetailsService;
 
     @Autowired
-    public LoginController(PageProperties pageProperties, @Qualifier("userDetailService") UserDetailsService userDetailsService) {
+    public LoginController(PageProperties pageProperties) {
         this.pageProperties = pageProperties;
-        this.userDetailsService = userDetailsService;
     }
+
 
     @GetMapping
     public String getLoginPage(ModelMap modelMap) {

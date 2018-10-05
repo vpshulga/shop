@@ -16,7 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/news")
+@RequestMapping("/web/news")
 public class NewsController {
     private static final int COUNT_OF_NEWS_ON_PAGE = 10;
     private final NewsService newsService;
@@ -69,7 +69,7 @@ public class NewsController {
         news.setUser(userService.findOne(1L));
         newsService.create(news);
         modelMap.addAttribute("news", news);
-        return "redirect:/news";
+        return "redirect:/web/news";
     }
 
     @PostMapping(value = "/{news_id}")

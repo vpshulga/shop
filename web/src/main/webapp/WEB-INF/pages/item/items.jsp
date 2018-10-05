@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">
-                <form action="${pageContext.request.contextPath}/items" method="post" enctype="multipart/form-data">
+                <form action="${pageContext.request.contextPath}/web/items" method="post" enctype="multipart/form-data">
                     <security:authorize access="isAuthenticated()">
                         <input type="file" name="xmlFile" accept="text/xml">
                         <button type="submit" class="btn btn-primary">upload</button>
@@ -33,7 +33,7 @@
                         <td>${item.name}</td>
                         <td>${item.price}</td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/items/${item.id}" class="btn btn-primary" aria-pressed="true"
+                            <a href="${pageContext.request.contextPath}/web/items/${item.id}" class="btn btn-primary" aria-pressed="true"
                                role="button">Details</a>
                         </td>
                     </tr>
@@ -45,7 +45,7 @@
     <ul class="pagination">
         <c:forEach var="page" begin="1" end="${pages}">
             <li class="page-item"><a class="page-link"
-                                     href="${pageContext.request.contextPath}/items?page=${page}">${page}</a></li>
+                                     href="${pageContext.request.contextPath}/web/items?page=${page}">${page}</a></li>
         </c:forEach>
     </ul>
 </div>

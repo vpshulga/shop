@@ -8,7 +8,7 @@
 </head>
 <body>
 <form:errors path="*" cssClass="error" />
-<form:form action="${pageContext.request.contextPath}/users/${user.id}" modelAttribute="user" method="post">
+<form:form action="${pageContext.request.contextPath}/web/users/${user.id}" modelAttribute="user" method="post">
     <div class="form-group">
         <form:label path="name">First name:</form:label>
         <form:input path="name" class="form-control" placeholder="First name" />

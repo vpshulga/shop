@@ -14,7 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/orders")
+@RequestMapping("/web/orders")
 public class OrderController {
     private final PageProperties pageProperties;
     private final ItemService itemService;
@@ -45,6 +45,6 @@ public class OrderController {
         order.setUser(userService.findOne(1L));
         orderService.create(order);
         modelMap.addAttribute("order", order);
-        return "redirect:/news";
+        return "redirect:/web/news";
     }
 }

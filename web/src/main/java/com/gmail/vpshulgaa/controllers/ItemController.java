@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-@RequestMapping("/items")
+@RequestMapping("/web/items")
 public class ItemController {
     private static final int COUNT_OF_ITEMS_ON_PAGE = 10;
     private final PageProperties pageProperties;
@@ -37,7 +37,7 @@ public class ItemController {
     @PostMapping
     public String upload(@RequestParam(value = "xmlFile") MultipartFile xmlFile) {
         itemService.createFromXml(xmlFile);
-        return "redirect:/items";
+        return "redirect:/web/items";
     }
 
 

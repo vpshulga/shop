@@ -8,7 +8,7 @@
 </head>
 <body>
 <form:errors path="*" cssClass="error"/>
-<form:form action="${pageContext.request.contextPath}/news" modelAttribute="news" method="post">
+<form:form action="${pageContext.request.contextPath}/web/news" modelAttribute="news" method="post">
     <div class="form-group">
         <form:label path="title">Title:</form:label>
         <form:input path="title" class="form-control" placeholder="Title"/>

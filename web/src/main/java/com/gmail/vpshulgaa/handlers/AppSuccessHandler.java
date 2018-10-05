@@ -54,9 +54,9 @@ public class AppSuccessHandler implements AuthenticationSuccessHandler {
         }
 
         if (isCustomerUser) {
-            return "/news";
+            return "/web/news";
         } else if (isAdmin) {
-            return "/users";
+            return "/web/users";
         } else {
             throw new IllegalStateException();
         }

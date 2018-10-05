@@ -12,10 +12,10 @@
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8">
-            <form action="${pageContext.request.contextPath}/users/delete" method="post">
+            <form action="${pageContext.request.contextPath}/web/users/delete" method="post">
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="${pageContext.request.contextPath}/users/create" class="btn btn-primary" aria-pressed="true" role="button">ADD</a>
+                        <a href="${pageContext.request.contextPath}/web/users/create" class="btn btn-primary" aria-pressed="true" role="button">ADD</a>
                         <button type="submit" class="btn btn-primary">DELETE</button>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                                     <td>${user.surname}</td>
                                     <td>${user.role.name}</td>
                                     <td>
-                                        <a href="${pageContext.request.contextPath}/users/${user.id}" class="btn btn-primary" aria-pressed="true"
+                                        <a href="${pageContext.request.contextPath}/web/users/${user.id}" class="btn btn-primary" aria-pressed="true"
                                            role="button">UPDATE</a>
                                     </td>
                                 </tr>

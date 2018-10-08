@@ -65,11 +65,10 @@ public class UserController {
     }
 
     @GetMapping(value = "/{id}")
-    @PreAuthorize("principal.id == #id")
+    @PreAuthorize("principal.id == #id or hasAnyAuthority('ADMIN_PERMISSION')")
     public String profilePage(ModelMap modelMap, @PathVariable("id") Long id) {
         UserProfileDto user  = userService.findUserProfile(id);
         modelMap.addAttribute("user", user);
-        modelMap.addAttribute("expectedId", id);
         return pageProperties.getUserProfilePagePath();
     }
 

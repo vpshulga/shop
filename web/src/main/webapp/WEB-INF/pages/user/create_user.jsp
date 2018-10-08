@@ -7,8 +7,9 @@
     <title>Create user</title>
 </head>
 <body>
-    <form:errors path="*" cssClass="error" />
+
     <form:form action="${pageContext.request.contextPath}/web/users/create" modelAttribute="user" method="post">
+        <form:errors path="*" cssClass="error" element="div" />
         <div class="form-group">
             <form:label path="name">First name:</form:label>
             <form:input path="name" class="form-control" placeholder="First name" />

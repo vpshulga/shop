@@ -17,6 +17,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -34,6 +35,7 @@ public class UserServiceImpl implements UserService {
     private final DtoConverter<UserProfileDto, User> userProfileDtoConverter;
     private final Converter<RoleDto, Role> roleConverter;
     private final RoleService roleService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public UserServiceImpl(UserDao userDao,
@@ -42,7 +44,7 @@ public class UserServiceImpl implements UserService {
                            @Qualifier("userProfileConverter") Converter<UserProfileDto, User> userProfileConverter,
                            @Qualifier("userProfileDtoConverter") DtoConverter<UserProfileDto, User> userProfileDtoConverter,
                            @Qualifier("roleConverter") Converter<RoleDto, Role> roleConverter,
-                           RoleService roleService) {
+                           RoleService roleService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userDao = userDao;
         this.userDtoConverter = userDtoConverter;
         this.userConverter = userConverter;
@@ -50,6 +52,7 @@ public class UserServiceImpl implements UserService {
         this.userProfileDtoConverter = userProfileDtoConverter;
         this.roleConverter = roleConverter;
         this.roleService = roleService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
@@ -83,6 +86,7 @@ public class UserServiceImpl implements UserService {
         try {
             User user = userProfileConverter.toEntity(userDto);
             Role role = roleConverter.toEntity(roleService.findByName(Roles.CUSTOMER_USER));
+            user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
             user.setRole(role);
             userDao.create(user);
             userDto = userProfileDtoConverter.toDto(user);
@@ -97,6 +101,7 @@ public class UserServiceImpl implements UserService {
     public UserDto update(UserDto userDto) {
         try {
             User user = userConverter.toEntity(userDto);
+            user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
             userDao.update(user);
             userDto = userDtoConverter.toDto(user);
         } catch (Exception e) {
@@ -155,5 +160,18 @@ public class UserServiceImpl implements UserService {
             logger.error("Failed to find users");
         }
         return usersDto;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public UserProfileDto findUserProfile(Long id) {
+        UserProfileDto userProfileDto = new UserProfileDto();
+        try {
+            User user = userDao.findOne(id);
+            userProfileDto = userProfileDtoConverter.toDto(user);
+        } catch (Exception e) {
+            logger.error("Failed to find user");
+        }
+        return userProfileDto;
     }
 }

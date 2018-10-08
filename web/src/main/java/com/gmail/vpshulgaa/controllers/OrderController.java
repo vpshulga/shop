@@ -1,7 +1,6 @@
 package com.gmail.vpshulgaa.controllers;
 
 import com.gmail.vpshulgaa.config.PageProperties;
-import com.gmail.vpshulgaa.dao.enums.Status;
 import com.gmail.vpshulgaa.service.ItemService;
 import com.gmail.vpshulgaa.service.OrderService;
 import com.gmail.vpshulgaa.service.UserService;
@@ -10,7 +9,6 @@ import com.gmail.vpshulgaa.service.dto.OrderDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -29,22 +27,33 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @GetMapping("/create")
+    @GetMapping("/order")
     public String createOrderPage(@RequestParam("item") Long id,
-            ModelMap modelMap) {
+                                  ModelMap modelMap) {
         ItemDto item = itemService.findOne(id);
         modelMap.addAttribute("item", item);
         modelMap.addAttribute("order", new OrderDto());
         return pageProperties.getCreatePagePath();
     }
 
-    @PostMapping("/create")
-    public String createOrder(@ModelAttribute OrderDto order,
-                             BindingResult result,
-                             ModelMap modelMap) {
-        order.setUser(userService.findOne(1L));
-        orderService.create(order);
-        modelMap.addAttribute("order", order);
-        return "redirect:/web/news";
+    @PostMapping("/order")
+    public String createReadyOrder(@RequestParam("quantity") Integer quantity,
+                                   @RequestParam("item") Long id,
+                                   ModelMap modelMap) {
+        ItemDto item = itemService.findOne(id);
+        modelMap.addAttribute("item", item);
+        modelMap.addAttribute("quantity", quantity);
+        modelMap.addAttribute("order", new OrderDto());
+        return pageProperties.getReadyOrderPagePath();
     }
+
+    @PostMapping("/order/ready")
+    public String createOrder(ModelMap modelMap,
+                              @ModelAttribute OrderDto orderDto) {
+        orderService.create(orderDto);
+        modelMap.addAttribute("order", orderDto);
+        return "redirect:/web/users";
+    }
+
+
 }

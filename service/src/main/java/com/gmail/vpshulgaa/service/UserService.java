@@ -20,4 +20,6 @@ public interface UserService {
     UserDto findByEmail(String email);
 
     List<UserDto> findEnabledUsers();
+
+    UserProfileDto findUserProfile(final Long id);
 }

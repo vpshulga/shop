@@ -33,13 +33,11 @@
     </div>
 </div>
 <form:errors path="*" cssClass="error"/>
-<form:form action="${pageContext.request.contextPath}/web/orders/create" modelAttribute="order" method="post">
+<form:form action="${pageContext.request.contextPath}/web/orders/order"  method="post">
     <div class="form-group">
-        <form:label path="quantity">Quantity</form:label>
-        <form:input path="quantity" class="form-control" placeholder="Quantity"/>
-    </div>
-    <div class="form-group">
-        <form:input type="hidden" path="item.id" class="form-control" value="${item.id}" />
+        <label>Quantity</label>
+        <input type="number" name="quantity" class="form-control" placeholder="Quantity"/>
+        <input type="hidden" name="item" value="${item.id}"/>
     </div>
     <button type="submit" class="btn btn-primary">Create</button>
 </form:form>

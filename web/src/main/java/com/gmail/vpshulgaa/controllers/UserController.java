@@ -24,18 +24,15 @@ public class UserController {
     private final UserService userService;
     private final Validator userValidator;
     private final RoleService roleService;
-    private final ProfileService profileService;
 
     @Autowired
     public UserController(PageProperties pageProperties, UserService userService,
                           @Qualifier("userValidator") Validator userValidator,
-                          RoleService roleService,
-                          ProfileService profileService) {
+                          RoleService roleService) {
         this.pageProperties = pageProperties;
         this.userService = userService;
         this.userValidator = userValidator;
         this.roleService = roleService;
-        this.profileService = profileService;
     }
 
     @GetMapping
@@ -50,15 +47,6 @@ public class UserController {
     public String addUserPage(ModelMap modelMap) {
         modelMap.addAttribute("user", new UserProfileDto());
         return pageProperties.getCreateUserPagePath();
-    }
-
-    @GetMapping(value = "/{id}")
-    public String updateUserPage(ModelMap modelMap, @PathVariable("id") Long id) {
-        UserDto user = userService.findOne(id);
-        List<RoleDto> roles = roleService.findAll();
-        modelMap.addAttribute("user", user);
-        modelMap.addAttribute("roles", roles);
-        return pageProperties.getUpdateUserPagePath();
     }
 
     @PostMapping("/create")
@@ -76,7 +64,25 @@ public class UserController {
         return "redirect:/web/users";
     }
 
-    @PostMapping(value = "/{id}")
+    @GetMapping(value = "/{id}")
+    @PreAuthorize("principal.id == #id")
+    public String profilePage(ModelMap modelMap, @PathVariable("id") Long id) {
+        UserProfileDto user  = userService.findUserProfile(id);
+        modelMap.addAttribute("user", user);
+        modelMap.addAttribute("expectedId", id);
+        return pageProperties.getUserProfilePagePath();
+    }
+
+    @GetMapping(value = "/{id}/update")
+    public String updateUserPage(ModelMap modelMap, @PathVariable("id") Long id) {
+        UserDto user = userService.findOne(id);
+        List<RoleDto> roles = roleService.findAll();
+        modelMap.addAttribute("user", user);
+        modelMap.addAttribute("roles", roles);
+        return pageProperties.getUpdateUserPagePath();
+    }
+
+    @PostMapping(value = "/{id}/update")
     public String updateUser(@ModelAttribute UserDto user,
                              BindingResult result,
                              ModelMap modelMap, @PathVariable("id") Long id) {
@@ -86,7 +92,7 @@ public class UserController {
         List<RoleDto> roles = roleService.findAll();
         modelMap.addAttribute("user", user);
         modelMap.addAttribute("roles", roles);
-        return "redirect:/users";
+        return "redirect:/web/users";
     }
 
     @PostMapping("/delete")

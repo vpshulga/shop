@@ -16,7 +16,7 @@
             <form action="${pageContext.request.contextPath}/web/news/delete" method="post">
                 <div class="row">
                     <div class="col-md-12">
-                        <security:authorize access="hasRole('CREATE_NEWS')">
+                        <security:authorize access="hasAuthority('CREATE_NEWS')">
                             <a href="${pageContext.request.contextPath}/web/news/create" class="btn btn-primary"
                                aria-pressed="true" role="button">ADD</a>
                             <button type="submit" class="btn btn-primary">DELETE</button>

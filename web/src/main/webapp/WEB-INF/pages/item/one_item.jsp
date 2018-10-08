@@ -35,7 +35,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <a href="${pageContext.request.contextPath}/web/orders/create?item=${item.id}" class="btn btn-primary" aria-pressed="true"
+            <a href="${pageContext.request.contextPath}/web/orders/order?item=${item.id}" class="btn btn-primary" aria-pressed="true"
                role="button">Create order</a>
         </div>
     </div>

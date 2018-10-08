@@ -42,7 +42,7 @@
                                     <td>${user.role.name}</td>
                                     <td>
                                         <a href="${pageContext.request.contextPath}/web/users/${user.id}" class="btn btn-primary" aria-pressed="true"
-                                           role="button">UPDATE</a>
+                                           role="button">Info</a>
                                     </td>
                                 </tr>
                             </c:forEach>

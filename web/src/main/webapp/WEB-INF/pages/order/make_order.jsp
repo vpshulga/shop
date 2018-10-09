@@ -32,8 +32,9 @@
         </table>
     </div>
 </div>
-<form:errors path="*" cssClass="error"/>
+
 <form:form action="${pageContext.request.contextPath}/web/orders/order"  method="post">
+    <form:errors path="*" cssClass="error"/>
     <div class="form-group">
         <label>Quantity</label>
         <input type="number" name="quantity" class="form-control" placeholder="Quantity"/>

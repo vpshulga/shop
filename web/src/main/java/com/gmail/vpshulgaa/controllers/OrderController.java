@@ -1,6 +1,7 @@
 package com.gmail.vpshulgaa.controllers;
 
 import com.gmail.vpshulgaa.config.PageProperties;
+import com.gmail.vpshulgaa.dao.entities.Order;
 import com.gmail.vpshulgaa.dao.enums.Status;
 import com.gmail.vpshulgaa.service.ItemService;
 import com.gmail.vpshulgaa.service.OrderService;
@@ -51,7 +52,7 @@ public class OrderController {
         Status[] statuses = Status.values();
         modelMap.addAttribute("order", order);
         modelMap.addAttribute("statuses", statuses);
-        return pageProperties.getUpdaetOrderPagePath();
+        return pageProperties.getUpdateOrderPagePath();
     }
 
 
@@ -60,7 +61,7 @@ public class OrderController {
                                   ModelMap modelMap) {
         ItemDto item = itemService.findOne(id);
         modelMap.addAttribute("item", item);
-        modelMap.addAttribute("order", new OrderDto());
+        modelMap.addAttribute("order", new Order());
         return pageProperties.getCreatePagePath();
     }
 
@@ -78,6 +79,7 @@ public class OrderController {
     @PostMapping("/order/ready")
     public String createOrder(ModelMap modelMap,
                               @ModelAttribute OrderDto order) {
+        order.setItem(itemService.findOne(order.getItem().getId()));
         orderService.create(order);
         modelMap.addAttribute("order", order);
         return "redirect:/web/orders";
@@ -87,6 +89,7 @@ public class OrderController {
     public String updateOrder(ModelMap modelMap,
                               @ModelAttribute OrderDto order, @PathVariable("id") Long id) {
         order.setId(id);
+        order.setItem(itemService.findOne(order.getItem().getId()));
         orderService.update(order);
         modelMap.addAttribute("order", order);
         return "redirect:/web/orders";

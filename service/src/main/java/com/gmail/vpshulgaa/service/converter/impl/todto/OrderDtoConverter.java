@@ -36,8 +36,6 @@ public class OrderDtoConverter implements DtoConverter<OrderDto, Order> {
         orderDto.setCreated(entity.getCreated());
         orderDto.setQuantity(entity.getQuantity());
         orderDto.setStatus(entity.getStatus());
-        orderDto.setTotal(entity.getItem().getPrice().multiply(BigDecimal.valueOf(entity.getQuantity())));
-
         if (entity.getItem() != null) {
             ItemDto itemDto = itemDtoConverter.toDto(entity.getItem());
             orderDto.setItem(itemDto);
@@ -47,6 +45,7 @@ public class OrderDtoConverter implements DtoConverter<OrderDto, Order> {
             UserDto userDto = userDtoConverter.toDto(entity.getUser());
             orderDto.setUser(userDto);
         }
+        orderDto.setTotal(entity.getItem().getPrice().multiply(BigDecimal.valueOf(entity.getQuantity())));
 
         return orderDto;
     }

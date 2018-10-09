@@ -23,6 +23,8 @@ public class PageProperties {
     private String createPagePath;
     private String userProfilePagePath;
     private String readyOrderPagePath;
+    private String ordersPagePath;
+    private String updaetOrderPagePath;
 
     @Autowired
     public PageProperties(Environment environment) {
@@ -45,6 +47,8 @@ public class PageProperties {
         this.createPagePath = environment.getProperty("create.order.page.path");
         this.userProfilePagePath = environment.getProperty("user.profile.page.path");
         this.readyOrderPagePath = environment.getProperty("ready.order.page.path");
+        this.ordersPagePath = environment.getProperty("orders.page.path");
+        this.updaetOrderPagePath = environment.getProperty("update.order.page.path");
     }
 
     public String getLoginPagePath() {
@@ -101,5 +105,13 @@ public class PageProperties {
 
     public String getReadyOrderPagePath() {
         return readyOrderPagePath;
+    }
+
+    public String getOrdersPagePath() {
+        return ordersPagePath;
+    }
+
+    public String getUpdaetOrderPagePath() {
+        return updaetOrderPagePath;
     }
 }

@@ -4,11 +4,12 @@
 <html lang="en">
 <head>
     <jsp:include page="../commons/header.jsp"/>
-    <title>Create user</title>
+    <title>Update user</title>
 </head>
 <body>
-<form:errors path="*" cssClass="error" />
+
 <form:form action="${pageContext.request.contextPath}/web/users/${user.id}/update" modelAttribute="user" method="post">
+    <form:errors path="*" cssClass="error" />
     <div class="form-group">
         <form:label path="name">First name:</form:label>
         <form:input path="name" class="form-control" placeholder="First name" />

@@ -31,7 +31,7 @@
         <security:authentication property="principal.id" var="user"/>
         <form:input type="hidden" path="user.id" class="form-control" value="${user}"/>
     </div>
-    <button type="submit" class="btn btn-primary">pay</button>
+    <button type="submit" class="btn btn-primary">Pay</button>
 </form:form>
 <jsp:include page="../util/js.jsp"/>
 <jsp:include page="../commons/footer.jsp"/>

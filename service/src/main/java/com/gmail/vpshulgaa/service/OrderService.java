@@ -17,4 +17,12 @@ public interface OrderService {
     void deleteById(final Long id);
 
     List<OrderDto> findOrdersByUserId(Long userId);
+
+    Long countOfOrder();
+
+    Long countOfOrderForUser(Long userId);
+
+    List<OrderDto> findOrdersByPage(Long page, int maxResults);
+
+    List<OrderDto> findOrdersByPageForUser(Long page, int maxResults, Long userId);
 }

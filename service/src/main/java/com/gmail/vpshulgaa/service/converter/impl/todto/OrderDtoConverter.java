@@ -7,6 +7,7 @@ import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.ItemDto;
 import com.gmail.vpshulgaa.service.dto.OrderDto;
 import com.gmail.vpshulgaa.service.dto.UserDto;
+import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -35,6 +36,7 @@ public class OrderDtoConverter implements DtoConverter<OrderDto, Order> {
         orderDto.setCreated(entity.getCreated());
         orderDto.setQuantity(entity.getQuantity());
         orderDto.setStatus(entity.getStatus());
+        orderDto.setTotal(entity.getItem().getPrice().multiply(BigDecimal.valueOf(entity.getQuantity())));
 
         if (entity.getItem() != null) {
             ItemDto itemDto = itemDtoConverter.toDto(entity.getItem());

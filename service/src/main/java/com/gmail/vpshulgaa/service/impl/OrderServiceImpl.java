@@ -121,4 +121,60 @@ public class OrderServiceImpl implements OrderService {
         }
         return ordersDto;
     }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public Long countOfOrder() {
+        Long count = 0L;
+        try {
+            count = orderDao.countOfOrders();
+        } catch (Exception e) {
+            logger.error("Failed to find orders", e);
+        }
+        return count;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public Long countOfOrderForUser(Long userId) {
+        Long count = 0L;
+        try {
+            count = orderDao.countOfOrdersForUser(userId);
+        } catch (Exception e) {
+            logger.error("Failed to find orders", e);
+        }
+        return count;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public List<OrderDto> findOrdersByPage(Long page, int maxResults) {
+        List<OrderDto> ordersDto = new ArrayList<>();
+        List<Order> orders;
+        try {
+            orders = orderDao.findOrdersByPage(page, maxResults);
+            for (Order order : orders) {
+                ordersDto.add(orderDtoConverter.toDto(order));
+            }
+        } catch (Exception e) {
+            logger.error("Failed to find orders", e);
+        }
+        return ordersDto;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public List<OrderDto> findOrdersByPageForUser(Long page, int maxResults, Long userId) {
+        List<OrderDto> ordersDto = new ArrayList<>();
+        List<Order> orders;
+        try {
+            orders = orderDao.findOrdersByPageForUser(page, maxResults, userId);
+            for (Order order : orders) {
+                ordersDto.add(orderDtoConverter.toDto(order));
+            }
+        } catch (Exception e) {
+            logger.error("Failed to find orders", e);
+        }
+        return ordersDto;
+    }
 }

@@ -1,6 +1,7 @@
 package com.gmail.vpshulgaa.service.dto;
 
 import com.gmail.vpshulgaa.dao.enums.Status;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -9,6 +10,7 @@ public class OrderDto {
     private LocalDateTime created;
     private Integer quantity;
     private Status status;
+    private BigDecimal total;
     private ItemDto item;
     private UserDto user;
 
@@ -49,6 +51,14 @@ public class OrderDto {
 
     public UserDto getUser() {
         return user;
+    }
+
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
     }
 
     public void setUser(UserDto user) {

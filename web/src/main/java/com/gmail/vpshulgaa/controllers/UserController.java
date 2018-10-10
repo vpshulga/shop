@@ -114,7 +114,7 @@ public class UserController {
 
 
     @PostMapping(value = "/{id}/update/password")
-    public String updateUser(@ModelAttribute ChangePasswordDto changePassword,
+    public String changePassword(@ModelAttribute ChangePasswordDto changePassword,
                              BindingResult result,
                              ModelMap modelMap, @PathVariable("id") Long id) {
         UserDto user = userService.findOne(id);

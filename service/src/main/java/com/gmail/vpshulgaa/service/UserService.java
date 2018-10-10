@@ -6,23 +6,21 @@ import com.gmail.vpshulgaa.service.dto.UserProfileDto;
 import java.util.List;
 
 public interface UserService {
-    UserDto findOne(final Long id);
+    UserProfileDto findOne(final Long id);
 
-    List<UserDto> findAll();
+    List<UserProfileDto> findAll();
 
     UserProfileDto create(final UserProfileDto dto);
 
-    UserDto update(final UserDto dto);
+    UserProfileDto update(final UserProfileDto dto);
 
-    UserDto delete(final UserDto dto);
+    UserProfileDto delete(final UserProfileDto dto);
 
     void deleteById(final Long id);
 
-    UserDto findByEmail(String email);
+    UserProfileDto findByEmail(String email);
 
-    List<UserDto> findNotDeletedUsers();
+    List<UserProfileDto> findNotDeletedUsers();
 
-    UserProfileDto findUserProfile(final Long id);
-
-    UserDto changePassword(ChangePasswordDto changePassword, UserDto user);
+    UserProfileDto changePassword(ChangePasswordDto changePassword, UserProfileDto user);
 }

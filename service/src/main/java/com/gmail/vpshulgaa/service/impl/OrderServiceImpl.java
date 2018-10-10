@@ -12,7 +12,7 @@ import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.ItemDto;
 import com.gmail.vpshulgaa.service.dto.OrderDto;
-import com.gmail.vpshulgaa.service.dto.UserDto;
+import com.gmail.vpshulgaa.service.dto.UserProfileDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +35,8 @@ public class OrderServiceImpl implements OrderService {
     private final DtoConverter<OrderDto, Order> orderDtoConverter;
     private final UserService userService;
     private final ItemService itemService;
-    private final Converter<UserDto, User> userConverter;
     private final Converter<ItemDto, Item> itemConverter;
+    private final Converter<UserProfileDto, User> userProfileConverter;
 
     @Autowired
     public OrderServiceImpl(
@@ -45,15 +45,15 @@ public class OrderServiceImpl implements OrderService {
             @Qualifier("orderDtoConverter") DtoConverter<OrderDto, Order> orderDtoConverter,
             UserService userService,
             ItemService itemService,
-            @Qualifier("userConverter") Converter<UserDto, User> userConverter,
-            @Qualifier("itemConverter") Converter<ItemDto, Item> itemConverter) {
+            @Qualifier("itemConverter") Converter<ItemDto, Item> itemConverter,
+            @Qualifier("userProfileConverter") Converter<UserProfileDto, User> userProfileConverter) {
         this.orderDao = orderDao;
         this.orderConverter = orderConverter;
         this.orderDtoConverter = orderDtoConverter;
         this.userService = userService;
         this.itemService = itemService;
-        this.userConverter = userConverter;
         this.itemConverter = itemConverter;
+        this.userProfileConverter = userProfileConverter;
     }
 
     @Override
@@ -80,10 +80,10 @@ public class OrderServiceImpl implements OrderService {
     public OrderDto create(OrderDto orderDto, Long itemId, Long userId) {
         try {
             Order order = orderConverter.toEntity(orderDto);
-            UserDto userDto = userService.findOne(userId);
+            UserProfileDto userDto = userService.findOne(userId);
             ItemDto itemDto = itemService.findOne(itemId);
             order.setItem(itemConverter.toEntity(itemDto));
-            order.setUser(userConverter.toEntity(userDto));
+            order.setUser(userProfileConverter.toEntity(userDto));
             order.setStatus(Status.NEW);
             order.setCreated(LocalDateTime.now());
             orderDao.create(order);
@@ -99,10 +99,10 @@ public class OrderServiceImpl implements OrderService {
     public OrderDto update(OrderDto orderDto, Long itemId, Long userId) {
         try {
             Order order = orderConverter.toEntity(orderDto);
-            UserDto userDto = userService.findOne(userId);
+            UserProfileDto userDto = userService.findOne(userId);
             ItemDto itemDto = itemService.findOne(itemId);
             order.setItem(itemConverter.toEntity(itemDto));
-            order.setUser(userConverter.toEntity(userDto));
+            order.setUser(userProfileConverter.toEntity(userDto));
             orderDao.update(order);
             orderDto = orderDtoConverter.toDto(order);
         } catch (Exception e) {

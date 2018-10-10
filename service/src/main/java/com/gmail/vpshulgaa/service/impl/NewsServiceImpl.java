@@ -8,7 +8,7 @@ import com.gmail.vpshulgaa.service.UserService;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.NewsDto;
-import com.gmail.vpshulgaa.service.dto.UserDto;
+import com.gmail.vpshulgaa.service.dto.UserProfileDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,8 @@ public class NewsServiceImpl implements NewsService {
     private final DtoConverter<NewsDto, News> newsDtoConverter;
     private final Converter<NewsDto, News> newsConverter;
     private final UserService userService;
-    private final Converter<UserDto, User> userConverter;
+    private final Converter<UserProfileDto, User> userProfileConverter;
+
 
     @Autowired
     public NewsServiceImpl(
@@ -38,12 +39,12 @@ public class NewsServiceImpl implements NewsService {
             @Qualifier("newsConverter") Converter<NewsDto, News> newsConverter,
             @Qualifier("newsDtoConverter") DtoConverter<NewsDto, News> newsDtoConverter,
             UserService userService,
-            @Qualifier("userConverter") Converter<UserDto, User> userConverter) {
+            @Qualifier("userProfileConverter") Converter<UserProfileDto, User> userProfileConverter) {
         this.newsConverter = newsConverter;
         this.newsDao = newsDao;
         this.newsDtoConverter = newsDtoConverter;
         this.userService = userService;
-        this.userConverter = userConverter;
+        this.userProfileConverter = userProfileConverter;
     }
 
     @Override
@@ -71,8 +72,8 @@ public class NewsServiceImpl implements NewsService {
         try {
             newsDto.setCreated(LocalDateTime.now());
             News news = newsConverter.toEntity(newsDto);
-            UserDto userDto = userService.findOne(userId);
-            news.setUser(userConverter.toEntity(userDto));
+            UserProfileDto userDto = userService.findOne(userId);
+            news.setUser(userProfileConverter.toEntity(userDto));
             newsDao.create(news);
             newsDto = newsDtoConverter.toDto(news);
         } catch (Exception e) {
@@ -86,8 +87,8 @@ public class NewsServiceImpl implements NewsService {
     public NewsDto update(NewsDto newsDto, Long userId) {
         try {
             News news = newsConverter.toEntity(newsDto);
-            UserDto userDto = userService.findOne(userId);
-            news.setUser(userConverter.toEntity(userDto));
+            UserProfileDto userDto = userService.findOne(userId);
+            news.setUser(userProfileConverter.toEntity(userDto));
             newsDao.update(news);
             newsDto = newsDtoConverter.toDto(news);
         } catch (Exception e) {

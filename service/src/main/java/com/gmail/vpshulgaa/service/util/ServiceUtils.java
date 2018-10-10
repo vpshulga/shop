@@ -7,7 +7,7 @@ public class ServiceUtils {
     private static final Logger logger = LogManager.getLogger(ServiceUtils.class);
 
     public static Long countOfPages(Long countOfEntities, int maxResults) {
-        Long countOfPages = 0L;
+        Long countOfPages;
         if (countOfEntities > 0 && countOfEntities <= maxResults) {
             countOfPages = 1L;
         } else if (countOfEntities % maxResults == 0) {

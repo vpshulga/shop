@@ -13,6 +13,7 @@ public class UserProfileDto {
     private String telephone;
     private Boolean disabled;
     private Boolean deleted;
+    private RoleDto role;
 
     public long getId() {
         return id;
@@ -92,6 +93,14 @@ public class UserProfileDto {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public RoleDto getRole() {
+        return role;
+    }
+
+    public void setRole(RoleDto role) {
+        this.role = role;
     }
 
     @Override

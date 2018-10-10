@@ -10,13 +10,8 @@ import com.gmail.vpshulgaa.service.UserService;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.CommentDto;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.gmail.vpshulgaa.service.dto.NewsDto;
-import com.gmail.vpshulgaa.service.dto.UserDto;
+import com.gmail.vpshulgaa.service.dto.UserProfileDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +21,10 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class CommentServiceImpl implements CommentService {
     private static final Logger logger = LogManager.getLogger(CommentServiceImpl.class);
@@ -34,9 +33,9 @@ public class CommentServiceImpl implements CommentService {
     private final Converter<CommentDto, Comment> commentConverter;
     private final DtoConverter<CommentDto, Comment> commentDtoConverter;
     private final Converter<NewsDto, News> newsConverter;
-    private final Converter<UserDto, User> userConverter;
     private final UserService userService;
     private final NewsService newsService;
+    private final Converter<UserProfileDto, User> userProfileConverter;
 
     @Autowired
     public CommentServiceImpl(
@@ -45,14 +44,14 @@ public class CommentServiceImpl implements CommentService {
             @Qualifier("commentDtoConverter") DtoConverter<CommentDto, Comment> commentDtoConverter,
             UserService userService, NewsService newsService,
             @Qualifier("newsConverter") Converter<NewsDto, News> newsConverter,
-            @Qualifier("userConverter") Converter<UserDto, User> userConverter) {
+            @Qualifier("userProfileConverter") Converter<UserProfileDto, User> userProfileConverter) {
         this.commentDao = commentDao;
         this.commentConverter = commentConverter;
         this.commentDtoConverter = commentDtoConverter;
         this.userService = userService;
         this.newsService = newsService;
         this.newsConverter = newsConverter;
-        this.userConverter = userConverter;
+        this.userProfileConverter = userProfileConverter;
     }
 
     @Override
@@ -80,10 +79,10 @@ public class CommentServiceImpl implements CommentService {
         try {
             commentDto.setCreated(LocalDateTime.now());
             Comment comment = commentConverter.toEntity(commentDto);
-            UserDto userDto = userService.findOne(userId);
+            UserProfileDto userDto = userService.findOne(userId);
             NewsDto newsDto = newsService.findOne(newsId);
             comment.setNews(newsConverter.toEntity(newsDto));
-            comment.setUser(userConverter.toEntity(userDto));
+            comment.setUser(userProfileConverter.toEntity(userDto));
             commentDao.create(comment);
             commentDto = commentDtoConverter.toDto(comment);
         } catch (Exception e) {

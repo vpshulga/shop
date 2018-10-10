@@ -25,17 +25,24 @@
             <form:input path="email" type="email" class="form-control" placeholder="Email"/>
         </div>
     </security:authorize>
+
+    <security:authorize access="!hasAuthority('CHANGE_ROLE')">
+        <div class="form-group">
+            <form:input path="email" type="hidden" class="form-control" placeholder="Email"/>
+        </div>
+    </security:authorize>
+
     <div class="form-group">
         <form:input path="password" type="hidden" class="form-control" value="" />
     </div>
 
     <div class="form-group">
-        <form:label path="profile.address">Address:</form:label>
-        <form:input path="profile.address" class="form-control" placeholder="Address"/>
+        <form:label path="address">Address:</form:label>
+        <form:input path="address" class="form-control" placeholder="Address"/>
     </div>
     <div class="form-group">
-        <form:label path="profile.telephone">Telephone:</form:label>
-        <form:input path="profile.telephone" class="form-control" placeholder="Telephone"/>
+        <form:label path="telephone">Telephone:</form:label>
+        <form:input path="telephone" class="form-control" placeholder="Telephone"/>
     </div>
     <security:authorize access="hasAuthority('CHANGE_ROLE')">
         <div class="form-group">
@@ -49,6 +56,14 @@
         <div class="form-group">
             Disable:<form:radiobutton path="disabled" value="true"/>
             Enable:<form:radiobutton path="disabled" value="false"/>
+        </div>
+    </security:authorize>
+    <security:authorize access="!hasAuthority('CHANGE_ROLE')">
+        <div class="form-group">
+            <form:input type="hidden" path="role.id" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <form:input type="hidden" path="disabled" class="form-control"/>
         </div>
     </security:authorize>
     <div class="form-group">

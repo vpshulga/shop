@@ -14,7 +14,8 @@ public class UserDto {
     private Set<AuditDto> audits = new HashSet<>();
     private RoleDto role;
     private DiscountDto discount;
-    private boolean isDisabled;
+    private Boolean disabled;
+    private Boolean deleted;
 
     public UserDto() {
     }
@@ -91,12 +92,20 @@ public class UserDto {
         this.discount = discount;
     }
 
-    public boolean isDisabled() {
-        return isDisabled;
+    public Boolean getDisabled() {
+        return disabled;
     }
 
-    public void setDisabled(boolean disabled) {
-        isDisabled = disabled;
+    public void setDisabled(Boolean disabled) {
+        this.disabled = disabled;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 
     @Override
@@ -105,7 +114,7 @@ public class UserDto {
         if (o == null || getClass() != o.getClass()) return false;
         UserDto userDto = (UserDto) o;
         return id == userDto.id &&
-                isDisabled == userDto.isDisabled &&
+                disabled == userDto.disabled &&
                 Objects.equals(email, userDto.email) &&
                 Objects.equals(name, userDto.name) &&
                 Objects.equals(surname, userDto.surname) &&
@@ -114,6 +123,6 @@ public class UserDto {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, name, surname, password, isDisabled);
+        return Objects.hash(id, email, name, surname, password, disabled);
     }
 }

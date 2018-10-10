@@ -1,32 +1,26 @@
 package com.gmail.vpshulgaa.controllers;
 
 import com.gmail.vpshulgaa.config.PageProperties;
-import com.gmail.vpshulgaa.service.UserService;
 import com.gmail.vpshulgaa.service.dto.UserDto;
-import com.gmail.vpshulgaa.service.dto.UserPrincipal;
-import com.gmail.vpshulgaa.utils.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/web/login")
-public class LoginController {
+@RequestMapping("/web/logout")
+public class LogoutController {
     private final PageProperties pageProperties;
 
     @Autowired
-    public LoginController(PageProperties pageProperties) {
+    public LogoutController(PageProperties pageProperties) {
         this.pageProperties = pageProperties;
     }
-
 
     @GetMapping
     public String getLoginPage(ModelMap modelMap) {
         modelMap.addAttribute("user", new UserDto());
-        return pageProperties.getLoginPagePath();
+        return pageProperties.getLogoutPagePath();
     }
 }

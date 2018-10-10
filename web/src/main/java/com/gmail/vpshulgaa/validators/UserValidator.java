@@ -18,12 +18,17 @@ public class UserValidator implements Validator {
     public void validate(Object o, Errors errors) {
         ValidationUtils.rejectIfEmpty(errors, "name", "user.name.empty");
         ValidationUtils.rejectIfEmpty(errors, "email", "user.email.empty");
+
         UserProfileDto user = (UserProfileDto) o;
 
         Pattern pattern = Pattern.compile("^([a-z0-9_-]+\\.)*[a-z0-9_-]+@[a-z0-9_-]+(\\.[a-z0-9_-]+)*\\.[a-z]{2,6}$",
                 Pattern.CASE_INSENSITIVE);
         if (!(pattern.matcher(user.getEmail()).matches())) {
             errors.rejectValue("email", "user.email.invalid");
+        }
+
+        if (!user.getPassword().equals(user.getConfirmPassword())) {
+            errors.rejectValue("password", "diff.password");
         }
     }
 }

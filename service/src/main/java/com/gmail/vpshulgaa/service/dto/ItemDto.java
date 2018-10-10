@@ -11,6 +11,7 @@ public class ItemDto {
     private String description;
     private String uniqueNumber;
     private BigDecimal price;
+    private Boolean deleted;
 
     private List<DiscountDto> discounts = new ArrayList<>();
 
@@ -63,6 +64,14 @@ public class ItemDto {
 
     public void setDiscounts(List<DiscountDto> discounts) {
         this.discounts = discounts;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 
     @Override

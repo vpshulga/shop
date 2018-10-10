@@ -7,9 +7,13 @@ import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
 @Table(name = "T_USER")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +31,9 @@ public class User implements Serializable {
     @Column(name = "F_PASSWORD")
     private String password;
     @Column(name = "F_IS_DISABLED")
-    private boolean isDisabled = false;
+    private Boolean disabled = false;
+    @Column(name = "F_IS_DELETED")
+    private Boolean deleted = false;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
     private Profile profile;
@@ -87,12 +93,20 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public boolean isDisabled() {
-        return isDisabled;
+    public Boolean getDisabled() {
+        return disabled;
     }
 
-    public void setDisabled(boolean disabled) {
-        isDisabled = disabled;
+    public void setDisabled(Boolean disabled) {
+        this.disabled = disabled;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 
     public Profile getProfile() {

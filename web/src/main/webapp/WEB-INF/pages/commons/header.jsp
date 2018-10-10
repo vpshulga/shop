@@ -20,12 +20,24 @@
                 </li>
             </security:authorize>
         </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="${pageContext.request.contextPath}/web/users/create"><span
-                    class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="${pageContext.request.contextPath}/web/login"><span class="glyphicon glyphicon-log-in"></span>
-                Login</a></li>
-        </ul>
+        <security:authorize access="isAnonymous()">
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="${pageContext.request.contextPath}/web/users/create"><span
+                        class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a href="${pageContext.request.contextPath}/web/login"><span
+                        class="glyphicon glyphicon-log-in"></span>
+                    Login</a></li>
+            </ul>
+        </security:authorize>
+        <security:authorize access="isAuthenticated()">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="${pageContext.request.contextPath}/web/logout"><span
+                        class="glyphicon glyphicon-log-out"></span>
+                    Logout</a></li>
+            </ul>
+        </security:authorize>
+
     </div>
 </nav>
 

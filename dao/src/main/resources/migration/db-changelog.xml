@@ -47,7 +47,8 @@
                 <constraints primaryKey="true"/>
             </column>
             <column name="F_DESCRIPTION" type="VARCHAR(1500)"/>
-            <column name="F_NAME" type="VARCHAR(50)"/>
+            <column name="F_IS_DELETED" type="BIT(1)"/>
+            <column name="F_NAME" type="VARCHAR(200)"/>
             <column name="F_PRICE" type="DECIMAL(19, 2)"/>
             <column name="F_U_NUMBER" type="VARCHAR(10)">
                 <constraints unique="true"/>
@@ -121,6 +122,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="F_IS_DISABLED" type="BIT(1)"/>
+            <column name="F_IS_DELETED" type="BIT(1)"/>
             <column name="F_NAME" type="VARCHAR(50)"/>
             <column name="F_PASSWORD" type="VARCHAR(255)"/>
             <column name="F_SURNAME" type="VARCHAR(50)"/>
@@ -486,6 +488,7 @@
             <column name="F_ID" valueNumeric="1"/>
             <column name="F_EMAIL" value="admin@admin.ru"/>
             <column name="F_IS_DISABLED" valueBoolean="false"/>
+            <column name="F_IS_DELETED" valueBoolean="false"/>
             <column name="F_NAME" value="Admin"/>
             <column name="F_PASSWORD" value="$2a$04$7xNvvkprv1hkEqoZUejWZeebCuygkQOhSI6E1fOVyoxBElPighlVS"/>
             <column name="F_SURNAME" value="Admin"/>

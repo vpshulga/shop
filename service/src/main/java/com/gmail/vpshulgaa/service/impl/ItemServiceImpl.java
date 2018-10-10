@@ -7,8 +7,7 @@ import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.ItemDto;
 import com.gmail.vpshulgaa.service.dto.XmlItemsDto;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -184,19 +183,23 @@ public class ItemServiceImpl implements ItemService {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void createFromXml(MultipartFile file) {
         try {
-            JAXBContext context = JAXBContext.newInstance(XmlItemsDto.class);
-            Unmarshaller unmarshaller = context.createUnmarshaller();
-            File tmpFile = new File("tmp.xml");
-            file.transferTo(tmpFile);
-            XmlItemsDto xmlItemsDto = (XmlItemsDto) unmarshaller.unmarshal(new FileReader(tmpFile));
-            List<ItemDto> itemsDto = xmlItemsDto.getItems();
+            if (file.getSize() != 0) {
+                JAXBContext context = JAXBContext.newInstance(XmlItemsDto.class);
+                Unmarshaller unmarshaller = context.createUnmarshaller();
+                File tmpFile = new File("tmp.xml");
+                file.transferTo(tmpFile);
+                BufferedReader bufferedReader = new BufferedReader(
+                        new InputStreamReader(new FileInputStream(tmpFile), "UTF-8"));
+                XmlItemsDto xmlItemsDto = (XmlItemsDto) unmarshaller.unmarshal(bufferedReader);
+                List<ItemDto> itemsDto = xmlItemsDto.getItems();
 
-            for (ItemDto itemDto : itemsDto) {
-                Item item = itemConverter.toEntity(itemDto);
-                itemDao.create(item);
+                for (ItemDto itemDto : itemsDto) {
+                    Item item = itemConverter.toEntity(itemDto);
+                    item.setDeleted(false);
+                    itemDao.create(item);
+                }
+                tmpFile.delete();
             }
-            tmpFile.delete();
-
         } catch (Exception e) {
             logger.error("Failed to create items", e);
         }

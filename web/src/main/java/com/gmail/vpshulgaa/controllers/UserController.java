@@ -1,9 +1,9 @@
 package com.gmail.vpshulgaa.controllers;
 
 import com.gmail.vpshulgaa.config.PageProperties;
-import com.gmail.vpshulgaa.service.ProfileService;
 import com.gmail.vpshulgaa.service.RoleService;
 import com.gmail.vpshulgaa.service.UserService;
+import com.gmail.vpshulgaa.service.dto.ChangePasswordDto;
 import com.gmail.vpshulgaa.service.dto.RoleDto;
 import com.gmail.vpshulgaa.service.dto.UserDto;
 import com.gmail.vpshulgaa.service.dto.UserProfileDto;
@@ -38,7 +38,7 @@ public class UserController {
     @GetMapping
     @PreAuthorize("hasAuthority('SHOW_USERS')")
     public String getUsers(ModelMap modelMap) {
-        List<UserDto> users = userService.findEnabledUsers();
+        List<UserDto> users = userService.findNotDeletedUsers();
         modelMap.addAttribute("users", users);
         return pageProperties.getUsersPagePath();
     }
@@ -54,14 +54,14 @@ public class UserController {
                              BindingResult result,
                              ModelMap modelMap) {
         userValidator.validate(user, result);
-
         if (result.hasErrors()) {
             modelMap.addAttribute("user", user);
             return pageProperties.getCreateUserPagePath();
+        } else {
+            userService.create(user);
+            modelMap.addAttribute("user", user);
+            return "redirect:/web/users";
         }
-        userService.create(user);
-        modelMap.addAttribute("user", user);
-        return "redirect:/web/users";
     }
 
     @GetMapping(value = "/{id}")
@@ -98,10 +98,28 @@ public class UserController {
     public String deleteUser(@RequestParam("ids") Long[] ids) {
         for (Long id : ids) {
             UserDto user = userService.findOne(id);
-            user.setDisabled(true);
+            user.setDeleted(true);
             userService.update(user);
         }
         return "redirect:/web/users";
     }
 
+    @GetMapping(value = "/{id}/update/password")
+    public String changePasswordPage(ModelMap modelMap, @PathVariable("id") Long id) {
+        UserDto user = userService.findOne(id);
+        modelMap.addAttribute("changePassword", new ChangePasswordDto());
+        modelMap.addAttribute("user", user);
+        return pageProperties.getChangePasswordPagePath();
+    }
+
+
+    @PostMapping(value = "/{id}/update/password")
+    public String updateUser(@ModelAttribute ChangePasswordDto changePassword,
+                             BindingResult result,
+                             ModelMap modelMap, @PathVariable("id") Long id) {
+        UserDto user = userService.findOne(id);
+        userService.changePassword(changePassword, user);
+        modelMap.addAttribute("changePassword", changePassword);
+        return "redirect:/web/users";
+    }
 }

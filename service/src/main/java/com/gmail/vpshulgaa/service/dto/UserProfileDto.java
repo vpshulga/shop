@@ -8,9 +8,11 @@ public class UserProfileDto {
     private String name;
     private String surname;
     private String password;
+    private String confirmPassword;
     private String address;
     private String telephone;
-    private boolean isDisabled;
+    private Boolean disabled;
+    private Boolean deleted;
 
     public long getId() {
         return id;
@@ -52,6 +54,14 @@ public class UserProfileDto {
         this.password = password;
     }
 
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
     public String getAddress() {
         return address;
     }
@@ -68,12 +78,20 @@ public class UserProfileDto {
         this.telephone = telephone;
     }
 
-    public boolean isDisabled() {
-        return isDisabled;
+    public Boolean getDisabled() {
+        return disabled;
     }
 
-    public void setDisabled(boolean disabled) {
-        isDisabled = disabled;
+    public void setDisabled(Boolean disabled) {
+        this.disabled = disabled;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 
     @Override

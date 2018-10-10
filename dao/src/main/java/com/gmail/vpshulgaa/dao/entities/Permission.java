@@ -3,9 +3,13 @@ package com.gmail.vpshulgaa.dao.entities;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
 @Table(name = "T_PERMISSION")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Permission implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

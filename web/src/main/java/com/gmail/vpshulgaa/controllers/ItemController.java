@@ -4,10 +4,12 @@ import com.gmail.vpshulgaa.config.PageProperties;
 import com.gmail.vpshulgaa.service.ItemService;
 import com.gmail.vpshulgaa.service.dto.ItemDto;
 import com.gmail.vpshulgaa.service.util.ServiceUtils;
+import com.gmail.vpshulgaa.utils.WebUtils;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,11 +44,25 @@ public class ItemController {
 
 
     @GetMapping(value = "/{id}")
-    public String getOneNews(@PathVariable Long id,
+    public String getOneItem(@PathVariable Long id,
                              ModelMap modelMap) {
         ItemDto item = itemService.findOne(id);
         modelMap.addAttribute("item", item);
+        System.out.println(WebUtils.getPrincipal().getPassword());
         return pageProperties.getOneItemPagePath();
+    }
+
+    @GetMapping("/create")
+    public String getCreateItemPage(ModelMap modelMap) {
+        modelMap.addAttribute("item", new ItemDto());
+        return pageProperties.getCreateItemPagePath();
+    }
+
+    @PostMapping("/create")
+    public String createitem(@ModelAttribute ItemDto item,
+                             BindingResult result,
+                             ModelMap modelMap) {
+        return "0";
     }
 
 }

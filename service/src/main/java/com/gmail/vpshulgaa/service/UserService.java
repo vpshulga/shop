@@ -1,5 +1,6 @@
 package com.gmail.vpshulgaa.service;
 
+import com.gmail.vpshulgaa.service.dto.ChangePasswordDto;
 import com.gmail.vpshulgaa.service.dto.UserDto;
 import com.gmail.vpshulgaa.service.dto.UserProfileDto;
 import java.util.List;
@@ -19,7 +20,9 @@ public interface UserService {
 
     UserDto findByEmail(String email);
 
-    List<UserDto> findEnabledUsers();
+    List<UserDto> findNotDeletedUsers();
 
     UserProfileDto findUserProfile(final Long id);
+
+    UserDto changePassword(ChangePasswordDto changePassword, UserDto user);
 }

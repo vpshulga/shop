@@ -25,6 +25,9 @@ public class PageProperties {
     private String readyOrderPagePath;
     private String ordersPagePath;
     private String updateOrderPagePath;
+    private String logoutPagePath;
+    private String createItemPagePath;
+    private String changePasswordPagePath;
 
     @Autowired
     public PageProperties(Environment environment) {
@@ -49,6 +52,9 @@ public class PageProperties {
         this.readyOrderPagePath = environment.getProperty("ready.order.page.path");
         this.ordersPagePath = environment.getProperty("orders.page.path");
         this.updateOrderPagePath = environment.getProperty("update.order.page.path");
+        this.logoutPagePath = environment.getProperty("logout.page.path");
+        this.createItemPagePath = environment.getProperty("create.item.page.path");
+        this.changePasswordPagePath = environment.getProperty("change.password.page.path");
     }
 
     public String getLoginPagePath() {
@@ -113,5 +119,17 @@ public class PageProperties {
 
     public String getUpdateOrderPagePath() {
         return updateOrderPagePath;
+    }
+
+    public String getLogoutPagePath() {
+        return logoutPagePath;
+    }
+
+    public String getCreateItemPagePath() {
+        return createItemPagePath;
+    }
+
+    public String getChangePasswordPagePath() {
+        return changePasswordPagePath;
     }
 }

@@ -26,8 +26,8 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
     }
 
     @Override
-    public List<User> findEnabledUsers() {
-        String hql = "from User as u where u.isDisabled=false";
+    public List<User> findNotDeletedUsers() {
+        String hql = "from User as u where u.deleted=false";
         Query query = getCurrentSession().createQuery(hql);
         return query.list();
     }

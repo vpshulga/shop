@@ -3,11 +3,15 @@ package com.gmail.vpshulgaa.dao.entities;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 @Entity
 @Table(name = "T_PROFILE")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Profile implements Serializable {
     @GenericGenerator(
             name = "generator",

@@ -8,6 +8,7 @@ import com.gmail.vpshulgaa.service.RoleService;
 import com.gmail.vpshulgaa.service.UserService;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
+import com.gmail.vpshulgaa.service.dto.ChangePasswordDto;
 import com.gmail.vpshulgaa.service.dto.RoleDto;
 import com.gmail.vpshulgaa.service.dto.UserDto;
 import com.gmail.vpshulgaa.service.dto.UserProfileDto;
@@ -88,6 +89,8 @@ public class UserServiceImpl implements UserService {
             Role role = roleConverter.toEntity(roleService.findByName(Roles.CUSTOMER_USER));
             user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
             user.setRole(role);
+            user.setDisabled(Boolean.FALSE);
+            user.setDeleted(Boolean.FALSE);
             userDao.create(user);
             userDto = userProfileDtoConverter.toDto(user);
         } catch (Exception e) {
@@ -101,7 +104,6 @@ public class UserServiceImpl implements UserService {
     public UserDto update(UserDto userDto) {
         try {
             User user = userConverter.toEntity(userDto);
-            user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
             userDao.update(user);
             userDto = userDtoConverter.toDto(user);
         } catch (Exception e) {
@@ -148,11 +150,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public List<UserDto> findEnabledUsers() {
+    public List<UserDto> findNotDeletedUsers() {
         List<UserDto> usersDto = new ArrayList<>();
         List<User> users;
         try {
-            users = userDao.findEnabledUsers();
+            users = userDao.findNotDeletedUsers();
             for (User user : users) {
                 usersDto.add(userDtoConverter.toDto(user));
             }
@@ -173,5 +175,18 @@ public class UserServiceImpl implements UserService {
             logger.error("Failed to find user");
         }
         return userProfileDto;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public UserDto changePassword(ChangePasswordDto changePassword, UserDto userDto) {
+        changePassword.setOldPassword(bCryptPasswordEncoder.encode(changePassword.getOldPassword()));
+        changePassword.setNewPassword(bCryptPasswordEncoder.encode(changePassword.getNewPassword()));
+        changePassword.setConfirmPassword(bCryptPasswordEncoder.encode(changePassword.getConfirmPassword()));
+        userDto.setPassword(changePassword.getNewPassword());
+        User user = userConverter.toEntity(userDto);
+        userDao.update(user);
+        userDto = userDtoConverter.toDto(user);
+        return userDto;
     }
 }

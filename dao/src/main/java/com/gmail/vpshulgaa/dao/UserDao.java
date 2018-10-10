@@ -6,5 +6,5 @@ import java.util.List;
 public interface UserDao extends GenericDao<User> {
     User findByEmail(String email);
 
-    List<User> findEnabledUsers();
+    List<User> findNotDeletedUsers();
 }

@@ -19,7 +19,8 @@ public class UserProfileDtoConverter implements DtoConverter<UserProfileDto, Use
         userProfileDto.setEmail(entity.getEmail());
         userProfileDto.setSurname(entity.getSurname());
         userProfileDto.setPassword(entity.getPassword());
-        userProfileDto.setDisabled(entity.isDisabled());
+        userProfileDto.setDisabled(entity.getDisabled());
+        userProfileDto.setDeleted(entity.getDeleted());
         userProfileDto.setAddress(entity.getProfile().getAddress());
         userProfileDto.setTelephone(entity.getProfile().getTelephone());
 

@@ -29,6 +29,7 @@
                                 <th scope="col">FirstName</th>
                                 <th scope="col">LastName</th>
                                 <th scope="col">Role</th>
+                                <th scope="col">Disabled</th>
                                 <th scope="col">Actions</th>
                             </tr>
                             </thead>
@@ -40,6 +41,7 @@
                                     <td>${user.name}</td>
                                     <td>${user.surname}</td>
                                     <td>${user.role.name}</td>
+                                    <td>${user.disabled}</td>
                                     <td>
                                         <a href="${pageContext.request.contextPath}/web/users/${user.id}" class="btn btn-primary" aria-pressed="true"
                                            role="button">Info</a>

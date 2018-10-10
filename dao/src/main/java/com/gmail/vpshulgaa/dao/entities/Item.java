@@ -6,9 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
 @Table(name = "T_ITEM")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Item implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,10 +22,12 @@ public class Item implements Serializable {
     private String name;
     @Column(name = "F_DESCRIPTION", length = 1500)
     private String description;
-    @Column(name = "F_U_NUMBER", length = 10, unique = true)
+    @Column(name = "F_U_NUMBER", length = 200, unique = true)
     private String uniqueNumber;
     @Column(name = "F_PRICE")
     private BigDecimal price;
+    @Column(name = "F_IS_DELETED")
+    private Boolean isDeleted;
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
@@ -80,6 +86,14 @@ public class Item implements Serializable {
 
     public void setDiscounts(List<Discount> discounts) {
         this.discounts = discounts;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
     }
 
     @Override

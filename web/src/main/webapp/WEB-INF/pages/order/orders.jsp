@@ -28,11 +28,11 @@
                     <c:forEach items="${orders}" var="order">
                         <tr>
                             <td>${order.created}</td>
-                            <td>${order.item.name}</td>
+                            <td>${order.itemName}</td>
                             <td>${order.quantity}</td>
-                            <td>${order.item.price}</td>
+                            <td>${order.itemPrice}</td>
                             <td>${order.total}</td>
-                            <td>${order.user.email}</td>
+                            <td>${order.creator}</td>
                             <td>${order.status}(<a class="page-link"
                                                    href="${pageContext.request.contextPath}/web/orders/${order.id}">change</a>)</td>
                         </tr>
@@ -68,9 +68,9 @@
                     <c:forEach items="${userOrders}" var="order">
                         <tr>
                             <td>${order.created}</td>
-                            <td>${order.item.name}</td>
+                            <td>${order.itemName}</td>
                             <td>${order.quantity}</td>
-                            <td>${order.item.price}</td>
+                            <td>${order.itemPrice}</td>
                             <td>${order.total}</td>
                         </tr>
                     </c:forEach>

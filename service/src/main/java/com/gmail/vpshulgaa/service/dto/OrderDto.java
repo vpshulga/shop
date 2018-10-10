@@ -11,8 +11,11 @@ public class OrderDto {
     private Integer quantity;
     private Status status;
     private BigDecimal total;
-    private ItemDto item;
-    private UserDto user;
+    private String itemName;
+    private BigDecimal itemPrice;
+    private Long itemId;
+    private Long userId;
+    private String creator;
 
     public OrderDto() {
     }
@@ -41,18 +44,6 @@ public class OrderDto {
         this.quantity = quantity;
     }
 
-    public ItemDto getItem() {
-        return item;
-    }
-
-    public void setItem(ItemDto item) {
-        this.item = item;
-    }
-
-    public UserDto getUser() {
-        return user;
-    }
-
     public BigDecimal getTotal() {
         return total;
     }
@@ -61,16 +52,52 @@ public class OrderDto {
         this.total = total;
     }
 
-    public void setUser(UserDto user) {
-        this.user = user;
-    }
-
     public Status getStatus() {
         return status;
     }
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    public BigDecimal getItemPrice() {
+        return itemPrice;
+    }
+
+    public void setItemPrice(BigDecimal itemPrice) {
+        this.itemPrice = itemPrice;
+    }
+
+    public Long getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(Long itemId) {
+        this.itemId = itemId;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     @Override

@@ -2,13 +2,13 @@ package com.gmail.vpshulgaa.service.impl;
 
 import com.gmail.vpshulgaa.dao.NewsDao;
 import com.gmail.vpshulgaa.dao.entities.News;
+import com.gmail.vpshulgaa.dao.entities.User;
 import com.gmail.vpshulgaa.service.NewsService;
+import com.gmail.vpshulgaa.service.UserService;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.NewsDto;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import com.gmail.vpshulgaa.service.dto.UserDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +18,10 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class NewsServiceImpl implements NewsService {
 
@@ -25,14 +29,21 @@ public class NewsServiceImpl implements NewsService {
     private final NewsDao newsDao;
     private final DtoConverter<NewsDto, News> newsDtoConverter;
     private final Converter<NewsDto, News> newsConverter;
+    private final UserService userService;
+    private final Converter<UserDto, User> userConverter;
 
     @Autowired
-    public NewsServiceImpl(NewsDao newsDao,
-                           @Qualifier("newsConverter") Converter<NewsDto, News> newsConverter,
-                           @Qualifier("newsDtoConverter") DtoConverter<NewsDto, News> newsDtoConverter) {
+    public NewsServiceImpl(
+            NewsDao newsDao,
+            @Qualifier("newsConverter") Converter<NewsDto, News> newsConverter,
+            @Qualifier("newsDtoConverter") DtoConverter<NewsDto, News> newsDtoConverter,
+            UserService userService,
+            @Qualifier("userConverter") Converter<UserDto, User> userConverter) {
         this.newsConverter = newsConverter;
         this.newsDao = newsDao;
         this.newsDtoConverter = newsDtoConverter;
+        this.userService = userService;
+        this.userConverter = userConverter;
     }
 
     @Override
@@ -56,10 +67,12 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public NewsDto create(NewsDto newsDto) {
+    public NewsDto create(NewsDto newsDto, Long userId) {
         try {
             newsDto.setCreated(LocalDateTime.now());
             News news = newsConverter.toEntity(newsDto);
+            UserDto userDto = userService.findOne(userId);
+            news.setUser(userConverter.toEntity(userDto));
             newsDao.create(news);
             newsDto = newsDtoConverter.toDto(news);
         } catch (Exception e) {
@@ -70,9 +83,11 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public NewsDto update(NewsDto newsDto) {
+    public NewsDto update(NewsDto newsDto, Long userId) {
         try {
             News news = newsConverter.toEntity(newsDto);
+            UserDto userDto = userService.findOne(userId);
+            news.setUser(userConverter.toEntity(userDto));
             newsDao.update(news);
             newsDto = newsDtoConverter.toDto(news);
         } catch (Exception e) {

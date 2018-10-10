@@ -42,7 +42,7 @@
                                     </td>
                                     <td>${news.created.dayOfMonth}-${news.created.monthValue}-${news.created.year}
                                             ${news.created.hour}:${news.created.minute}</td>
-                                    <td>${news.user.name}</td>
+                                    <td>${news.creator}</td>
                                     <td>
                                         <a href="${pageContext.request.contextPath}/web/news/${news.id}/update"
                                            class="btn btn-primary"

@@ -7,8 +7,7 @@ public class CommentDto {
     private long id;
     private String content;
     private LocalDateTime created;
-    private UserDto user;
-    private NewsDto news;
+    private String creator;
 
     public CommentDto() {
     }
@@ -37,20 +36,12 @@ public class CommentDto {
         this.created = created;
     }
 
-    public UserDto getUser() {
-        return user;
+    public String getCreator() {
+        return creator;
     }
 
-    public void setUser(UserDto user) {
-        this.user = user;
-    }
-
-    public NewsDto getNews() {
-        return news;
-    }
-
-    public void setNews(NewsDto news) {
-        this.news = news;
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
 
     @Override

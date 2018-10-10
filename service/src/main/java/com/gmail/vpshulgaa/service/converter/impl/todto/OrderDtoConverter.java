@@ -16,16 +16,6 @@ import org.springframework.stereotype.Component;
 @Component("orderDtoConverter")
 public class OrderDtoConverter implements DtoConverter<OrderDto, Order> {
 
-    private final DtoConverter<ItemDto, Item> itemDtoConverter;
-    private final DtoConverter<UserDto, User> userDtoConverter;
-
-    @Autowired
-    public OrderDtoConverter(@Qualifier("itemDtoConverter") DtoConverter<ItemDto, Item> itemDtoConverter,
-                             @Qualifier("userDtoConverter") DtoConverter<UserDto, User> userDtoConverter) {
-        this.itemDtoConverter = itemDtoConverter;
-        this.userDtoConverter = userDtoConverter;
-    }
-
     @Override
     public OrderDto toDto(Order entity) {
         if (entity == null) {
@@ -36,16 +26,12 @@ public class OrderDtoConverter implements DtoConverter<OrderDto, Order> {
         orderDto.setCreated(entity.getCreated());
         orderDto.setQuantity(entity.getQuantity());
         orderDto.setStatus(entity.getStatus());
-        if (entity.getItem() != null) {
-            ItemDto itemDto = itemDtoConverter.toDto(entity.getItem());
-            orderDto.setItem(itemDto);
-        }
-
-        if (entity.getUser() != null) {
-            UserDto userDto = userDtoConverter.toDto(entity.getUser());
-            orderDto.setUser(userDto);
-        }
         orderDto.setTotal(entity.getItem().getPrice().multiply(BigDecimal.valueOf(entity.getQuantity())));
+        orderDto.setItemName(entity.getItem().getName());
+        orderDto.setItemPrice(entity.getItem().getPrice());
+        orderDto.setItemId(entity.getItem().getId());
+        orderDto.setCreator(entity.getUser().getName());
+        orderDto.setUserId(entity.getUser().getId());
 
         return orderDto;
     }

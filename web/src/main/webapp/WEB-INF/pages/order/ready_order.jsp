@@ -24,13 +24,7 @@
     <div class="form-group">
         <form:input path="quantity" type="hidden" class="form-control" value="${quantity}"/>
     </div>
-    <div class="form-group">
-        <form:input type="hidden" path="item.id" class="form-control" value="${item.id}"/>
-    </div>
-    <div class="form-group">
-        <security:authentication property="principal.id" var="user"/>
-        <form:input type="hidden" path="user.id" class="form-control" value="${user}"/>
-    </div>
+    <input type="hidden" name="item" value="${item.id}"/>
     <button type="submit" class="btn btn-primary">Pay</button>
 </form:form>
 <jsp:include page="../util/js.jsp"/>

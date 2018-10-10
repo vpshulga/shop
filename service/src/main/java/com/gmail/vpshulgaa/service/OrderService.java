@@ -8,9 +8,9 @@ public interface OrderService {
 
     List<OrderDto> findAll();
 
-    OrderDto create(final OrderDto dto);
+    OrderDto create(final OrderDto dto, Long itemId, Long userId);
 
-    OrderDto update(final OrderDto dto);
+    OrderDto update(final OrderDto dto, Long itemId, Long userId);
 
     OrderDto delete(final OrderDto dto);
 

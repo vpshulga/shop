@@ -15,8 +15,8 @@
     <div class="col-md-8">
         <ul class="list-group">
             <li class="list-group-item">Created: ${order.created}</li>
-            <li class="list-group-item">Item: ${order.item.name}</li>
-            <li class="list-group-item">Price: ${order.item.price}</li>
+            <li class="list-group-item">Item: ${order.itemName}</li>
+            <li class="list-group-item">Price: ${order.itemPrice}</li>
             <li class="list-group-item">Quantity: ${order.quantity}</li>
             <li class="list-group-item">Total: ${order.total}</li>
             <li class="list-group-item"><form:form action="${pageContext.request.contextPath}/web/orders/${order.id}/update" modelAttribute="order" method="post">
@@ -28,13 +28,19 @@
                     <form:input path="quantity" type="hidden" class="form-control"/>
                 </div>
                 <div class="form-group">
-                    <form:input type="hidden" path="item.id" class="form-control"/>
-                </div>
-                <div class="form-group">
-                    <form:input path="user.id" type="hidden"  class="form-control" />
-                </div>
-                <div class="form-group">
                     <form:input path="total" type="hidden"  class="form-control" />
+                </div>
+                <div class="form-group">
+                    <form:input path="itemName" type="hidden"  class="form-control" />
+                </div>
+                <div class="form-group">
+                    <form:input path="itemPrice" type="hidden"  class="form-control" />
+                </div>
+                <div class="form-group">
+                    <form:input path="itemId" type="hidden"  class="form-control" />
+                </div>
+                <div class="form-group">
+                    <form:input path="userId" type="hidden"  class="form-control" />
                 </div>
                 <div class="form-group">
                     <form:label path="status">Status:</form:label>
@@ -44,6 +50,7 @@
                         </c:forEach>
                     </form:select>
                 </div>
+
                 <button type="submit" class="btn btn-primary">Update</button>
             </form:form></li>
         </ul>

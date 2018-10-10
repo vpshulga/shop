@@ -21,7 +21,10 @@
         <form:input type="hidden" path="created" class="form-control" />
     </div>
     <div class="form-group">
-        <form:input type="hidden" path="user.id" class="form-control" />
+        <form:input type="hidden" path="creator" class="form-control" />
+    </div>
+    <div class="form-group">
+        <form:input type="hidden" path="userId" class="form-control" />
     </div>
 
 

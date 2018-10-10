@@ -8,9 +8,9 @@ public interface NewsService {
 
     List<NewsDto> findAll();
 
-    NewsDto create(final NewsDto dto);
+    NewsDto create(final NewsDto dto, Long userId);
 
-    NewsDto update(final NewsDto dto);
+    NewsDto update(final NewsDto dto, Long userId);
 
     NewsDto delete(final NewsDto dto);
 

@@ -8,7 +8,8 @@ public class NewsDto {
     private String title;
     private String content;
     private LocalDateTime created;
-    private UserDto user;
+    private String creator;
+    private Long userId;
 
     public NewsDto() {
     }
@@ -45,12 +46,20 @@ public class NewsDto {
         this.created = created;
     }
 
-    public UserDto getUser() {
-        return user;
+    public String getCreator() {
+        return creator;
     }
 
-    public void setUser(UserDto user) {
-        this.user = user;
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     @Override

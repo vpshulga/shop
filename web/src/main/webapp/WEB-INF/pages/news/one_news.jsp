@@ -50,7 +50,7 @@
             <h3>Comments</h3>
             <c:forEach items="${comments}" var="oneComment">
                 created:${oneComment.created} |
-                creator:${oneComment.user.name}<br>
+                creator:${oneComment.creator}<br>
                 ${oneComment.content}<br><br>
             </c:forEach></div>
         <div class="col-md-3"></div>

@@ -13,13 +13,6 @@ import org.springframework.stereotype.Component;
 @Component("newsConverter")
 public class NewsConverter implements Converter<NewsDto, News> {
 
-    private final Converter<UserDto, User> userConverter;
-
-    @Autowired
-    public NewsConverter(@Qualifier("userConverter") Converter<UserDto, User> userConverter) {
-        this.userConverter = userConverter;
-    }
-
     @Override
     public News toEntity(NewsDto dto) {
         if (dto == null) {
@@ -30,10 +23,6 @@ public class NewsConverter implements Converter<NewsDto, News> {
         news.setTitle(dto.getTitle());
         news.setContent(dto.getContent());
         news.setCreated(dto.getCreated());
-
-        if (dto.getUser() != null) {
-            news.setUser(userConverter.toEntity(dto.getUser()));
-        }
 
         return news;
     }

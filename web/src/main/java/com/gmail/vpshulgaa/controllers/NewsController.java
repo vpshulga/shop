@@ -7,18 +7,17 @@ import com.gmail.vpshulgaa.service.dto.CommentDto;
 import com.gmail.vpshulgaa.service.dto.NewsDto;
 import com.gmail.vpshulgaa.service.util.ServiceUtils;
 import com.gmail.vpshulgaa.utils.WebUtils;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/web/news")
 public class NewsController {
-    private static final int COUNT_OF_NEWS_ON_PAGE = 10;
     private final NewsService newsService;
     private final PageProperties pageProperties;
     private final CommentService commentService;
@@ -33,34 +32,45 @@ public class NewsController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('SHOW_NEWS')")
     public String getNews(@RequestParam(value = "page", defaultValue = "1") Long page,
                           ModelMap modelMap) {
-        Long pagesCount = ServiceUtils.countOfPages(newsService.countOfNews(), COUNT_OF_NEWS_ON_PAGE);
-        List<NewsDto> news = newsService.findNewsByPage(page, COUNT_OF_NEWS_ON_PAGE);
+        Long pagesCount = ServiceUtils.countOfPages(newsService.countOfNews(),
+                pageProperties.getCountOfEntitiesOnPage());
+        List<NewsDto> news = newsService.findNewsByPage(page,
+                pageProperties.getCountOfEntitiesOnPage());
         modelMap.addAttribute("pages", pagesCount);
         modelMap.addAttribute("news", news);
         return pageProperties.getNewsPagePath();
     }
 
     @GetMapping(value = "/create")
+    @PreAuthorize("hasAuthority('CREATE_NEWS')")
     public String addNewsPage(ModelMap modelMap) {
         modelMap.addAttribute("news", new NewsDto());
         return pageProperties.getCreateNewsPagePath();
     }
 
     @GetMapping(value = "/{id}")
+    @PreAuthorize("hasAuthority('SHOW_NEWS')")
     public String getOneNews(@PathVariable Long id,
-                             ModelMap modelMap) {
+                             ModelMap modelMap,
+                             @RequestParam(value = "page", defaultValue = "1") Long page) {
         NewsDto news = newsService.findOne(id);
         CommentDto comment = new CommentDto();
-        List<CommentDto> comments = commentService.findCommentsByNewsId(id);
+        Long pagesCount = ServiceUtils.countOfPages(commentService.countOfCommentsByNewsId(id),
+                pageProperties.getCountOfEntitiesOnPage());
+        List<CommentDto> comments = commentService.findCommentsByPageForNews(id, page,
+                pageProperties.getCountOfEntitiesOnPage());
         modelMap.addAttribute("comments", comments);
         modelMap.addAttribute("news", news);
         modelMap.addAttribute("comment", comment);
+        modelMap.addAttribute("pages", pagesCount);
         return pageProperties.getOneNewsPagePath();
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('CREATE_NEWS')")
     public String createNews(@ModelAttribute NewsDto news,
                              BindingResult result,
                              ModelMap modelMap) {
@@ -70,18 +80,16 @@ public class NewsController {
     }
 
     @PostMapping(value = "/{news_id}")
+    @PreAuthorize("hasAuthority('CREATE_COMMENT')")
     public String createComment(@ModelAttribute CommentDto comment,
                                 ModelMap modelMap, @PathVariable("news_id") Long news_id) {
-        NewsDto news = newsService.findOne(news_id);
         commentService.create(comment, news_id, WebUtils.getPrincipal().getId());
-        List<CommentDto> comments = commentService.findCommentsByNewsId(news_id);
         modelMap.addAttribute("comment", comment);
-        modelMap.addAttribute("comments", comments);
-        modelMap.addAttribute("news", news);
-        return pageProperties.getOneNewsPagePath();
+        return "redirect:/web/news/" + news_id;
     }
 
     @GetMapping(value = "/{id}/update")
+    @PreAuthorize("hasAuthority('UPDATE_NEWS')")
     public String updateNewsPage(@PathVariable Long id,
                                  ModelMap modelMap) {
         NewsDto news = newsService.findOne(id);
@@ -90,6 +98,7 @@ public class NewsController {
     }
 
     @PostMapping(value = "/{id}/update")
+    @PreAuthorize("hasAuthority('UPDATE_NEWS')")
     public String updateNews(@ModelAttribute NewsDto news,
                              BindingResult result,
                              ModelMap modelMap,
@@ -102,11 +111,22 @@ public class NewsController {
     }
 
     @PostMapping("/delete")
-    public String deleteNews(@RequestParam("ids") Long[] ids) {
-        for (Long id : ids) {
-            newsService.deleteById(id);
+    @PreAuthorize("hasAuthority('DELETE_NEWS')")
+    public String deleteNews(@RequestParam(value = "ids", required = false) Long[] ids) {
+        if (ids != null) {
+            for (Long id : ids) {
+                newsService.deleteById(id);
+            }
         }
-        return "redirect:/news";
+        return "redirect:/web/news";
+    }
+
+    @PostMapping("/comment/delete")
+    @PreAuthorize("hasAuthority('DELETE_COMMENTS')")
+    public String deleteComment(@RequestParam(value = "commentId") Long commentId,
+                                @RequestParam(value = "newsId") Long newsId) {
+        commentService.deleteById(commentId);
+        return "redirect:/web/news/" + newsId;
     }
 
 }

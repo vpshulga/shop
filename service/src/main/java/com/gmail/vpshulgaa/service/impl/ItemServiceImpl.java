@@ -7,6 +7,7 @@ import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.ItemDto;
 import com.gmail.vpshulgaa.service.dto.XmlItemsDto;
+import com.gmail.vpshulgaa.service.util.ServiceUtils;
 import java.io.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -63,6 +64,8 @@ public class ItemServiceImpl implements ItemService {
     public ItemDto create(ItemDto itemDto) {
         try {
             Item item = itemConverter.toEntity(itemDto);
+            item.setDeleted(Boolean.FALSE);
+            item.setUniqueNumber(ServiceUtils.generateUniqueId());
             itemDao.create(item);
             itemDto = itemDtoConverter.toDto(item);
         } catch (Exception e) {
@@ -195,7 +198,8 @@ public class ItemServiceImpl implements ItemService {
 
                 for (ItemDto itemDto : itemsDto) {
                     Item item = itemConverter.toEntity(itemDto);
-                    item.setDeleted(false);
+                    item.setDeleted(Boolean.FALSE);
+                    item.setUniqueNumber(ServiceUtils.generateUniqueId());
                     itemDao.create(item);
                 }
                 tmpFile.delete();

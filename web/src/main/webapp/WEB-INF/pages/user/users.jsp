@@ -50,6 +50,12 @@
                             </c:forEach>
                             </tbody>
                         </table>
+                        <ul class="pagination">
+                            <c:forEach var="page" begin="1" end="${pages}">
+                                <li class="page-item"><a class="page-link"
+                                                         href="${pageContext.request.contextPath}/web/users?page=${page}">${page}</a></li>
+                            </c:forEach>
+                        </ul>
                     </div>
                 </div>
             </form>

@@ -7,39 +7,45 @@
     <title>Create user</title>
 </head>
 <body>
-
-    <form:form action="${pageContext.request.contextPath}/web/users/create" modelAttribute="user" method="post">
-        <form:errors path="*" cssClass="error" element="div" />
-        <div class="form-group">
-            <form:label path="name">First name:</form:label>
-            <form:input path="name" class="form-control" placeholder="First name" />
-        </div>
-        <div class="form-group">
-            <form:label path="surname">Last name:</form:label>
-            <form:input path="surname" class="form-control" placeholder="Last name" />
-        </div>
-        <div class="form-group">
-            <form:label path="email">Email:</form:label>
-            <form:input path="email" type="email" class="form-control" placeholder="Email" />
-        </div>
-        <div class="form-group">
-            <form:label path="password">Password:</form:label>
-            <form:input path="password" type="password" class="form-control" placeholder="Password" />
-        </div>
-        <div class="form-group">
-            <form:label path="confirmPassword">Confirm Password:</form:label>
-            <form:input path="confirmPassword" type="password" class="form-control" placeholder="Password" />
-        </div>
-        <div class="form-group">
-            <form:label path="address">Address:</form:label>
-            <form:input path="address" class="form-control" placeholder="Address" />
-        </div>
-        <div class="form-group">
-            <form:label path="telephone">Telephone:</form:label>
-            <form:input path="telephone" class="form-control" placeholder="Telephone" />
-        </div>
-        <button type="submit" class="btn btn-primary">Create</button>
-    </form:form>
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 shadow-lg bg-white rounded">
+        <h1>Registration form</h1>
+        <form:form action="${pageContext.request.contextPath}/web/users/create" modelAttribute="user" method="post">
+            <form:errors path="*" cssClass="error" element="div"/>
+            <div class="form-group">
+                <form:label path="name">First name:</form:label>
+                <form:input path="name" class="form-control" placeholder="First name"/>
+            </div>
+            <div class="form-group">
+                <form:label path="surname">Last name:</form:label>
+                <form:input path="surname" class="form-control" placeholder="Last name"/>
+            </div>
+            <div class="form-group">
+                <form:label path="email">Email:</form:label>
+                <form:input path="email" type="email" class="form-control" placeholder="Email"/>
+            </div>
+            <div class="form-group">
+                <form:label path="password">Password:</form:label>
+                <form:input path="password" type="password" class="form-control" placeholder="Password"/>
+            </div>
+            <div class="form-group">
+                <form:label path="confirmPassword">Confirm Password:</form:label>
+                <form:input path="confirmPassword" type="password" class="form-control" placeholder="Password"/>
+            </div>
+            <div class="form-group">
+                <form:label path="address">Address:</form:label>
+                <form:input path="address" class="form-control" placeholder="Address"/>
+            </div>
+            <div class="form-group">
+                <form:label path="telephone">Telephone:</form:label>
+                <form:input path="telephone" class="form-control" placeholder="Telephone"/>
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+        </form:form>
+    </div>
+    <div class="col-md-4"></div>
+</div>
 </body>
 </html>
 

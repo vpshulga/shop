@@ -129,16 +129,28 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public List<CommentDto> findCommentsByNewsId(Long newsId) {
+    public Long countOfCommentsByNewsId(Long newsId) {
+        Long count = 0L;
+        try {
+            count = commentDao.countOfCommentsByNewsId(newsId);
+        } catch (Exception e) {
+            logger.error("Failed to find comments", e);
+        }
+        return count;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public List<CommentDto> findCommentsByPageForNews(Long newsId, Long page, int maxResults) {
         List<CommentDto> commentsDto = new ArrayList<>();
         List<Comment> comments;
         try {
-            comments = commentDao.findCommentsByNewsId(newsId);
+            comments = commentDao.findCommentsByPageForNews(newsId, page, maxResults);
             for (Comment comment : comments) {
                 commentsDto.add(commentDtoConverter.toDto(comment));
             }
         } catch (Exception e) {
-            logger.error("Failed to get comments", e);
+            logger.error("Failed to find comments", e);
         }
         return commentsDto;
     }

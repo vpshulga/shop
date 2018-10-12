@@ -9,24 +9,26 @@
 </head>
 <body>
 <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
         <ul class="list-group">
             <li class="list-group-item">Item: ${item.name}</li>
             <li class="list-group-item">Cost: ${item.price}</li>
             <li class="list-group-item">Quantity: ${quantity}</li>
             <li class="list-group-item">Total: ${quantity * item.price}</li>
         </ul>
+        <form:errors path="*" cssClass="error"/>
+        <form:form action="${pageContext.request.contextPath}/web/orders/order/ready" modelAttribute="order"
+                   method="post">
+            <div class="form-group">
+                <form:input path="quantity" type="hidden" class="form-control" value="${quantity}"/>
+            </div>
+            <input type="hidden" name="item" value="${item.id}"/>
+            <button type="submit" class="btn btn-primary">Pay</button>
+        </form:form>
     </div>
 </div>
-<form:errors path="*" cssClass="error"/>
-<form:form action="${pageContext.request.contextPath}/web/orders/order/ready" modelAttribute="order" method="post">
-    <div class="form-group">
-        <form:input path="quantity" type="hidden" class="form-control" value="${quantity}"/>
-    </div>
-    <input type="hidden" name="item" value="${item.id}"/>
-    <button type="submit" class="btn btn-primary">Pay</button>
-</form:form>
+
 <jsp:include page="../util/js.jsp"/>
 <jsp:include page="../commons/footer.jsp"/>
 </body>

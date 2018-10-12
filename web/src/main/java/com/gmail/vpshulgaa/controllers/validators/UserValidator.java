@@ -1,4 +1,4 @@
-package com.gmail.vpshulgaa.validators;
+package com.gmail.vpshulgaa.controllers.validators;
 
 import com.gmail.vpshulgaa.service.dto.UserProfileDto;
 import java.util.regex.Pattern;

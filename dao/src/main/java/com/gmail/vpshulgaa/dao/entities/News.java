@@ -16,9 +16,9 @@ public class News implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "F_ID", updatable = false, nullable = false)
     private long id;
-    @Column(name = "F_TITLE", length = 100)
+    @Column(name = "F_TITLE", length = 200)
     private String title;
-    @Column(name = "F_CONTENT", length = 1000)
+    @Column(name = "F_CONTENT", length = 3000)
     private String content;
     @Column(name = "F_CREATED")
     private LocalDateTime created;

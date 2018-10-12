@@ -13,6 +13,7 @@ import com.gmail.vpshulgaa.utils.WebUtils;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,6 @@ public class OrderController {
     private final PageProperties pageProperties;
     private final ItemService itemService;
     private final OrderService orderService;
-    private static final int COUNT_OF_ITEMS_ON_PAGE = 10;
 
     @Autowired
     public OrderController(PageProperties pageProperties,
@@ -35,12 +35,17 @@ public class OrderController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('SHOW_ORDERS')")
     public String getOrders(@RequestParam(value = "page", defaultValue = "1") Long page,
                             ModelMap modelMap) {
-        Long pagesCount = ServiceUtils.countOfPages(orderService.countOfOrder(), COUNT_OF_ITEMS_ON_PAGE);
-        Long userPagesCount = ServiceUtils.countOfPages(orderService.countOfOrderForUser(WebUtils.getPrincipal().getId()), COUNT_OF_ITEMS_ON_PAGE);
-        List<OrderDto> orders = orderService.findOrdersByPage(page, COUNT_OF_ITEMS_ON_PAGE);
-        List<OrderDto> userOrders = orderService.findOrdersByPageForUser(page, COUNT_OF_ITEMS_ON_PAGE, WebUtils.getPrincipal().getId());
+        Long pagesCount = ServiceUtils.countOfPages(orderService.countOfOrder(),
+                pageProperties.getCountOfEntitiesOnPage());
+        Long userPagesCount = ServiceUtils.countOfPages(orderService.countOfOrderForUser(WebUtils.getPrincipal().getId()),
+                pageProperties.getCountOfEntitiesOnPage());
+        List<OrderDto> orders = orderService.findOrdersByPage(page,
+                pageProperties.getCountOfEntitiesOnPage());
+        List<OrderDto> userOrders = orderService.findOrdersByPageForUser(page,
+                pageProperties.getCountOfEntitiesOnPage(), WebUtils.getPrincipal().getId());
         modelMap.addAttribute("pages", pagesCount);
         modelMap.addAttribute("pagesForUser", userPagesCount);
         modelMap.addAttribute("orders", orders);
@@ -49,6 +54,7 @@ public class OrderController {
     }
 
     @GetMapping(value = "/{id}")
+    @PreAuthorize("hasAuthority('CHANGE_ORDER_STATUS')")
     public String updatePage(ModelMap modelMap, @PathVariable("id") Long id) {
         OrderDto order = orderService.findOne(id);
         Status[] statuses = Status.values();
@@ -59,6 +65,7 @@ public class OrderController {
 
 
     @GetMapping("/order")
+    @PreAuthorize("hasAuthority('CREATE_ORDER')")
     public String createOrderPage(@RequestParam("item") Long id,
                                   ModelMap modelMap) {
         ItemDto item = itemService.findOne(id);
@@ -68,6 +75,7 @@ public class OrderController {
     }
 
     @PostMapping("/order")
+    @PreAuthorize("hasAuthority('CREATE_ORDER')")
     public String createReadyOrder(@RequestParam("quantity") Integer quantity,
                                    @RequestParam("item") Long id,
                                    ModelMap modelMap) {
@@ -79,6 +87,7 @@ public class OrderController {
     }
 
     @PostMapping("/order/ready")
+    @PreAuthorize("hasAuthority('CREATE_ORDER')")
     public String createOrder(ModelMap modelMap,
                               @ModelAttribute OrderDto order,
                               @RequestParam("item") Long id) {
@@ -88,6 +97,7 @@ public class OrderController {
     }
 
     @PostMapping("/{id}/update")
+    @PreAuthorize("hasAuthority('CHANGE_ORDER_STATUS')")
     public String updateOrder(ModelMap modelMap,
                               @ModelAttribute OrderDto order,
                               @PathVariable("id") Long id) {
@@ -98,6 +108,4 @@ public class OrderController {
         modelMap.addAttribute("order", order);
         return "redirect:/web/orders";
     }
-
-
 }

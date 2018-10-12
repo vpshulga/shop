@@ -29,6 +29,8 @@ public class PageProperties {
     private String createItemPagePath;
     private String changePasswordPagePath;
 
+    private int countOfEntitiesOnPage;
+
     @Autowired
     public PageProperties(Environment environment) {
         this.environment = environment;
@@ -55,6 +57,7 @@ public class PageProperties {
         this.logoutPagePath = environment.getProperty("logout.page.path");
         this.createItemPagePath = environment.getProperty("create.item.page.path");
         this.changePasswordPagePath = environment.getProperty("change.password.page.path");
+        this.countOfEntitiesOnPage = Integer.parseInt(environment.getProperty("count.of.entities.on.page"));
     }
 
     public String getLoginPagePath() {
@@ -131,5 +134,9 @@ public class PageProperties {
 
     public String getChangePasswordPagePath() {
         return changePasswordPagePath;
+    }
+
+    public int getCountOfEntitiesOnPage() {
+        return countOfEntitiesOnPage;
     }
 }

@@ -10,13 +10,15 @@
             <a class="navbar-brand" href="${pageContext.request.contextPath}">Shop</a>
         </div>
         <ul class="nav navbar-nav">
-            <li><a href="${pageContext.request.contextPath}/web/items">Items</a></li>
-            <li><a href="${pageContext.request.contextPath}/web/users">Users</a></li>
-            <li><a href="${pageContext.request.contextPath}/web/news">News</a></li>
-
             <security:authorize access="isAuthenticated()">
+                <li><a href="${pageContext.request.contextPath}/web/items">Items</a></li>
+                <li><a href="${pageContext.request.contextPath}/web/users">Users</a></li>
+                <li><a href="${pageContext.request.contextPath}/web/news">News</a></li>
                 <li>
                     <a href="${pageContext.request.contextPath}/web/users/<security:authentication property="principal.id" />">Profile</a>
+                </li>
+                <li>
+                    <a href="${pageContext.request.contextPath}/web/orders">Orders</a>
                 </li>
             </security:authorize>
         </ul>

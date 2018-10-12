@@ -5,8 +5,8 @@ import com.gmail.vpshulgaa.service.RoleService;
 import com.gmail.vpshulgaa.service.UserService;
 import com.gmail.vpshulgaa.service.dto.ChangePasswordDto;
 import com.gmail.vpshulgaa.service.dto.RoleDto;
-import com.gmail.vpshulgaa.service.dto.UserDto;
 import com.gmail.vpshulgaa.service.dto.UserProfileDto;
+import com.gmail.vpshulgaa.service.util.ServiceUtils;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -37,9 +37,15 @@ public class UserController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('SHOW_USERS')")
-    public String getUsers(ModelMap modelMap) {
-        List<UserProfileDto> users = userService.findNotDeletedUsers();
+    public String getUsers(
+            @RequestParam(value = "page", defaultValue = "1") Long page,
+            ModelMap modelMap) {
+        Long pagesCount = ServiceUtils.countOfPages(userService.countOfUsers(),
+                pageProperties.getCountOfEntitiesOnPage());
+        List<UserProfileDto> users = userService.findUsersByPage(page,
+                pageProperties.getCountOfEntitiesOnPage());
         modelMap.addAttribute("users", users);
+        modelMap.addAttribute("pages", pagesCount);
         return pageProperties.getUsersPagePath();
     }
 
@@ -65,14 +71,15 @@ public class UserController {
     }
 
     @GetMapping(value = "/{id}")
-    @PreAuthorize("principal.id == #id or hasAnyAuthority('ADMIN_PERMISSION')")
+    @PreAuthorize("principal.id == #id or hasAuthority('CHANGE_ROLE')")
     public String profilePage(ModelMap modelMap, @PathVariable("id") Long id) {
-        UserProfileDto user  = userService.findOne(id);
+        UserProfileDto user = userService.findOne(id);
         modelMap.addAttribute("user", user);
         return pageProperties.getUserProfilePagePath();
     }
 
     @GetMapping(value = "/{id}/update")
+    @PreAuthorize("principal.id == #id or hasAuthority('CHANGE_ROLE')")
     public String updateUserPage(ModelMap modelMap, @PathVariable("id") Long id) {
         UserProfileDto user = userService.findOne(id);
         List<RoleDto> roles = roleService.findAll();
@@ -94,16 +101,20 @@ public class UserController {
     }
 
     @PostMapping("/delete")
-    public String deleteUser(@RequestParam("ids") Long[] ids) {
-        for (Long id : ids) {
-            UserProfileDto user = userService.findOne(id);
-            user.setDeleted(true);
-            userService.update(user);
+    @PreAuthorize("hasAuthority('DELETE_USER')")
+    public String deleteUser(@RequestParam(value = "ids", required = false) Long[] ids) {
+        if (ids != null) {
+            for (Long id : ids) {
+                UserProfileDto user = userService.findOne(id);
+                user.setDeleted(true);
+                userService.update(user);
+            }
         }
         return "redirect:/web/users";
     }
 
     @GetMapping(value = "/{id}/update/password")
+    @PreAuthorize("principal.id == #id or hasAuthority('CHANGE_ROLE')")
     public String changePasswordPage(ModelMap modelMap, @PathVariable("id") Long id) {
         UserProfileDto user = userService.findOne(id);
         modelMap.addAttribute("changePassword", new ChangePasswordDto());
@@ -113,12 +124,12 @@ public class UserController {
 
 
     @PostMapping(value = "/{id}/update/password")
+    @PreAuthorize("principal.id == #id or hasAuthority('CHANGE_ROLE')")
     public String changePassword(@ModelAttribute ChangePasswordDto changePassword,
-                             BindingResult result,
-                             ModelMap modelMap, @PathVariable("id") Long id) {
-        UserProfileDto user = userService.findOne(id);
-        userService.changePassword(changePassword, user);
+                                 BindingResult result,
+                                 ModelMap modelMap, @PathVariable("id") Long id) {
+        userService.changePassword(changePassword, id);
         modelMap.addAttribute("changePassword", changePassword);
-        return "redirect:/web/users";
+        return "redirect:/web/users/" + id;
     }
 }

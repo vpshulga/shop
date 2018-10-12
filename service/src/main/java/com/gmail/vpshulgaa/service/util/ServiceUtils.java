@@ -1,5 +1,7 @@
 package com.gmail.vpshulgaa.service.util;
 
+import java.util.Random;
+import java.util.UUID;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,5 +18,15 @@ public class ServiceUtils {
             countOfPages = countOfEntities / maxResults + 1;
         }
         return countOfPages;
+    }
+
+    public static String generateUniqueId() {
+        String uId = UUID.randomUUID().toString();
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 10; i++) {
+            sb.append(uId.charAt(random.nextInt(uId.length()-1)));
+        }
+        return sb.toString();
     }
 }

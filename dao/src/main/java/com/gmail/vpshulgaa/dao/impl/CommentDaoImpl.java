@@ -17,10 +17,23 @@ public class CommentDaoImpl extends GenericDaoImpl<Comment> implements CommentDa
     }
 
     @Override
-    public List<Comment> findCommentsByNewsId(Long newsId) {
-        String hql = "from Comment as c where c.news.id=:newsId";
+    public Long countOfCommentsByNewsId(Long newsId) {
+        String hql = "select count(*) from Comment as c where c.news.id=:newsId";
         Query query = getCurrentSession().createQuery(hql);
         query.setParameter("newsId", newsId);
+        return (Long) query.uniqueResult();
+    }
+
+    @Override
+    public List<Comment> findCommentsByPageForNews(Long newsId, Long page, int maxResults) {
+        String hql = "from Comment as c where c.news.id=:newsId order by c.created desc";
+        Query query = getCurrentSession().createQuery(hql);
+        int startPosition = (int) ((page - 1) * maxResults);
+        query.setParameter("newsId", newsId);
+        query.setFirstResult(startPosition);
+        query.setMaxResults(maxResults);
         return query.list();
     }
+
+
 }

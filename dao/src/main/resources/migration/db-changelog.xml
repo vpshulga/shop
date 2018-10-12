@@ -1,5 +1,6 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <property name="now" value="now()" dbms="mysql"/>
     <changeSet author="vpshulga (generated)" id="1538644835993-1">
         <createTable tableName="t_audit">
             <column autoIncrement="true" name="F_ID" type="BIGINT">
@@ -60,9 +61,9 @@
             <column autoIncrement="true" name="F_ID" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="F_CONTENT" type="VARCHAR(1000)"/>
+            <column name="F_CONTENT" type="VARCHAR(3000)"/>
             <column name="F_CREATED" type="datetime"/>
-            <column name="F_TITLE" type="VARCHAR(100)"/>
+            <column name="F_TITLE" type="VARCHAR(200)"/>
             <column name="F_USER_ID" type="BIGINT"/>
         </createTable>
     </changeSet>
@@ -118,8 +119,8 @@
             <column autoIncrement="true" name="F_ID" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="F_EMAIL" type="VARCHAR(50)">
-                <constraints nullable="false"/>
+            <column name="F_EMAIL" type="VARCHAR(150)">
+                <constraints nullable="false" unique="true"/>
             </column>
             <column name="F_IS_DISABLED" type="BIT(1)"/>
             <column name="F_IS_DELETED" type="BIT(1)"/>
@@ -460,6 +461,26 @@
             <column name="F_ADDRESS" value="Minsk"/>
             <column name="F_TELEPHONE" value="+375296622616"/>
         </insert>
+        <insert tableName="t_profile">
+            <column name="F_USER_ID" valueNumeric="2"/>
+            <column name="F_ADDRESS" value="Minsk"/>
+            <column name="F_TELEPHONE" value="+375296622617"/>
+        </insert>
+        <insert tableName="t_profile">
+            <column name="F_USER_ID" valueNumeric="3"/>
+            <column name="F_ADDRESS" value="Minsk"/>
+            <column name="F_TELEPHONE" value="+375296622618"/>
+        </insert>
+        <insert tableName="t_profile">
+            <column name="F_USER_ID" valueNumeric="4"/>
+            <column name="F_ADDRESS" value="Minsk"/>
+            <column name="F_TELEPHONE" value="+375296622619"/>
+        </insert>
+        <insert tableName="t_profile">
+            <column name="F_USER_ID" valueNumeric="5"/>
+            <column name="F_ADDRESS" value="Minsk"/>
+            <column name="F_TELEPHONE" value="+375296622611"/>
+        </insert>
     </changeSet>
     <changeSet author="vpshulga (generated)" id="1538644835993-16">
         <insert tableName="t_role">
@@ -494,6 +515,50 @@
             <column name="F_SURNAME" value="Admin"/>
             <column name="F_DISCOUNT_ID"/>
             <column name="F_ROLE_ID" valueNumeric="1"/>
+        </insert>
+        <insert tableName="t_user">
+            <column name="F_ID" valueNumeric="2"/>
+            <column name="F_EMAIL" value="security@security.ru"/>
+            <column name="F_IS_DISABLED" valueBoolean="false"/>
+            <column name="F_IS_DELETED" valueBoolean="false"/>
+            <column name="F_NAME" value="Security"/>
+            <column name="F_PASSWORD" value="$2a$04$M1bxZ.TTVO8ftN4u2cQSeOr3rUlsFkC.PGFRqbY8CS8olAFfLt9uK"/>
+            <column name="F_SURNAME" value="Security"/>
+            <column name="F_DISCOUNT_ID"/>
+            <column name="F_ROLE_ID" valueNumeric="2"/>
+        </insert>
+        <insert tableName="t_user">
+            <column name="F_ID" valueNumeric="3"/>
+            <column name="F_EMAIL" value="sale@sale.ru"/>
+            <column name="F_IS_DISABLED" valueBoolean="false"/>
+            <column name="F_IS_DELETED" valueBoolean="false"/>
+            <column name="F_NAME" value="Sale"/>
+            <column name="F_PASSWORD" value="$2a$04$SiQvBKJgbYPOnCjzVKpJ4ee81oHGJrPVk4uf3fR68o.Mp1lt3wdu."/>
+            <column name="F_SURNAME" value="Sale"/>
+            <column name="F_DISCOUNT_ID"/>
+            <column name="F_ROLE_ID" valueNumeric="3"/>
+        </insert>
+        <insert tableName="t_user">
+            <column name="F_ID" valueNumeric="4"/>
+            <column name="F_EMAIL" value="customer@customer.ru"/>
+            <column name="F_IS_DISABLED" valueBoolean="false"/>
+            <column name="F_IS_DELETED" valueBoolean="false"/>
+            <column name="F_NAME" value="Customer"/>
+            <column name="F_PASSWORD" value="$2a$04$rZFGmBM0gksbP8VUwswAtucUcCetb59Y2RULYrwlTDYn59oUS12Uy"/>
+            <column name="F_SURNAME" value="Customer"/>
+            <column name="F_DISCOUNT_ID"/>
+            <column name="F_ROLE_ID" valueNumeric="4"/>
+        </insert>
+        <insert tableName="t_user">
+            <column name="F_ID" valueNumeric="5"/>
+            <column name="F_EMAIL" value="api@api.ru"/>
+            <column name="F_IS_DISABLED" valueBoolean="false"/>
+            <column name="F_IS_DELETED" valueBoolean="false"/>
+            <column name="F_NAME" value="Api"/>
+            <column name="F_PASSWORD" value="$2a$04$78hXuKJCDnJ3y8aCGRJrXO74xM0ZuCJwp5AwODwlujjlqE3JkQ5HC"/>
+            <column name="F_SURNAME" value="Api"/>
+            <column name="F_DISCOUNT_ID"/>
+            <column name="F_ROLE_ID" valueNumeric="5"/>
         </insert>
     </changeSet>
     <changeSet author="vpshulga (generated)" id="1538644835993-18">
@@ -622,5 +687,25 @@
                                  constraintName="FKjrn3ioy0oylsyml20ai8qe3qc" deferrable="false"
                                  initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
                                  referencedColumnNames="F_ID" referencedTableName="t_user" validate="true"/>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-41">
+        <insert tableName="t_news">
+            <column name="F_ID" valueNumeric="1"/>
+            <column name="F_CONTENT" value="Нашумевших и напуганных произведенным эффектом Александра Кокорина и Павла Мамаева доставили в Тверской суд Москвы. Он должен вынести решение относительно ходатайства СК об аресте футболистов. Ранее, после ультиматума правоохранительных органов, они один за другим явились в полицию и (с разным успехом) демонстрировали раскаяние. Mash описывает происходящее в зале.
+
+Следователь формулирует доводы в пользу ареста Кокорина. Сообщает, что сделать это необходимо, так как задержанный богат, имеет связи в органах власти и может скрыться или надавить на свидетелей. Кроме того, «пренебрегал нормами поведения», а также на свободе остаются неустановленные участники нападения."/>
+            <column name="F_CREATED" valueDate="${now}"/>
+            <column name="F_TITLE" value="Суд решил арестовать Кокориных и Мамаева на два месяца"/>
+            <column name="F_USER_ID" valueNumeric="1"/>
+        </insert>
+        <insert tableName="t_news">
+            <column name="F_ID" valueNumeric="2"/>
+            <column name="F_CONTENT" value="В Сморгонском районе пропали двое мужчин. Это Юрий Микульский 1980 года рождения и Александр Лохач 1973 года рождения. 6 октября, в субботу, они уехали на рыбалку на озеро невдалеке от деревни Белое. Потом мужчины перестали подавать о себе известия, передает УВД Гродненского облисполкома. Милиция начала розыск.
+
+— Оба гражданина выглядят на 40—45 лет, рост 170 сантиметров. Немаловажный момент: мужчины уехали и могут передвигаться на автомобиле Volkswagen Transporter белого цвета, регистрационный знак 7600 ЕІ-4. Просьба ко всем, кому что-либо известно о местонахождении данных лиц, сообщить в милицию, — говорится в сообщении УВД."/>
+            <column name="F_CREATED" valueDate="${now}"/>
+            <column name="F_TITLE" value="Двое мужчин отправились на рыбалку и не вернулись домой"/>
+            <column name="F_USER_ID" valueNumeric="1"/>
+        </insert>
     </changeSet>
 </databaseChangeLog>

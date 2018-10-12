@@ -14,6 +14,8 @@ import com.gmail.vpshulgaa.service.dto.ChangePasswordDto;
 import com.gmail.vpshulgaa.service.dto.ProfileDto;
 import com.gmail.vpshulgaa.service.dto.RoleDto;
 import com.gmail.vpshulgaa.service.dto.UserProfileDto;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +25,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Service
@@ -171,30 +170,42 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public List<UserProfileDto> findNotDeletedUsers() {
-        List<UserProfileDto> usersDto = new ArrayList<>();
-        List<User> users;
-        try {
-            users = userDao.findNotDeletedUsers();
-            for (User user : users) {
-                usersDto.add(userProfileDtoConverter.toDto(user));
-            }
-        } catch (Exception e) {
-            logger.error("Failed to find users");
+    public UserProfileDto changePassword(ChangePasswordDto changePassword, Long userId) {
+        User user = userDao.findOne(userId);
+        if (changePassword.getNewPassword().equals(changePassword.getConfirmPassword())) {
+            changePassword.setNewPassword(bCryptPasswordEncoder.encode(changePassword.getNewPassword()));
+
+            user.setPassword(changePassword.getNewPassword());
+            userDao.update(user);
         }
-        return usersDto;
+        return userProfileDtoConverter.toDto(user);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public UserProfileDto changePassword(ChangePasswordDto changePassword, UserProfileDto userDto) {
-        changePassword.setOldPassword(bCryptPasswordEncoder.encode(changePassword.getOldPassword()));
-        changePassword.setNewPassword(bCryptPasswordEncoder.encode(changePassword.getNewPassword()));
-        changePassword.setConfirmPassword(bCryptPasswordEncoder.encode(changePassword.getConfirmPassword()));
-        userDto.setPassword(changePassword.getNewPassword());
-        User user = userProfileConverter.toEntity(userDto);
-        userDao.update(user);
-        userDto = userProfileDtoConverter.toDto(user);
-        return userDto;
+    public Long countOfUsers() {
+        Long count = 0L;
+        try {
+            count = userDao.countOfUsers();
+        } catch (Exception e) {
+            logger.error("Failed to find users", e);
+        }
+        return count;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public List<UserProfileDto> findUsersByPage(Long page, int maxResults) {
+        List<UserProfileDto> usersDto = new ArrayList<>();
+        List<User> users;
+        try {
+            users = userDao.findUsersByPage(page, maxResults);
+            for (User user : users) {
+                usersDto.add(userProfileDtoConverter.toDto(user));
+            }
+        } catch (Exception e) {
+            logger.error("Failed to find users", e);
+        }
+        return usersDto;
     }
 }

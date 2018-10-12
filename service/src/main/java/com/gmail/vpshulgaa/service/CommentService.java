@@ -16,5 +16,7 @@ public interface CommentService {
 
     void deleteById(final Long id);
 
-    List<CommentDto> findCommentsByNewsId(Long newsId);
+    Long countOfCommentsByNewsId(Long newsId);
+
+    List<CommentDto> findCommentsByPageForNews(Long newsId, Long page, int maxResults);
 }

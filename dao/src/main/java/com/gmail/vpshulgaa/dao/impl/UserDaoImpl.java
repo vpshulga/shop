@@ -26,9 +26,19 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
     }
 
     @Override
-    public List<User> findNotDeletedUsers() {
-        String hql = "from User as u where u.deleted=false";
+    public Long countOfUsers() {
+        String hql = "select count(*) from User as u where u.deleted=false";
         Query query = getCurrentSession().createQuery(hql);
+        return (Long) query.uniqueResult();
+    }
+
+    @Override
+    public List<User> findUsersByPage(Long page, int maxResults) {
+        String hql = "from User as u where u.deleted=false order by u.id";
+        Query query = getCurrentSession().createQuery(hql);
+        int startPosition = (int) ((page - 1) * maxResults);
+        query.setFirstResult(startPosition);
+        query.setMaxResults(maxResults);
         return query.list();
     }
 }

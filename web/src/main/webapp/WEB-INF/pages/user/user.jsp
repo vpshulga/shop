@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <jsp:include page="../commons/header.jsp"/>
-    <title>Create user</title>
+    <title>Profile</title>
 </head>
 <body>
 <div class="row">
@@ -22,6 +22,9 @@
         <a href="${pageContext.request.contextPath}/web/users/${user.id}/update" class="btn btn-primary"
            aria-pressed="true"
            role="button">Update</a>
+        <a href="${pageContext.request.contextPath}/web/users/${user.id}/update/password" class="btn btn-primary"
+           aria-pressed="true"
+           role="button">Change Password</a>
     </div>
 </div>
 </body>

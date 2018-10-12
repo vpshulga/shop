@@ -19,6 +19,8 @@
                         <security:authorize access="hasAuthority('CREATE_NEWS')">
                             <a href="${pageContext.request.contextPath}/web/news/create" class="btn btn-primary"
                                aria-pressed="true" role="button">ADD</a>
+                        </security:authorize>
+                        <security:authorize access="hasAuthority('DELETE_NEWS')">
                             <button type="submit" class="btn btn-primary">DELETE</button>
                         </security:authorize>
                     </div>
@@ -28,7 +30,9 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th scope="col">#</th>
+                                <security:authorize access="hasAuthority('DELETE_NEWS')">
+                                    <th scope="col">#</th>
+                                </security:authorize>
                                 <th scope="col">Title</th>
                                 <th scope="col">Created</th>
                                 <th scope="col">Creator</th>
@@ -37,18 +41,23 @@
                             <tbody>
                             <c:forEach items="${news}" var="news">
                                 <tr>
-                                    <th scope="row"><input type="checkbox" name="ids" value="${news.id}"></th>
-                                    <td><a href="${pageContext.request.contextPath}/web/news/${news.id}">${news.title}</a>
+                                    <security:authorize access="hasAuthority('DELETE_NEWS')">
+                                        <th scope="row"><input type="checkbox" name="ids" value="${news.id}"></th>
+                                    </security:authorize>
+                                    <td>
+                                        <a href="${pageContext.request.contextPath}/web/news/${news.id}">${news.title}</a>
                                     </td>
                                     <td>${news.created.dayOfMonth}-${news.created.monthValue}-${news.created.year}
                                             ${news.created.hour}:${news.created.minute}</td>
                                     <td>${news.creator}</td>
-                                    <td>
-                                        <a href="${pageContext.request.contextPath}/web/news/${news.id}/update"
-                                           class="btn btn-primary"
-                                           aria-pressed="true"
-                                           role="button">UPDATE</a>
-                                    </td>
+                                    <security:authorize access="hasAuthority('UPDATE_NEWS')">
+                                        <td>
+                                            <a href="${pageContext.request.contextPath}/web/news/${news.id}/update"
+                                               class="btn btn-primary"
+                                               aria-pressed="true"
+                                               role="button">UPDATE</a>
+                                        </td>
+                                    </security:authorize>
                                 </tr>
                             </c:forEach>
                             </tbody>

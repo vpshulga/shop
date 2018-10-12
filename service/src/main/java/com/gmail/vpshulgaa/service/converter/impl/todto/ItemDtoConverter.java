@@ -32,6 +32,7 @@ public class ItemDtoConverter implements DtoConverter<ItemDto, Item> {
         itemDto.setDescription(entity.getDescription());
         itemDto.setUniqueNumber(entity.getUniqueNumber());
         itemDto.setPrice(entity.getPrice());
+        itemDto.setDeleted(entity.getDeleted());
 
 
         List<DiscountDto> discounts = new ArrayList<>();

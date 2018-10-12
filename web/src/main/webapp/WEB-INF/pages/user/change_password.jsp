@@ -7,23 +7,25 @@
     <title>Change Password</title>
 </head>
 <body>
-
-<form:form action="${pageContext.request.contextPath}/web/users/${user.id}/update/password" modelAttribute="changePassword" method="post">
-    <form:errors path="*" cssClass="error" element="div" />
-    <div class="form-group">
-        <form:label path="oldPassword">Old:</form:label>
-        <form:input path="oldPassword" class="form-control"  />
-    </div>
-    <div class="form-group">
-        <form:label path="newPassword">New:</form:label>
-        <form:input path="newPassword" class="form-control"  />
-    </div>
-    <div class="form-group">
-        <form:label path="confirmPassword">Confirm:</form:label>
-        <form:input path="confirmPassword" class="form-control" />
-    </div>
-    <button type="submit" class="btn btn-primary">Create</button>
-</form:form>
+<div class="col-md-4"></div>
+<div class="col-md-4 shadow-lg bg-white rounded">
+    <h1>Change password form</h1>
+    <form:form action="${pageContext.request.contextPath}/web/users/${user.id}/update/password"
+               modelAttribute="changePassword" method="post">
+        <form:errors path="*" cssClass="error" element="div"/>
+        <div class="form-group">
+            <form:label path="newPassword">New:</form:label>
+            <form:input path="newPassword" type="password" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <form:label path="confirmPassword">Confirm:</form:label>
+            <form:input path="confirmPassword" type="password" class="form-control"/>
+        </div>
+        <button type="submit" class="btn btn-primary">Change</button>
+    </form:form>
+</div>
+<div class="col-md-4"></div>
+</div>
 </body>
 </html>
 

@@ -8,40 +8,42 @@
     <title>order page</title>
 </head>
 <body>
-<div class="row">
-    <div class="col-md-12">
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Description</th>
-                <th scope="col">Price</th>
-                <th scope="col">Unique number</th>
-            </tr>
-            </thead>
-            <tbody>
-
-            <tr>
-                <td>${item.name}</td>
-                <td>${item.description}</td>
-                <td>${item.price}</td>
-                <td>${item.uniqueNumber}</td>
-            </tr>
-
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<form:form action="${pageContext.request.contextPath}/web/orders/order"  method="post">
+<form:form action="${pageContext.request.contextPath}/web/orders/order" method="post">
     <form:errors path="*" cssClass="error"/>
-    <div class="form-group">
-        <label>Quantity</label>
-        <input type="number" name="quantity" class="form-control" placeholder="Quantity"/>
-        <input type="hidden" name="item" value="${item.id}"/>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Unique number</th>
+                    <th scope="col">Quantity</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr>
+                    <td>${item.name}</td>
+                    <td>${item.description}</td>
+                    <td>${item.price}</td>
+                    <td>${item.uniqueNumber}</td>
+                    <td>
+                        <div class="form-group">
+                            <input type="number" name="quantity" class="form-control" placeholder="Quantity"/>
+                            <input type="hidden" name="item" value="${item.id}"/>
+                        </div>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
     </div>
-    <button type="submit" class="btn btn-primary">Create</button>
+    <button type="submit" class="btn btn-primary">Create order</button>
 </form:form>
+
 <jsp:include page="../util/js.jsp"/>
 <jsp:include page="../commons/footer.jsp"/>
 </body>

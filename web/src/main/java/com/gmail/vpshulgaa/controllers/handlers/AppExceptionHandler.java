@@ -1,4 +1,4 @@
-package com.gmail.vpshulgaa.handlers;
+package com.gmail.vpshulgaa.controllers.handlers;
 
 import com.gmail.vpshulgaa.config.PageProperties;
 import javax.servlet.http.HttpServletRequest;

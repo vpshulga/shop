@@ -1,7 +1,7 @@
 package com.gmail.vpshulgaa.controllers;
 
 import com.gmail.vpshulgaa.config.PageProperties;
-import com.gmail.vpshulgaa.service.dto.UserDto;
+import com.gmail.vpshulgaa.service.dto.UserProfileDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -20,7 +20,7 @@ public class LogoutController {
 
     @GetMapping
     public String getLoginPage(ModelMap modelMap) {
-        modelMap.addAttribute("user", new UserDto());
+        modelMap.addAttribute("user", new UserProfileDto());
         return pageProperties.getLogoutPagePath();
     }
 }

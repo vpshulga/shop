@@ -1,4 +1,4 @@
-package com.gmail.vpshulgaa.handlers;
+package com.gmail.vpshulgaa.controllers.handlers;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -39,24 +39,36 @@ public class AppSuccessHandler implements AuthenticationSuccessHandler {
     }
 
     private String determineTargetUrl(Authentication authentication) {
-        boolean isCustomerUser = false;
         boolean isAdmin = false;
+        boolean isSecurityUser = false;
+        boolean isSaleUser = false;
+        boolean isCustomerUser = false;
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         for (GrantedAuthority grantedAuthority : authorities) {
-            if (grantedAuthority.getAuthority().equals("CUSTOMER_USER_PERMISSION")) {
-                isCustomerUser = true;
-                break;
-            } else if (grantedAuthority.getAuthority().equals("ADMIN_PERMISSION")) {
+            if (grantedAuthority.getAuthority().equals("ADMIN_PERMISSION")) {
                 isAdmin = true;
+                break;
+            } else if (grantedAuthority.getAuthority().equals("SECURITY_USER_PERMISSION")) {
+                isSecurityUser = true;
+                break;
+            } else if (grantedAuthority.getAuthority().equals("SALE_USER_PERMISSION")) {
+                isSaleUser = true;
+                break;
+            } else if (grantedAuthority.getAuthority().equals("CUSTOMER_USER_PERMISSION")) {
+                isCustomerUser = true;
                 break;
             }
         }
 
-        if (isCustomerUser) {
-            return "/web/news";
-        } else if (isAdmin) {
+        if (isAdmin) {
             return "/web/users";
+        } else if (isSecurityUser) {
+            return "/web/users";
+        } else if (isSaleUser) {
+            return "/web/orders";
+        } else if (isCustomerUser) {
+            return "/web/items";
         } else {
             throw new IllegalStateException();
         }

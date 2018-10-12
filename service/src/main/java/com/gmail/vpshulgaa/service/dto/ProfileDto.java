@@ -1,35 +1,51 @@
 package com.gmail.vpshulgaa.service.dto;
 
-import com.gmail.vpshulgaa.dao.entities.User;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.util.Objects;
 
-@Getter
-@Setter
-@NoArgsConstructor
 public class ProfileDto {
     private long userId;
     private String address;
     private String telephone;
 
+    public ProfileDto() {
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         ProfileDto that = (ProfileDto) o;
-
-        return userId == that.userId && (address != null ? address.equals(that.address) : that.address == null)
-                && (telephone != null ? telephone.equals(that.telephone) : that.telephone == null);
+        return userId == that.userId &&
+                Objects.equals(address, that.address) &&
+                Objects.equals(telephone, that.telephone);
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (userId ^ (userId >>> 32));
-        result = 31 * result + (address != null ? address.hashCode() : 0);
-        result = 31 * result + (telephone != null ? telephone.hashCode() : 0);
-        return result;
+        return Objects.hash(userId, address, telephone);
     }
 }

@@ -1,0 +1,695 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <property name="now" value="now()" dbms="mysql"/>
+    <changeSet author="vpshulga (generated)" id="1538644835993-1">
+        <createTable tableName="t_audit">
+            <column autoIncrement="true" name="F_ID" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="F_CREATED" type="datetime"/>
+            <column name="F_EVENT_TYPE" type="VARCHAR(30)"/>
+            <column name="F_USER_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-2">
+        <createTable tableName="t_comment">
+            <column autoIncrement="true" name="F_ID" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="F_CONTENT" type="VARCHAR(1000)"/>
+            <column name="F_CREATED" type="datetime"/>
+            <column name="F_NEWS_ID" type="BIGINT"/>
+            <column name="F_USER_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-3">
+        <createTable tableName="t_discount">
+            <column autoIncrement="true" name="F_ID" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="F_EXPIRE_DATE" type="date"/>
+            <column name="F_NAME" type="VARCHAR(30)"/>
+            <column name="F_PERCENT" type="DECIMAL(19, 2)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-4">
+        <createTable tableName="t_discount_item">
+            <column name="F_ITEM_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="F_DISCOUNT_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-5">
+        <createTable tableName="t_item">
+            <column autoIncrement="true" name="F_ID" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="F_DESCRIPTION" type="VARCHAR(1500)"/>
+            <column name="F_IS_DELETED" type="BIT(1)"/>
+            <column name="F_NAME" type="VARCHAR(200)"/>
+            <column name="F_PRICE" type="DECIMAL(19, 2)"/>
+            <column name="F_U_NUMBER" type="VARCHAR(10)">
+                <constraints unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-6">
+        <createTable tableName="t_news">
+            <column autoIncrement="true" name="F_ID" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="F_CONTENT" type="VARCHAR(3000)"/>
+            <column name="F_CREATED" type="datetime"/>
+            <column name="F_TITLE" type="VARCHAR(200)"/>
+            <column name="F_USER_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-7">
+        <createTable tableName="t_order">
+            <column autoIncrement="true" name="F_ID" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="F_CREATED" type="datetime"/>
+            <column name="F_QUANTITY" type="INT"/>
+            <column name="F_STATUS" type="VARCHAR(255)"/>
+            <column name="F_ITEM_ID" type="BIGINT"/>
+            <column name="F_USER_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-8">
+        <createTable tableName="t_permission">
+            <column autoIncrement="true" name="F_ID" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="F_NAME" type="VARCHAR(30)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-9">
+        <createTable tableName="t_permission_role">
+            <column name="F_ROLE_ID" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="F_PERMISSION_ID" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-10">
+        <createTable tableName="t_profile">
+            <column name="F_USER_ID" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="F_ADDRESS" type="VARCHAR(200)"/>
+            <column name="F_TELEPHONE" type="VARCHAR(20)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-11">
+        <createTable tableName="t_role">
+            <column autoIncrement="true" name="F_ID" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="F_NAME" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-12">
+        <createTable tableName="t_user">
+            <column autoIncrement="true" name="F_ID" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="F_EMAIL" type="VARCHAR(150)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="F_IS_DISABLED" type="BIT(1)"/>
+            <column name="F_IS_DELETED" type="BIT(1)"/>
+            <column name="F_NAME" type="VARCHAR(50)"/>
+            <column name="F_PASSWORD" type="VARCHAR(255)"/>
+            <column name="F_SURNAME" type="VARCHAR(50)"/>
+            <column name="F_DISCOUNT_ID" type="BIGINT"/>
+            <column name="F_ROLE_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-13">
+        <insert tableName="t_permission">
+            <column name="F_ID" valueNumeric="1"/>
+            <column name="F_NAME" value="SHOW_USERS"/>
+        </insert>
+        <insert tableName="t_permission">
+            <column name="F_ID" valueNumeric="2"/>
+            <column name="F_NAME" value="CHANGE_ROLE"/>
+        </insert>
+        <insert tableName="t_permission">
+            <column name="F_ID" valueNumeric="3"/>
+            <column name="F_NAME" value="CHANGE_PASSWORD"/>
+        </insert>
+        <insert tableName="t_permission">
+            <column name="F_ID" valueNumeric="4"/>
+            <column name="F_NAME" value="DISABLE_USER"/>
+        </insert>
+        <insert tableName="t_permission">
+            <column name="F_ID" valueNumeric="5"/>
+            <column name="F_NAME" value="DELETE_USER"/>
+        </insert>
+        <insert tableName="t_permission">
+            <column name="F_ID" valueNumeric="6"/>
+            <column name="F_NAME" value="CREATE_NEWS"/>
+        </insert>
+        <insert tableName="t_permission">
+            <column name="F_ID" valueNumeric="7"/>
+            <column name="F_NAME" value="UPDATE_NEWS"/>
+        </insert>
+        <insert tableName="t_permission">
+            <column name="F_ID" valueNumeric="8"/>
+            <column name="F_NAME" value="DELETE_NEWS"/>
+        </insert>
+        <insert tableName="t_permission">
+            <column name="F_ID" valueNumeric="9"/>
+            <column name="F_NAME" value="DELETE_COMMENTS"/>
+        </insert>
+        <insert tableName="t_permission">
+            <column name="F_ID" valueNumeric="10"/>
+            <column name="F_NAME" value="CREATE_ITEMS"/>
+        </insert>
+        <insert tableName="t_permission">
+            <column name="F_ID" valueNumeric="11"/>
+            <column name="F_NAME" value="COPY_ITEMS"/>
+        </insert>
+        <insert tableName="t_permission">
+            <column name="F_ID" valueNumeric="12"/>
+            <column name="F_NAME" value="REMOVE_ITEMS"/>
+        </insert>
+        <insert tableName="t_permission">
+            <column name="F_ID" valueNumeric="13"/>
+            <column name="F_NAME" value="UPLOAD_ITEMS_XML"/>
+        </insert>
+        <insert tableName="t_permission">
+            <column name="F_ID" valueNumeric="14"/>
+            <column name="F_NAME" value="SHOW_ALL_ORDERS"/>
+        </insert>
+        <insert tableName="t_permission">
+            <column name="F_ID" valueNumeric="15"/>
+            <column name="F_NAME" value="CHANGE_ORDER_STATUS"/>
+        </insert>
+        <insert tableName="t_permission">
+            <column name="F_ID" valueNumeric="16"/>
+            <column name="F_NAME" value="SHOW_NEWS"/>
+        </insert>
+        <insert tableName="t_permission">
+            <column name="F_ID" valueNumeric="17"/>
+            <column name="F_NAME" value="CREATE_COMMENT"/>
+        </insert>
+        <insert tableName="t_permission">
+            <column name="F_ID" valueNumeric="18"/>
+            <column name="F_NAME" value="CREATE_ORDER"/>
+        </insert>
+        <insert tableName="t_permission">
+            <column name="F_ID" valueNumeric="19"/>
+            <column name="F_NAME" value="UPDATE_PROFILE"/>
+        </insert>
+        <insert tableName="t_permission">
+            <column name="F_ID" valueNumeric="20"/>
+            <column name="F_NAME" value="SHOW_ORDERS"/>
+        </insert>
+        <insert tableName="t_permission">
+            <column name="F_ID" valueNumeric="21"/>
+            <column name="F_NAME" value="ADMIN_PERMISSION"/>
+        </insert>
+        <insert tableName="t_permission">
+            <column name="F_ID" valueNumeric="22"/>
+            <column name="F_NAME" value="SECURITY_USER_PERMISSION"/>
+        </insert>
+        <insert tableName="t_permission">
+            <column name="F_ID" valueNumeric="23"/>
+            <column name="F_NAME" value="SALE_USER_PERMISSION"/>
+        </insert>
+        <insert tableName="t_permission">
+            <column name="F_ID" valueNumeric="24"/>
+            <column name="F_NAME" value="CUSTOMER_USER_PERMISSION"/>
+        </insert>
+        <insert tableName="t_permission">
+            <column name="F_ID" valueNumeric="25"/>
+            <column name="F_NAME" value="API_USER_PERMISSION"/>
+        </insert>
+        <insert tableName="t_permission">
+            <column name="F_ID" valueNumeric="26"/>
+            <column name="F_NAME" value="SHOW_ITEMS"/>
+        </insert>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-14">
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="1"/>
+            <column name="F_PERMISSION_ID" valueNumeric="1"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="1"/>
+            <column name="F_PERMISSION_ID" valueNumeric="2"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="1"/>
+            <column name="F_PERMISSION_ID" valueNumeric="3"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="1"/>
+            <column name="F_PERMISSION_ID" valueNumeric="4"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="1"/>
+            <column name="F_PERMISSION_ID" valueNumeric="5"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="1"/>
+            <column name="F_PERMISSION_ID" valueNumeric="6"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="1"/>
+            <column name="F_PERMISSION_ID" valueNumeric="7"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="1"/>
+            <column name="F_PERMISSION_ID" valueNumeric="8"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="1"/>
+            <column name="F_PERMISSION_ID" valueNumeric="9"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="1"/>
+            <column name="F_PERMISSION_ID" valueNumeric="10"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="1"/>
+            <column name="F_PERMISSION_ID" valueNumeric="11"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="1"/>
+            <column name="F_PERMISSION_ID" valueNumeric="12"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="1"/>
+            <column name="F_PERMISSION_ID" valueNumeric="13"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="1"/>
+            <column name="F_PERMISSION_ID" valueNumeric="14"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="1"/>
+            <column name="F_PERMISSION_ID" valueNumeric="15"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="1"/>
+            <column name="F_PERMISSION_ID" valueNumeric="16"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="1"/>
+            <column name="F_PERMISSION_ID" valueNumeric="17"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="1"/>
+            <column name="F_PERMISSION_ID" valueNumeric="18"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="1"/>
+            <column name="F_PERMISSION_ID" valueNumeric="19"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="1"/>
+            <column name="F_PERMISSION_ID" valueNumeric="20"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="1"/>
+            <column name="F_PERMISSION_ID" valueNumeric="21"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="1"/>
+            <column name="F_PERMISSION_ID" valueNumeric="26"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="2"/>
+            <column name="F_PERMISSION_ID" valueNumeric="1"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="2"/>
+            <column name="F_PERMISSION_ID" valueNumeric="2"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="2"/>
+            <column name="F_PERMISSION_ID" valueNumeric="3"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="2"/>
+            <column name="F_PERMISSION_ID" valueNumeric="4"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="2"/>
+            <column name="F_PERMISSION_ID" valueNumeric="5"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="2"/>
+            <column name="F_PERMISSION_ID" valueNumeric="22"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="3"/>
+            <column name="F_PERMISSION_ID" valueNumeric="6"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="3"/>
+            <column name="F_PERMISSION_ID" valueNumeric="7"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="3"/>
+            <column name="F_PERMISSION_ID" valueNumeric="8"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="3"/>
+            <column name="F_PERMISSION_ID" valueNumeric="9"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="3"/>
+            <column name="F_PERMISSION_ID" valueNumeric="10"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="3"/>
+            <column name="F_PERMISSION_ID" valueNumeric="11"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="3"/>
+            <column name="F_PERMISSION_ID" valueNumeric="12"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="3"/>
+            <column name="F_PERMISSION_ID" valueNumeric="13"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="3"/>
+            <column name="F_PERMISSION_ID" valueNumeric="14"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="3"/>
+            <column name="F_PERMISSION_ID" valueNumeric="15"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="3"/>
+            <column name="F_PERMISSION_ID" valueNumeric="16"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="3"/>
+            <column name="F_PERMISSION_ID" valueNumeric="20"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="3"/>
+            <column name="F_PERMISSION_ID" valueNumeric="23"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="3"/>
+            <column name="F_PERMISSION_ID" valueNumeric="26"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="4"/>
+            <column name="F_PERMISSION_ID" valueNumeric="16"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="4"/>
+            <column name="F_PERMISSION_ID" valueNumeric="17"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="4"/>
+            <column name="F_PERMISSION_ID" valueNumeric="18"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="4"/>
+            <column name="F_PERMISSION_ID" valueNumeric="19"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="4"/>
+            <column name="F_PERMISSION_ID" valueNumeric="20"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="4"/>
+            <column name="F_PERMISSION_ID" valueNumeric="24"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="4"/>
+            <column name="F_PERMISSION_ID" valueNumeric="26"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="5"/>
+            <column name="F_PERMISSION_ID" valueNumeric="25"/>
+        </insert>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-15">
+        <insert tableName="t_profile">
+            <column name="F_USER_ID" valueNumeric="1"/>
+            <column name="F_ADDRESS" value="Minsk"/>
+            <column name="F_TELEPHONE" value="+375296622616"/>
+        </insert>
+        <insert tableName="t_profile">
+            <column name="F_USER_ID" valueNumeric="2"/>
+            <column name="F_ADDRESS" value="Minsk"/>
+            <column name="F_TELEPHONE" value="+375296622617"/>
+        </insert>
+        <insert tableName="t_profile">
+            <column name="F_USER_ID" valueNumeric="3"/>
+            <column name="F_ADDRESS" value="Minsk"/>
+            <column name="F_TELEPHONE" value="+375296622618"/>
+        </insert>
+        <insert tableName="t_profile">
+            <column name="F_USER_ID" valueNumeric="4"/>
+            <column name="F_ADDRESS" value="Minsk"/>
+            <column name="F_TELEPHONE" value="+375296622619"/>
+        </insert>
+        <insert tableName="t_profile">
+            <column name="F_USER_ID" valueNumeric="5"/>
+            <column name="F_ADDRESS" value="Minsk"/>
+            <column name="F_TELEPHONE" value="+375296622611"/>
+        </insert>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-16">
+        <insert tableName="t_role">
+            <column name="F_ID" valueNumeric="1"/>
+            <column name="F_NAME" value="ADMIN"/>
+        </insert>
+        <insert tableName="t_role">
+            <column name="F_ID" valueNumeric="2"/>
+            <column name="F_NAME" value="SECURITY_USER"/>
+        </insert>
+        <insert tableName="t_role">
+            <column name="F_ID" valueNumeric="3"/>
+            <column name="F_NAME" value="SALE_USER"/>
+        </insert>
+        <insert tableName="t_role">
+            <column name="F_ID" valueNumeric="4"/>
+            <column name="F_NAME" value="CUSTOMER_USER"/>
+        </insert>
+        <insert tableName="t_role">
+            <column name="F_ID" valueNumeric="5"/>
+            <column name="F_NAME" value="API_USER"/>
+        </insert>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-17">
+        <insert tableName="t_user">
+            <column name="F_ID" valueNumeric="1"/>
+            <column name="F_EMAIL" value="admin@admin.ru"/>
+            <column name="F_IS_DISABLED" valueBoolean="false"/>
+            <column name="F_IS_DELETED" valueBoolean="false"/>
+            <column name="F_NAME" value="Admin"/>
+            <column name="F_PASSWORD" value="$2a$04$7xNvvkprv1hkEqoZUejWZeebCuygkQOhSI6E1fOVyoxBElPighlVS"/>
+            <column name="F_SURNAME" value="Admin"/>
+            <column name="F_DISCOUNT_ID"/>
+            <column name="F_ROLE_ID" valueNumeric="1"/>
+        </insert>
+        <insert tableName="t_user">
+            <column name="F_ID" valueNumeric="2"/>
+            <column name="F_EMAIL" value="security@security.ru"/>
+            <column name="F_IS_DISABLED" valueBoolean="false"/>
+            <column name="F_IS_DELETED" valueBoolean="false"/>
+            <column name="F_NAME" value="Security"/>
+            <column name="F_PASSWORD" value="$2a$04$M1bxZ.TTVO8ftN4u2cQSeOr3rUlsFkC.PGFRqbY8CS8olAFfLt9uK"/>
+            <column name="F_SURNAME" value="Security"/>
+            <column name="F_DISCOUNT_ID"/>
+            <column name="F_ROLE_ID" valueNumeric="2"/>
+        </insert>
+        <insert tableName="t_user">
+            <column name="F_ID" valueNumeric="3"/>
+            <column name="F_EMAIL" value="sale@sale.ru"/>
+            <column name="F_IS_DISABLED" valueBoolean="false"/>
+            <column name="F_IS_DELETED" valueBoolean="false"/>
+            <column name="F_NAME" value="Sale"/>
+            <column name="F_PASSWORD" value="$2a$04$SiQvBKJgbYPOnCjzVKpJ4ee81oHGJrPVk4uf3fR68o.Mp1lt3wdu."/>
+            <column name="F_SURNAME" value="Sale"/>
+            <column name="F_DISCOUNT_ID"/>
+            <column name="F_ROLE_ID" valueNumeric="3"/>
+        </insert>
+        <insert tableName="t_user">
+            <column name="F_ID" valueNumeric="4"/>
+            <column name="F_EMAIL" value="customer@customer.ru"/>
+            <column name="F_IS_DISABLED" valueBoolean="false"/>
+            <column name="F_IS_DELETED" valueBoolean="false"/>
+            <column name="F_NAME" value="Customer"/>
+            <column name="F_PASSWORD" value="$2a$04$rZFGmBM0gksbP8VUwswAtucUcCetb59Y2RULYrwlTDYn59oUS12Uy"/>
+            <column name="F_SURNAME" value="Customer"/>
+            <column name="F_DISCOUNT_ID"/>
+            <column name="F_ROLE_ID" valueNumeric="4"/>
+        </insert>
+        <insert tableName="t_user">
+            <column name="F_ID" valueNumeric="5"/>
+            <column name="F_EMAIL" value="api@api.ru"/>
+            <column name="F_IS_DISABLED" valueBoolean="false"/>
+            <column name="F_IS_DELETED" valueBoolean="false"/>
+            <column name="F_NAME" value="Api"/>
+            <column name="F_PASSWORD" value="$2a$04$78hXuKJCDnJ3y8aCGRJrXO74xM0ZuCJwp5AwODwlujjlqE3JkQ5HC"/>
+            <column name="F_SURNAME" value="Api"/>
+            <column name="F_DISCOUNT_ID"/>
+            <column name="F_ROLE_ID" valueNumeric="5"/>
+        </insert>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-18">
+        <createIndex indexName="FK1bnfdhs2ffsgb7twwqxbgj1wp" tableName="t_order">
+            <column name="F_ITEM_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-19">
+        <createIndex indexName="FK1dpyp0hr6159qy32fho9na0ya" tableName="t_order">
+            <column name="F_USER_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-20">
+        <createIndex indexName="FK2mm6ehn6e6qno5s131opk6ou5" tableName="t_permission_role">
+            <column name="F_PERMISSION_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-21">
+        <createIndex indexName="FK6507v43ylmbe4fj6j1hs65805" tableName="t_user">
+            <column name="F_ROLE_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-22">
+        <createIndex indexName="FK7mh8p7k731m5lfakvwpoyiu1f" tableName="t_discount_item">
+            <column name="F_DISCOUNT_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-23">
+        <createIndex indexName="FKd5y4mg1tcpsyi2dcla37gka5m" tableName="t_news">
+            <column name="F_USER_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-24">
+        <createIndex indexName="FKeniu19lguym67ac3regewvpcw" tableName="t_comment">
+            <column name="F_NEWS_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-25">
+        <createIndex indexName="FKh9g9cfe2h36vut30ur2c674jt" tableName="t_user">
+            <column name="F_DISCOUNT_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-26">
+        <createIndex indexName="FKhp2xreeuwv5aijppbnts2ddi1" tableName="t_discount_item">
+            <column name="F_ITEM_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-27">
+        <createIndex indexName="FKj08s3lhgtgxc5tricii8ic6h8" tableName="t_comment">
+            <column name="F_USER_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-28">
+        <createIndex indexName="FKjrn3ioy0oylsyml20ai8qe3qc" tableName="t_audit">
+            <column name="F_USER_ID"/>
+        </createIndex>
+    </changeSet>
+	<changeSet author="vpshulga (generated)" id="1538644835993-29">
+        <addForeignKeyConstraint baseColumnNames="F_ITEM_ID" baseTableName="t_order"
+                                 constraintName="FK1bnfdhs2ffsgb7twwqxbgj1wp" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="F_ID" referencedTableName="t_item" validate="true"/>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-30">
+        <addForeignKeyConstraint baseColumnNames="F_USER_ID" baseTableName="t_order"
+                                 constraintName="FK1dpyp0hr6159qy32fho9na0ya" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="F_ID" referencedTableName="t_user" validate="true"/>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-31">
+        <addForeignKeyConstraint baseColumnNames="F_PERMISSION_ID" baseTableName="t_permission_role"
+                                 constraintName="FK2mm6ehn6e6qno5s131opk6ou5" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="F_ID" referencedTableName="t_permission" validate="true"/>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-32">
+        <addForeignKeyConstraint baseColumnNames="F_ROLE_ID" baseTableName="t_user"
+                                 constraintName="FK6507v43ylmbe4fj6j1hs65805" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="F_ID" referencedTableName="t_role" validate="true"/>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-33">
+        <addForeignKeyConstraint baseColumnNames="F_DISCOUNT_ID" baseTableName="t_discount_item"
+                                 constraintName="FK7mh8p7k731m5lfakvwpoyiu1f" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="F_ID" referencedTableName="t_discount" validate="true"/>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-34">
+        <addForeignKeyConstraint baseColumnNames="F_USER_ID" baseTableName="t_news"
+                                 constraintName="FKd5y4mg1tcpsyi2dcla37gka5m" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="F_ID" referencedTableName="t_user" validate="true"/>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-35">
+        <addForeignKeyConstraint baseColumnNames="F_NEWS_ID" baseTableName="t_comment"
+                                 constraintName="FKeniu19lguym67ac3regewvpcw" deferrable="false"
+                                 initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION"
+                                 referencedColumnNames="F_ID" referencedTableName="t_news" validate="true"/>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-36">
+        <addForeignKeyConstraint baseColumnNames="F_DISCOUNT_ID" baseTableName="t_user"
+                                 constraintName="FKh9g9cfe2h36vut30ur2c674jt" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="F_ID" referencedTableName="t_discount" validate="true"/>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-37">
+        <addForeignKeyConstraint baseColumnNames="F_ITEM_ID" baseTableName="t_discount_item"
+                                 constraintName="FKhp2xreeuwv5aijppbnts2ddi1" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="F_ID" referencedTableName="t_item" validate="true"/>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-38">
+        <addForeignKeyConstraint baseColumnNames="F_ROLE_ID" baseTableName="t_permission_role"
+                                 constraintName="FKi4s0tahl2bgydcq9gx1nkkl6u" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="F_ID" referencedTableName="t_role" validate="true"/>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-39">
+        <addForeignKeyConstraint baseColumnNames="F_USER_ID" baseTableName="t_comment"
+                                 constraintName="FKj08s3lhgtgxc5tricii8ic6h8" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="F_ID" referencedTableName="t_user" validate="true"/>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-40">
+        <addForeignKeyConstraint baseColumnNames="F_USER_ID" baseTableName="t_audit"
+                                 constraintName="FKjrn3ioy0oylsyml20ai8qe3qc" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="F_ID" referencedTableName="t_user" validate="true"/>
+    </changeSet>
+    <changeSet author="vpshulga (generated)" id="1538644835993-41">
+        <insert tableName="t_news">
+            <column name="F_ID" valueNumeric="1"/>
+            <column name="F_CONTENT" value="Нашумевших и напуганных произведенным эффектом Александра Кокорина и Павла Мамаева доставили в Тверской суд Москвы. Он должен вынести решение относительно ходатайства СК об аресте футболистов. Ранее, после ультиматума правоохранительных органов, они один за другим явились в полицию и (с разным успехом) демонстрировали раскаяние. Mash описывает происходящее в зале.
+
+Следователь формулирует доводы в пользу ареста Кокорина. Сообщает, что сделать это необходимо, так как задержанный богат, имеет связи в органах власти и может скрыться или надавить на свидетелей. Кроме того, «пренебрегал нормами поведения», а также на свободе остаются неустановленные участники нападения."/>
+            <column name="F_CREATED" valueDate="${now}"/>
+            <column name="F_TITLE" value="Суд решил арестовать Кокориных и Мамаева на два месяца"/>
+            <column name="F_USER_ID" valueNumeric="1"/>
+        </insert>
+        <insert tableName="t_news">
+            <column name="F_ID" valueNumeric="2"/>
+            <column name="F_CONTENT" value="В Сморгонском районе пропали двое мужчин. Это Юрий Микульский 1980 года рождения и Александр Лохач 1973 года рождения. 6 октября, в субботу, они уехали на рыбалку на озеро невдалеке от деревни Белое. Потом мужчины перестали подавать о себе известия, передает УВД Гродненского облисполкома. Милиция начала розыск.
+
+— Оба гражданина выглядят на 40—45 лет, рост 170 сантиметров. Немаловажный момент: мужчины уехали и могут передвигаться на автомобиле Volkswagen Transporter белого цвета, регистрационный знак 7600 ЕІ-4. Просьба ко всем, кому что-либо известно о местонахождении данных лиц, сообщить в милицию, — говорится в сообщении УВД."/>
+            <column name="F_CREATED" valueDate="${now}"/>
+            <column name="F_TITLE" value="Двое мужчин отправились на рыбалку и не вернулись домой"/>
+            <column name="F_USER_ID" valueNumeric="1"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

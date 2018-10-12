@@ -1,16 +1,13 @@
 package com.gmail.vpshulgaa.service.converter.impl.toentity;
 
-import com.gmail.vpshulgaa.dao.entities.Comment;
 import com.gmail.vpshulgaa.dao.entities.News;
 import com.gmail.vpshulgaa.service.converter.Converter;
-import com.gmail.vpshulgaa.service.dto.CommentDto;
 import com.gmail.vpshulgaa.service.dto.NewsDto;
-
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import org.springframework.stereotype.Component;
 
-public class NewsConverter implements Converter<NewsDto, News>{
+@Component("newsConverter")
+public class NewsConverter implements Converter<NewsDto, News> {
 
     @Override
     public News toEntity(NewsDto dto) {
@@ -22,12 +19,6 @@ public class NewsConverter implements Converter<NewsDto, News>{
         news.setTitle(dto.getTitle());
         news.setContent(dto.getContent());
         news.setCreated(dto.getCreated());
-
-        UserConverter userConverter = new UserConverter();
-
-        if (dto.getUser() != null ) {
-            news.setUser(userConverter.toEntity(dto.getUser()));
-        }
 
         return news;
     }

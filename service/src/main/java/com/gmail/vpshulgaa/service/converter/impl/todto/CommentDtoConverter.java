@@ -3,12 +3,13 @@ package com.gmail.vpshulgaa.service.converter.impl.todto;
 import com.gmail.vpshulgaa.dao.entities.Comment;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.CommentDto;
-import com.gmail.vpshulgaa.service.dto.NewsDto;
-import com.gmail.vpshulgaa.service.dto.UserDto;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component("commentDtoConverter")
 public class CommentDtoConverter implements DtoConverter<CommentDto, Comment> {
+
     @Override
     public CommentDto toDto(Comment entity) {
         if (entity == null) {
@@ -18,19 +19,7 @@ public class CommentDtoConverter implements DtoConverter<CommentDto, Comment> {
         commentDto.setId(entity.getId());
         commentDto.setContent(entity.getContent());
         commentDto.setCreated(entity.getCreated());
-
-        NewsDtoConverter newsDtoConverter = new NewsDtoConverter();
-        if (entity.getNews() != null) {
-            NewsDto newsDto = newsDtoConverter.toDto(entity.getNews());
-            commentDto.setNews(newsDto);
-        }
-
-        UserDtoConverter userDtoConverter = new UserDtoConverter();
-        if (entity.getUser() != null) {
-            UserDto userDto = userDtoConverter.toDto(entity.getUser());
-            commentDto.setUser(userDto);
-        }
-
+        commentDto.setCreator(entity.getUser().getName());
 
         return commentDto;
     }

@@ -1,12 +1,13 @@
 package com.gmail.vpshulgaa.service.converter.impl.toentity;
 
 import com.gmail.vpshulgaa.dao.entities.Profile;
-import com.gmail.vpshulgaa.dao.entities.User;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.dto.ProfileDto;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
-public class ProfileConverter implements Converter<ProfileDto, Profile>{
+@Component("profileConverter")
+public class ProfileConverter implements Converter<ProfileDto, Profile> {
 
     @Override
     public Profile toEntity(ProfileDto dto) {

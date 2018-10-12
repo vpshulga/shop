@@ -1,13 +1,13 @@
 package com.gmail.vpshulgaa.service.converter.impl.toentity;
 
 import com.gmail.vpshulgaa.dao.entities.Permission;
-import com.gmail.vpshulgaa.dao.entities.Role;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.dto.PermissionDto;
-import com.gmail.vpshulgaa.service.dto.RoleDto;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
-public class PermissionConverter implements Converter<PermissionDto, Permission>{
+@Component("permissionConverter")
+public class PermissionConverter implements Converter<PermissionDto, Permission> {
     @Override
     public Permission toEntity(PermissionDto dto) {
         if (dto == null) {

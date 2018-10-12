@@ -1,16 +1,18 @@
 package com.gmail.vpshulgaa.dao.impl;
 
 import com.gmail.vpshulgaa.dao.GenericDao;
-import com.gmail.vpshulgaa.dao.util.HibernateUtil;
 import java.io.Serializable;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class GenericDaoImpl<T extends Serializable> implements GenericDao<T> {
     private Class<T> clazz;
 
-    private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+    @Autowired
+    private SessionFactory sessionFactory;
+
 
     public GenericDaoImpl(Class<T> clazz) {
         this.clazz = clazz;

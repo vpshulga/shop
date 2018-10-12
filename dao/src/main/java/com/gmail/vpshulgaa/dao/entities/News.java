@@ -4,25 +4,21 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import javax.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-@Getter
-@Setter
-@NoArgsConstructor
 @Entity
 @Table(name = "T_NEWS")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class News implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "F_ID", updatable = false, nullable = false)
     private long id;
-    @Column(name = "F_TITLE", length = 100)
+    @Column(name = "F_TITLE", length = 200)
     private String title;
-    @Column(name = "F_CONTENT", length = 1000)
+    @Column(name = "F_CONTENT", length = 3000)
     private String content;
     @Column(name = "F_CREATED")
     private LocalDateTime created;
@@ -31,6 +27,48 @@ public class News implements Serializable {
     @JoinColumn(name = "F_USER_ID")
     private User user;
 
+    public News() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -1,35 +1,53 @@
 package com.gmail.vpshulgaa.service.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import com.gmail.vpshulgaa.dao.enums.Roles;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
-@Getter
-@Setter
-@NoArgsConstructor
 public class RoleDto {
     private long id;
-    private String name;
+    private Roles name;
     private Set<PermissionDto> permissions = new HashSet<>();
 
+    public RoleDto() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Roles getName() {
+        return name;
+    }
+
+    public void setName(Roles name) {
+        this.name = name;
+    }
+
+    public Set<PermissionDto> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(Set<PermissionDto> permissions) {
+        this.permissions = permissions;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         RoleDto roleDto = (RoleDto) o;
-
-        return id == roleDto.id && (name != null ? name.equals(roleDto.name) : roleDto.name == null);
+        return id == roleDto.id &&
+                name == roleDto.name;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        return result;
+        return Objects.hash(id, name);
     }
 }

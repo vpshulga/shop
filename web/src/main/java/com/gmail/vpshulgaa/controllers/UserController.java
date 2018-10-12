@@ -138,7 +138,7 @@ public class UserController {
         changePasswordValidator.validate(changePassword, result);
         if (result.hasErrors()) {
             modelMap.addAttribute("changePassword", changePassword);
-            return pageProperties.getChangePasswordPagePath();
+            return "redirect:/web/users/" + id + "/update/password";
         } else {
             userService.changePassword(changePassword, id);
             modelMap.addAttribute("changePassword", changePassword);

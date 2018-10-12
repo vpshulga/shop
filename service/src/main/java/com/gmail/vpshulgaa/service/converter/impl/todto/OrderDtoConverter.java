@@ -1,16 +1,10 @@
 package com.gmail.vpshulgaa.service.converter.impl.todto;
 
-import com.gmail.vpshulgaa.dao.entities.Item;
 import com.gmail.vpshulgaa.dao.entities.Order;
-import com.gmail.vpshulgaa.dao.entities.User;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
-import com.gmail.vpshulgaa.service.dto.ItemDto;
 import com.gmail.vpshulgaa.service.dto.OrderDto;
-import com.gmail.vpshulgaa.service.dto.UserDto;
 import java.math.BigDecimal;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component("orderDtoConverter")

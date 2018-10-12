@@ -12,18 +12,15 @@ import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.CommentDto;
 import com.gmail.vpshulgaa.service.dto.NewsDto;
 import com.gmail.vpshulgaa.service.dto.UserProfileDto;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -55,7 +52,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional(readOnly = true)
     public CommentDto findOne(Long id) {
         CommentDto commentDto = null;
         try {
@@ -68,13 +65,13 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional(readOnly = true)
     public List<CommentDto> findAll() {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional
     public CommentDto create(CommentDto commentDto, Long newsId, Long userId) {
         try {
             commentDto.setCreated(LocalDateTime.now());
@@ -92,7 +89,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional
     public CommentDto update(CommentDto commentDto) {
         try {
             Comment comment = commentConverter.toEntity(commentDto);
@@ -105,7 +102,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional
     public CommentDto delete(CommentDto commentDto) {
         try {
             Comment comment = commentConverter.toEntity(commentDto);
@@ -118,7 +115,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional
     public void deleteById(Long id) {
         try {
             commentDao.deleteById(id);
@@ -128,7 +125,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional(readOnly = true)
     public Long countOfCommentsByNewsId(Long newsId) {
         Long count = 0L;
         try {
@@ -140,7 +137,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional(readOnly = true)
     public List<CommentDto> findCommentsByPageForNews(Long newsId, Long page, int maxResults) {
         List<CommentDto> commentsDto = new ArrayList<>();
         List<Comment> comments;

@@ -8,6 +8,7 @@ import com.gmail.vpshulgaa.service.dto.RoleDto;
 import com.gmail.vpshulgaa.service.dto.UserProfileDto;
 import com.gmail.vpshulgaa.service.util.ServiceUtils;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,15 +25,18 @@ public class UserController {
     private final UserService userService;
     private final Validator userValidator;
     private final RoleService roleService;
+    private final Validator changePasswordValidator;
 
     @Autowired
     public UserController(PageProperties pageProperties, UserService userService,
                           @Qualifier("userValidator") Validator userValidator,
-                          RoleService roleService) {
+                          RoleService roleService,
+                          @Qualifier("changePasswordValidator") Validator changePasswordValidator) {
         this.pageProperties = pageProperties;
         this.userService = userService;
         this.userValidator = userValidator;
         this.roleService = roleService;
+        this.changePasswordValidator = changePasswordValidator;
     }
 
     @GetMapping
@@ -56,7 +60,7 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public String createUser(@ModelAttribute UserProfileDto user,
+    public String createUser(@ModelAttribute @Valid UserProfileDto user,
                              BindingResult result,
                              ModelMap modelMap) {
         userValidator.validate(user, result);
@@ -115,7 +119,9 @@ public class UserController {
 
     @GetMapping(value = "/{id}/update/password")
     @PreAuthorize("principal.id == #id or hasAuthority('CHANGE_ROLE')")
-    public String changePasswordPage(ModelMap modelMap, @PathVariable("id") Long id) {
+    public String changePasswordPage(
+            ModelMap modelMap,
+            @PathVariable("id") Long id) {
         UserProfileDto user = userService.findOne(id);
         modelMap.addAttribute("changePassword", new ChangePasswordDto());
         modelMap.addAttribute("user", user);
@@ -125,11 +131,18 @@ public class UserController {
 
     @PostMapping(value = "/{id}/update/password")
     @PreAuthorize("principal.id == #id or hasAuthority('CHANGE_ROLE')")
-    public String changePassword(@ModelAttribute ChangePasswordDto changePassword,
-                                 BindingResult result,
-                                 ModelMap modelMap, @PathVariable("id") Long id) {
-        userService.changePassword(changePassword, id);
-        modelMap.addAttribute("changePassword", changePassword);
-        return "redirect:/web/users/" + id;
+    public String changePassword(
+            @ModelAttribute ChangePasswordDto changePassword,
+            BindingResult result,
+            ModelMap modelMap, @PathVariable("id") Long id) {
+        changePasswordValidator.validate(changePassword, result);
+        if (result.hasErrors()) {
+            modelMap.addAttribute("changePassword", changePassword);
+            return pageProperties.getChangePasswordPagePath();
+        } else {
+            userService.changePassword(changePassword, id);
+            modelMap.addAttribute("changePassword", changePassword);
+            return "redirect:/web/users/" + id;
+        }
     }
 }

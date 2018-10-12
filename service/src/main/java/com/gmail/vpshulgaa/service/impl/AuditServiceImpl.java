@@ -6,14 +6,13 @@ import com.gmail.vpshulgaa.service.AuditService;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.AuditDto;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -34,7 +33,7 @@ public class AuditServiceImpl implements AuditService {
 
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional(readOnly = true)
     public AuditDto findOne(Long id) {
         AuditDto auditDto = null;
         try {
@@ -47,12 +46,13 @@ public class AuditServiceImpl implements AuditService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional(readOnly = true)
     public List<AuditDto> findAll() {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
+    @Transactional
     public AuditDto create(AuditDto auditDto) {
         try {
             Audit audit = auditConverter.toEntity(auditDto);
@@ -65,7 +65,7 @@ public class AuditServiceImpl implements AuditService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional
     public AuditDto update(AuditDto auditDto) {
         try {
             Audit audit = auditConverter.toEntity(auditDto);
@@ -78,7 +78,7 @@ public class AuditServiceImpl implements AuditService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional
     public AuditDto delete(AuditDto auditDto) {
         try {
             Audit audit = auditConverter.toEntity(auditDto);
@@ -91,7 +91,7 @@ public class AuditServiceImpl implements AuditService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional
     public void deleteById(Long id) {
         try {
             auditDao.deleteById(id);

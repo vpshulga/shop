@@ -6,14 +6,13 @@ import com.gmail.vpshulgaa.service.DiscountService;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.DiscountDto;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -25,14 +24,17 @@ public class DiscountServiceImpl implements DiscountService {
     private final DtoConverter<DiscountDto, Discount> discountDtoConverter;
 
     @Autowired
-    public DiscountServiceImpl(DiscountDao discountDao, @Qualifier("discountConverter") Converter<DiscountDto, Discount> discountConverter, @Qualifier("discountDtoConverter") DtoConverter<DiscountDto, Discount> discountDtoConverter) {
+    public DiscountServiceImpl(
+            DiscountDao discountDao,
+            @Qualifier("discountConverter") Converter<DiscountDto, Discount> discountConverter,
+            @Qualifier("discountDtoConverter") DtoConverter<DiscountDto, Discount> discountDtoConverter) {
         this.discountDao = discountDao;
         this.discountConverter = discountConverter;
         this.discountDtoConverter = discountDtoConverter;
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional(readOnly = true)
     public DiscountDto findOne(Long id) {
         DiscountDto discountDto = null;
         try {
@@ -45,13 +47,13 @@ public class DiscountServiceImpl implements DiscountService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional(readOnly = true)
     public List<DiscountDto> findAll() {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional
     public DiscountDto create(DiscountDto discountDto) {
         try {
             Discount discount = discountConverter.toEntity(discountDto);
@@ -64,7 +66,7 @@ public class DiscountServiceImpl implements DiscountService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional
     public DiscountDto update(DiscountDto discountDto) {
         try {
             Discount discount = discountConverter.toEntity(discountDto);
@@ -77,7 +79,7 @@ public class DiscountServiceImpl implements DiscountService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional
     public DiscountDto delete(DiscountDto discountDto) {
         try {
             Discount discount = discountConverter.toEntity(discountDto);
@@ -90,7 +92,7 @@ public class DiscountServiceImpl implements DiscountService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional
     public void deleteById(Long id) {
         try {
             discountDao.deleteById(id);

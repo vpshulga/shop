@@ -2,12 +2,13 @@ package com.gmail.vpshulgaa.controllers.validators;
 
 import com.gmail.vpshulgaa.service.dto.UserProfileDto;
 import java.util.regex.Pattern;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-@Component
+@Component("userValidator")
 public class UserValidator implements Validator {
     @Override
     public boolean supports(Class<?> clazz) {
@@ -15,8 +16,8 @@ public class UserValidator implements Validator {
     }
 
     @Override
-    public void validate(Object o, Errors errors) {
-        ValidationUtils.rejectIfEmpty(errors, "name", "user.name.empty");
+    public void validate(@Nullable Object o, Errors errors) {
+        ValidationUtils.rejectIfEmpty(errors, "name", "user.name.empty", "aaasdasd");
         ValidationUtils.rejectIfEmpty(errors, "email", "user.email.empty");
 
         UserProfileDto user = (UserProfileDto) o;

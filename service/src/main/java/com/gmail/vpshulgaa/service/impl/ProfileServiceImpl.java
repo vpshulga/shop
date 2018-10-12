@@ -6,14 +6,13 @@ import com.gmail.vpshulgaa.service.ProfileService;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.ProfileDto;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -25,16 +24,17 @@ public class ProfileServiceImpl implements ProfileService {
     private final Converter<ProfileDto, Profile> profileConverter;
 
     @Autowired
-    public ProfileServiceImpl(ProfileDao profileDao,
-                              @Qualifier("profileDtoConverter") DtoConverter<ProfileDto, Profile> profileDtoConverter,
-                              @Qualifier("profileConverter") Converter<ProfileDto, Profile> profileConverter) {
+    public ProfileServiceImpl(
+            ProfileDao profileDao,
+            @Qualifier("profileDtoConverter") DtoConverter<ProfileDto, Profile> profileDtoConverter,
+            @Qualifier("profileConverter") Converter<ProfileDto, Profile> profileConverter) {
         this.profileDao = profileDao;
         this.profileDtoConverter = profileDtoConverter;
         this.profileConverter = profileConverter;
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional(readOnly = true)
     public ProfileDto findOne(Long id) {
         ProfileDto profileDto = null;
         try {
@@ -47,13 +47,13 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional(readOnly = true)
     public List<ProfileDto> findAll() {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional
     public ProfileDto create(ProfileDto profileDto) {
         try {
             Profile profile = profileConverter.toEntity(profileDto);
@@ -66,7 +66,7 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional
     public ProfileDto update(ProfileDto profileDto) {
         try {
             Profile profile = profileConverter.toEntity(profileDto);
@@ -79,7 +79,7 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional
     public ProfileDto delete(ProfileDto profileDto) {
         try {
             Profile profile = profileConverter.toEntity(profileDto);
@@ -92,7 +92,7 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional
     public void deleteById(Long id) {
         try {
             profileDao.deleteById(id);

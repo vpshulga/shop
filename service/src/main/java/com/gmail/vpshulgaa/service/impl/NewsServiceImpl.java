@@ -9,18 +9,15 @@ import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.NewsDto;
 import com.gmail.vpshulgaa.service.dto.UserProfileDto;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class NewsServiceImpl implements NewsService {
@@ -48,7 +45,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional(readOnly = true)
     public NewsDto findOne(Long id) {
         NewsDto newsDto = null;
         try {
@@ -61,13 +58,13 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional(readOnly = true)
     public List<NewsDto> findAll() {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional
     public NewsDto create(NewsDto newsDto, Long userId) {
         try {
             newsDto.setCreated(LocalDateTime.now());
@@ -83,7 +80,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional
     public NewsDto update(NewsDto newsDto, Long userId) {
         try {
             News news = newsConverter.toEntity(newsDto);
@@ -98,7 +95,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional
     public NewsDto delete(NewsDto newsDto) {
         try {
             News news = newsConverter.toEntity(newsDto);
@@ -111,7 +108,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional
     public void deleteById(Long id) {
         try {
             newsDao.deleteById(id);
@@ -121,7 +118,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional(readOnly = true)
     public Long countOfNews() {
         Long count = 0L;
         try {
@@ -133,7 +130,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional(readOnly = true)
     public List<NewsDto> findNewsByPage(Long page, int maxResults) {
         List<NewsDto> newsDtos = new ArrayList<>();
         List<News> newsList;

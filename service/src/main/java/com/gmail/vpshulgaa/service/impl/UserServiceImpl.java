@@ -22,8 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 
@@ -41,14 +39,15 @@ public class UserServiceImpl implements UserService {
     private final Converter<ProfileDto, Profile> profileConverter;
 
     @Autowired
-    public UserServiceImpl(UserDao userDao,
-                           @Qualifier("userProfileConverter") Converter<UserProfileDto, User> userProfileConverter,
-                           @Qualifier("userProfileDtoConverter") DtoConverter<UserProfileDto, User> userProfileDtoConverter,
-                           @Qualifier("roleConverter") Converter<RoleDto, Role> roleConverter,
-                           RoleService roleService,
-                           BCryptPasswordEncoder bCryptPasswordEncoder,
-                           ProfileService profileService,
-                           @Qualifier("profileConverter") Converter<ProfileDto, Profile> profileConverter) {
+    public UserServiceImpl(
+            UserDao userDao,
+            @Qualifier("userProfileConverter") Converter<UserProfileDto, User> userProfileConverter,
+            @Qualifier("userProfileDtoConverter") DtoConverter<UserProfileDto, User> userProfileDtoConverter,
+            @Qualifier("roleConverter") Converter<RoleDto, Role> roleConverter,
+            RoleService roleService,
+            BCryptPasswordEncoder bCryptPasswordEncoder,
+            ProfileService profileService,
+            @Qualifier("profileConverter") Converter<ProfileDto, Profile> profileConverter) {
         this.userDao = userDao;
         this.userProfileConverter = userProfileConverter;
         this.userProfileDtoConverter = userProfileDtoConverter;
@@ -60,7 +59,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional(readOnly = true)
     public UserProfileDto findOne(Long id) {
         UserProfileDto userProfileDto = new UserProfileDto();
         try {
@@ -73,7 +72,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional(readOnly = true)
     public List<UserProfileDto> findAll() {
         List<UserProfileDto> users = new ArrayList<>();
         try {
@@ -85,7 +84,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional
     public UserProfileDto create(UserProfileDto userDto) {
         try {
             User user = userProfileConverter.toEntity(userDto);
@@ -108,7 +107,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional
     public UserProfileDto update(UserProfileDto userDto) {
         try {
             User user = userProfileConverter.toEntity(userDto);
@@ -127,7 +126,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional
     public UserProfileDto delete(UserProfileDto userDto) {
         try {
             User user = userProfileConverter.toEntity(userDto);
@@ -146,7 +145,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional
     public void deleteById(Long id) {
         try {
             userDao.deleteById(id);
@@ -156,7 +155,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional
     public UserProfileDto findByEmail(String email) {
         UserProfileDto userDto = null;
         try {
@@ -169,7 +168,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional
     public UserProfileDto changePassword(ChangePasswordDto changePassword, Long userId) {
         User user = userDao.findOne(userId);
         if (changePassword.getNewPassword().equals(changePassword.getConfirmPassword())) {
@@ -182,7 +181,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional(readOnly = true)
     public Long countOfUsers() {
         Long count = 0L;
         try {
@@ -194,7 +193,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional(readOnly = true)
     public List<UserProfileDto> findUsersByPage(Long page, int maxResults) {
         List<UserProfileDto> usersDto = new ArrayList<>();
         List<User> users;

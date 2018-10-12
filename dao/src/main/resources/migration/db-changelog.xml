@@ -232,6 +232,10 @@
             <column name="F_ID" valueNumeric="25"/>
             <column name="F_NAME" value="API_USER_PERMISSION"/>
         </insert>
+        <insert tableName="t_permission">
+            <column name="F_ID" valueNumeric="26"/>
+            <column name="F_NAME" value="SHOW_ITEMS"/>
+        </insert>
     </changeSet>
     <changeSet author="vpshulga (generated)" id="1538644835993-14">
         <insert tableName="t_permission_role">
@@ -239,15 +243,7 @@
             <column name="F_PERMISSION_ID" valueNumeric="1"/>
         </insert>
         <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="2"/>
-            <column name="F_PERMISSION_ID" valueNumeric="1"/>
-        </insert>
-        <insert tableName="t_permission_role">
             <column name="F_ROLE_ID" valueNumeric="1"/>
-            <column name="F_PERMISSION_ID" valueNumeric="2"/>
-        </insert>
-        <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="2"/>
             <column name="F_PERMISSION_ID" valueNumeric="2"/>
         </insert>
         <insert tableName="t_permission_role">
@@ -255,15 +251,7 @@
             <column name="F_PERMISSION_ID" valueNumeric="3"/>
         </insert>
         <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="2"/>
-            <column name="F_PERMISSION_ID" valueNumeric="3"/>
-        </insert>
-        <insert tableName="t_permission_role">
             <column name="F_ROLE_ID" valueNumeric="1"/>
-            <column name="F_PERMISSION_ID" valueNumeric="4"/>
-        </insert>
-        <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="2"/>
             <column name="F_PERMISSION_ID" valueNumeric="4"/>
         </insert>
         <insert tableName="t_permission_role">
@@ -271,19 +259,7 @@
             <column name="F_PERMISSION_ID" valueNumeric="5"/>
         </insert>
         <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="2"/>
-            <column name="F_PERMISSION_ID" valueNumeric="5"/>
-        </insert>
-        <insert tableName="t_permission_role">
             <column name="F_ROLE_ID" valueNumeric="1"/>
-            <column name="F_PERMISSION_ID" valueNumeric="6"/>
-        </insert>
-        <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="2"/>
-            <column name="F_PERMISSION_ID" valueNumeric="6"/>
-        </insert>
-        <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="3"/>
             <column name="F_PERMISSION_ID" valueNumeric="6"/>
         </insert>
         <insert tableName="t_permission_role">
@@ -291,35 +267,11 @@
             <column name="F_PERMISSION_ID" valueNumeric="7"/>
         </insert>
         <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="2"/>
-            <column name="F_PERMISSION_ID" valueNumeric="7"/>
-        </insert>
-        <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="3"/>
-            <column name="F_PERMISSION_ID" valueNumeric="7"/>
-        </insert>
-        <insert tableName="t_permission_role">
             <column name="F_ROLE_ID" valueNumeric="1"/>
             <column name="F_PERMISSION_ID" valueNumeric="8"/>
         </insert>
         <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="2"/>
-            <column name="F_PERMISSION_ID" valueNumeric="8"/>
-        </insert>
-        <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="3"/>
-            <column name="F_PERMISSION_ID" valueNumeric="8"/>
-        </insert>
-        <insert tableName="t_permission_role">
             <column name="F_ROLE_ID" valueNumeric="1"/>
-            <column name="F_PERMISSION_ID" valueNumeric="9"/>
-        </insert>
-        <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="2"/>
-            <column name="F_PERMISSION_ID" valueNumeric="9"/>
-        </insert>
-        <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="3"/>
             <column name="F_PERMISSION_ID" valueNumeric="9"/>
         </insert>
         <insert tableName="t_permission_role">
@@ -327,15 +279,7 @@
             <column name="F_PERMISSION_ID" valueNumeric="10"/>
         </insert>
         <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="3"/>
-            <column name="F_PERMISSION_ID" valueNumeric="10"/>
-        </insert>
-        <insert tableName="t_permission_role">
             <column name="F_ROLE_ID" valueNumeric="1"/>
-            <column name="F_PERMISSION_ID" valueNumeric="11"/>
-        </insert>
-        <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="3"/>
             <column name="F_PERMISSION_ID" valueNumeric="11"/>
         </insert>
         <insert tableName="t_permission_role">
@@ -343,15 +287,7 @@
             <column name="F_PERMISSION_ID" valueNumeric="12"/>
         </insert>
         <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="3"/>
-            <column name="F_PERMISSION_ID" valueNumeric="12"/>
-        </insert>
-        <insert tableName="t_permission_role">
             <column name="F_ROLE_ID" valueNumeric="1"/>
-            <column name="F_PERMISSION_ID" valueNumeric="13"/>
-        </insert>
-        <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="3"/>
             <column name="F_PERMISSION_ID" valueNumeric="13"/>
         </insert>
         <insert tableName="t_permission_role">
@@ -359,47 +295,15 @@
             <column name="F_PERMISSION_ID" valueNumeric="14"/>
         </insert>
         <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="3"/>
-            <column name="F_PERMISSION_ID" valueNumeric="14"/>
-        </insert>
-        <insert tableName="t_permission_role">
             <column name="F_ROLE_ID" valueNumeric="1"/>
             <column name="F_PERMISSION_ID" valueNumeric="15"/>
         </insert>
         <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="3"/>
-            <column name="F_PERMISSION_ID" valueNumeric="15"/>
-        </insert>
-        <insert tableName="t_permission_role">
             <column name="F_ROLE_ID" valueNumeric="1"/>
             <column name="F_PERMISSION_ID" valueNumeric="16"/>
         </insert>
         <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="2"/>
-            <column name="F_PERMISSION_ID" valueNumeric="16"/>
-        </insert>
-        <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="3"/>
-            <column name="F_PERMISSION_ID" valueNumeric="16"/>
-        </insert>
-        <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="4"/>
-            <column name="F_PERMISSION_ID" valueNumeric="16"/>
-        </insert>
-        <insert tableName="t_permission_role">
             <column name="F_ROLE_ID" valueNumeric="1"/>
-            <column name="F_PERMISSION_ID" valueNumeric="17"/>
-        </insert>
-        <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="2"/>
-            <column name="F_PERMISSION_ID" valueNumeric="17"/>
-        </insert>
-        <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="3"/>
-            <column name="F_PERMISSION_ID" valueNumeric="17"/>
-        </insert>
-        <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="4"/>
             <column name="F_PERMISSION_ID" valueNumeric="17"/>
         </insert>
         <insert tableName="t_permission_role">
@@ -407,31 +311,11 @@
             <column name="F_PERMISSION_ID" valueNumeric="18"/>
         </insert>
         <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="4"/>
-            <column name="F_PERMISSION_ID" valueNumeric="18"/>
-        </insert>
-        <insert tableName="t_permission_role">
             <column name="F_ROLE_ID" valueNumeric="1"/>
             <column name="F_PERMISSION_ID" valueNumeric="19"/>
         </insert>
         <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="2"/>
-            <column name="F_PERMISSION_ID" valueNumeric="19"/>
-        </insert>
-        <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="3"/>
-            <column name="F_PERMISSION_ID" valueNumeric="19"/>
-        </insert>
-        <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="4"/>
-            <column name="F_PERMISSION_ID" valueNumeric="19"/>
-        </insert>
-        <insert tableName="t_permission_role">
             <column name="F_ROLE_ID" valueNumeric="1"/>
-            <column name="F_PERMISSION_ID" valueNumeric="20"/>
-        </insert>
-        <insert tableName="t_permission_role">
-            <column name="F_ROLE_ID" valueNumeric="4"/>
             <column name="F_PERMISSION_ID" valueNumeric="20"/>
         </insert>
         <insert tableName="t_permission_role">
@@ -439,16 +323,116 @@
             <column name="F_PERMISSION_ID" valueNumeric="21"/>
         </insert>
         <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="1"/>
+            <column name="F_PERMISSION_ID" valueNumeric="26"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="2"/>
+            <column name="F_PERMISSION_ID" valueNumeric="1"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="2"/>
+            <column name="F_PERMISSION_ID" valueNumeric="2"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="2"/>
+            <column name="F_PERMISSION_ID" valueNumeric="3"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="2"/>
+            <column name="F_PERMISSION_ID" valueNumeric="4"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="2"/>
+            <column name="F_PERMISSION_ID" valueNumeric="5"/>
+        </insert>
+        <insert tableName="t_permission_role">
             <column name="F_ROLE_ID" valueNumeric="2"/>
             <column name="F_PERMISSION_ID" valueNumeric="22"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="3"/>
+            <column name="F_PERMISSION_ID" valueNumeric="6"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="3"/>
+            <column name="F_PERMISSION_ID" valueNumeric="7"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="3"/>
+            <column name="F_PERMISSION_ID" valueNumeric="8"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="3"/>
+            <column name="F_PERMISSION_ID" valueNumeric="9"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="3"/>
+            <column name="F_PERMISSION_ID" valueNumeric="10"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="3"/>
+            <column name="F_PERMISSION_ID" valueNumeric="11"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="3"/>
+            <column name="F_PERMISSION_ID" valueNumeric="12"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="3"/>
+            <column name="F_PERMISSION_ID" valueNumeric="13"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="3"/>
+            <column name="F_PERMISSION_ID" valueNumeric="14"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="3"/>
+            <column name="F_PERMISSION_ID" valueNumeric="15"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="3"/>
+            <column name="F_PERMISSION_ID" valueNumeric="16"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="3"/>
+            <column name="F_PERMISSION_ID" valueNumeric="20"/>
         </insert>
         <insert tableName="t_permission_role">
             <column name="F_ROLE_ID" valueNumeric="3"/>
             <column name="F_PERMISSION_ID" valueNumeric="23"/>
         </insert>
         <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="3"/>
+            <column name="F_PERMISSION_ID" valueNumeric="26"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="4"/>
+            <column name="F_PERMISSION_ID" valueNumeric="16"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="4"/>
+            <column name="F_PERMISSION_ID" valueNumeric="17"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="4"/>
+            <column name="F_PERMISSION_ID" valueNumeric="18"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="4"/>
+            <column name="F_PERMISSION_ID" valueNumeric="19"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="4"/>
+            <column name="F_PERMISSION_ID" valueNumeric="20"/>
+        </insert>
+        <insert tableName="t_permission_role">
             <column name="F_ROLE_ID" valueNumeric="4"/>
             <column name="F_PERMISSION_ID" valueNumeric="24"/>
+        </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="4"/>
+            <column name="F_PERMISSION_ID" valueNumeric="26"/>
         </insert>
         <insert tableName="t_permission_role">
             <column name="F_ROLE_ID" valueNumeric="5"/>

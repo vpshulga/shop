@@ -13,18 +13,15 @@ import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.ItemDto;
 import com.gmail.vpshulgaa.service.dto.OrderDto;
 import com.gmail.vpshulgaa.service.dto.UserProfileDto;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -57,7 +54,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional(readOnly = true)
     public OrderDto findOne(Long id) {
         OrderDto orderDto = null;
         try {
@@ -70,13 +67,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional(readOnly = true)
     public List<OrderDto> findAll() {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional
     public OrderDto create(OrderDto orderDto, Long itemId, Long userId) {
         try {
             Order order = orderConverter.toEntity(orderDto);
@@ -95,7 +92,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional
     public OrderDto update(OrderDto orderDto, Long itemId, Long userId) {
         try {
             Order order = orderConverter.toEntity(orderDto);
@@ -112,7 +109,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional
     public OrderDto delete(OrderDto orderDto) {
         try {
             Order order = orderConverter.toEntity(orderDto);
@@ -125,7 +122,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional
     public void deleteById(Long id) {
         try {
             orderDao.deleteById(id);
@@ -135,7 +132,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional(readOnly = true)
     public List<OrderDto> findOrdersByUserId(Long userId) {
         List<OrderDto> ordersDto = new ArrayList<>();
         List<Order> orders;
@@ -151,7 +148,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional(readOnly = true)
     public Long countOfOrder() {
         Long count = 0L;
         try {
@@ -163,7 +160,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional(readOnly = true)
     public Long countOfOrderForUser(Long userId) {
         Long count = 0L;
         try {
@@ -175,7 +172,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional(readOnly = true)
     public List<OrderDto> findOrdersByPage(Long page, int maxResults) {
         List<OrderDto> ordersDto = new ArrayList<>();
         List<Order> orders;
@@ -191,7 +188,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    @Transactional(readOnly = true)
     public List<OrderDto> findOrdersByPageForUser(Long page, int maxResults, Long userId) {
         List<OrderDto> ordersDto = new ArrayList<>();
         List<Order> orders;

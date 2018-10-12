@@ -17,7 +17,7 @@ public class UserValidator implements Validator {
 
     @Override
     public void validate(@Nullable Object o, Errors errors) {
-        ValidationUtils.rejectIfEmpty(errors, "name", "user.name.empty", "aaasdasd");
+        ValidationUtils.rejectIfEmpty(errors, "name", "user.name.empty");
         ValidationUtils.rejectIfEmpty(errors, "email", "user.email.empty");
 
         UserProfileDto user = (UserProfileDto) o;

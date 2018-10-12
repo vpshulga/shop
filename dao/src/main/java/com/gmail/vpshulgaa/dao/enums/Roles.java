@@ -6,5 +6,6 @@ public enum Roles {
     SECURITY_USER,
     SALE_USER,
     CUSTOMER_USER,
-    API_USER
+    API_USER,
+    MANAGER
 }

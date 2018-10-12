@@ -28,6 +28,8 @@ public class PageProperties {
     private String logoutPagePath;
     private String createItemPagePath;
     private String changePasswordPagePath;
+    private String createCardPagePath;
+    private String cardsPagePath;
 
     private int countOfEntitiesOnPage;
 
@@ -57,6 +59,8 @@ public class PageProperties {
         this.logoutPagePath = environment.getProperty("logout.page.path");
         this.createItemPagePath = environment.getProperty("create.item.page.path");
         this.changePasswordPagePath = environment.getProperty("change.password.page.path");
+        this.createCardPagePath = environment.getProperty("create.card.page.path");
+        this.cardsPagePath = environment.getProperty("cards.page.path");
         this.countOfEntitiesOnPage = Integer.parseInt(environment.getProperty("count.of.entities.on.page"));
     }
 
@@ -138,5 +142,13 @@ public class PageProperties {
 
     public int getCountOfEntitiesOnPage() {
         return countOfEntitiesOnPage;
+    }
+
+    public String getCreateCardPagePath() {
+        return createCardPagePath;
+    }
+
+    public String getCardsPagePath() {
+        return cardsPagePath;
     }
 }

@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.security.core.Authentication;
@@ -43,21 +44,21 @@ public class AppSuccessHandler implements AuthenticationSuccessHandler {
         boolean isSecurityUser = false;
         boolean isSaleUser = false;
         boolean isCustomerUser = false;
+        boolean isManagerUser = false;
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         for (GrantedAuthority grantedAuthority : authorities) {
-            if (grantedAuthority.getAuthority().equals("ADMIN_PERMISSION")) {
-                isAdmin = true;
-                break;
-            } else if (grantedAuthority.getAuthority().equals("SECURITY_USER_PERMISSION")) {
-                isSecurityUser = true;
-                break;
-            } else if (grantedAuthority.getAuthority().equals("SALE_USER_PERMISSION")) {
-                isSaleUser = true;
-                break;
-            } else if (grantedAuthority.getAuthority().equals("CUSTOMER_USER_PERMISSION")) {
-                isCustomerUser = true;
-                break;
+            switch (grantedAuthority.getAuthority()) {
+                case "ADMIN_PERMISSION":
+                    isAdmin = true;
+                case "SECURITY_USER_PERMISSION":
+                    isSecurityUser = true;
+                case "SALE_USER_PERMISSION":
+                    isSaleUser = true;
+                case "CUSTOMER_USER_PERMISSION":
+                    isCustomerUser = true;
+                case "MANAGE_BUSINESS_CARD":
+                    isManagerUser = true;
             }
         }
 
@@ -69,6 +70,8 @@ public class AppSuccessHandler implements AuthenticationSuccessHandler {
             return "/web/orders";
         } else if (isCustomerUser) {
             return "/web/items";
+        } else if (isManagerUser) {
+            return "/web/cards";
         } else {
             throw new IllegalStateException();
         }

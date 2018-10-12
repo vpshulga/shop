@@ -60,7 +60,7 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public String createUser(@ModelAttribute @Valid UserProfileDto user,
+    public String createUser(@ModelAttribute UserProfileDto user,
                              BindingResult result,
                              ModelMap modelMap) {
         userValidator.validate(user, result);

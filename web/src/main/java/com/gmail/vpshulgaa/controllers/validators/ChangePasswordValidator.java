@@ -18,5 +18,11 @@ public class ChangePasswordValidator implements Validator {
     public void validate(@Nullable Object o, Errors errors) {
         ValidationUtils.rejectIfEmpty(errors, "newPassword", "new.password.empty");
         ValidationUtils.rejectIfEmpty(errors, "confirmPassword", "confirm.password.empty");
+
+        ChangePasswordDto changePasswordDto = (ChangePasswordDto) o;
+
+        if (!changePasswordDto.getNewPassword().equals(changePasswordDto.getConfirmPassword())) {
+            errors.rejectValue("newPassword", "diff.password");
+        }
     }
 }

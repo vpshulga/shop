@@ -3,6 +3,7 @@ package com.gmail.vpshulgaa.controllers.handlers;
 import com.gmail.vpshulgaa.config.PageProperties;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -13,6 +14,11 @@ public class AppExceptionHandler {
     @Autowired
     public AppExceptionHandler(PageProperties pageProperties) {
         this.pageProperties = pageProperties;
+    }
+
+    @ExceptionHandler
+    public String accessDeniedHandler(HttpServletRequest req, AccessDeniedException e) {
+        return pageProperties.getAccessDeniedPagePath();
     }
 
     @ExceptionHandler

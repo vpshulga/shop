@@ -13,9 +13,11 @@ import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.ItemDto;
 import com.gmail.vpshulgaa.service.dto.OrderDto;
 import com.gmail.vpshulgaa.service.dto.UserProfileDto;
+import com.gmail.vpshulgaa.service.util.ServiceUtils;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,14 +71,21 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional(readOnly = true)
     public List<OrderDto> findAll() {
-        return new ArrayList<>();
+        List<OrderDto> orders = new ArrayList<>();
+        try {
+            orders = orderDtoConverter.toDtoList(orderDao.findAll());
+        } catch (Exception e) {
+            logger.error("Failed to get orders", e);
+        }
+        return orders;
     }
 
     @Override
     @Transactional
-    public OrderDto create(OrderDto orderDto, Long itemId, Long userId) {
+    public OrderDto create(OrderDto orderDto, Long itemId) {
         try {
             Order order = orderConverter.toEntity(orderDto);
+            Long userId = ServiceUtils.getPrincipal().getId();
             UserProfileDto userDto = userService.findOne(userId);
             ItemDto itemDto = itemService.findOne(itemId);
             order.setItem(itemConverter.toEntity(itemDto));
@@ -161,9 +170,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional(readOnly = true)
-    public Long countOfOrderForUser(Long userId) {
+    public Long countOfOrderForUser() {
         Long count = 0L;
         try {
+            Long userId = ServiceUtils.getPrincipal().getId();
             count = orderDao.countOfOrdersForUser(userId);
         } catch (Exception e) {
             logger.error("Failed to find orders", e);
@@ -189,10 +199,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<OrderDto> findOrdersByPageForUser(Long page, int maxResults, Long userId) {
+    public List<OrderDto> findOrdersByPageForUser(Long page, int maxResults) {
         List<OrderDto> ordersDto = new ArrayList<>();
         List<Order> orders;
         try {
+            Long userId = ServiceUtils.getPrincipal().getId();
             orders = orderDao.findOrdersByPageForUser(page, maxResults, userId);
             for (Order order : orders) {
                 ordersDto.add(orderDtoConverter.toDto(order));
@@ -201,5 +212,20 @@ public class OrderServiceImpl implements OrderService {
             logger.error("Failed to find orders", e);
         }
         return ordersDto;
+    }
+
+    @Override
+    @Transactional
+    public boolean isExistInOrders(Long itemId) {
+        boolean exists = false;
+        List<Order> orders = orderDao.findAll();
+        List<OrderDto> orderDtos = orderDtoConverter.toDtoList(orders);
+        for (OrderDto orderDto : orderDtos) {
+            if (Objects.equals(orderDto.getItemId(), itemId)) {
+                exists = true;
+                break;
+            }
+        }
+        return exists;
     }
 }

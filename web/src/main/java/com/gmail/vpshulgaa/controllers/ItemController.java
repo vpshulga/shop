@@ -6,10 +6,12 @@ import com.gmail.vpshulgaa.service.dto.ItemDto;
 import com.gmail.vpshulgaa.service.util.ServiceUtils;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,11 +20,15 @@ import org.springframework.web.multipart.MultipartFile;
 public class ItemController {
     private final PageProperties pageProperties;
     private final ItemService itemService;
+    private final Validator createItemValidator;
 
     @Autowired
-    public ItemController(PageProperties pageProperties, ItemService itemService) {
+    public ItemController(
+            PageProperties pageProperties, ItemService itemService,
+            @Qualifier("createItemValidator") Validator createItemValidator) {
         this.pageProperties = pageProperties;
         this.itemService = itemService;
+        this.createItemValidator = createItemValidator;
     }
 
     @GetMapping
@@ -68,16 +74,20 @@ public class ItemController {
     public String createItem(@ModelAttribute ItemDto item,
                              BindingResult result,
                              ModelMap modelMap) {
-        itemService.create(item);
-        modelMap.addAttribute("item", item);
-        return "redirect:/web/items";
+        createItemValidator.validate(item, result);
+        if (result.hasErrors()) {
+            modelMap.addAttribute("item", item);
+            return pageProperties.getCreateItemPagePath();
+        } else {
+            itemService.create(item);
+            return "redirect:/web/items";
+        }
     }
 
     @PostMapping("/copy")
     @PreAuthorize("hasAuthority('COPY_ITEMS')")
     public String copyItem(@ModelAttribute ItemDto item,
-                             BindingResult result,
-                             ModelMap modelMap) {
+                           ModelMap modelMap) {
         itemService.create(item);
         modelMap.addAttribute("item", item);
         return "redirect:/web/items";

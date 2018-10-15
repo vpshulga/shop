@@ -24,4 +24,6 @@ public interface UserService {
     Long countOfUsers();
 
     List<UserProfileDto> findUsersByPage(Long page, int maxResults);
+
+    boolean isExistsEmail(String email);
 }

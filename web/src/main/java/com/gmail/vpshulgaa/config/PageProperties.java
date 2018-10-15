@@ -20,7 +20,7 @@ public class PageProperties {
     private String updateNewsPagePath;
     private String oneNewsPagePath;
     private String oneItemPagePath;
-    private String createPagePath;
+    private String createOrderPagePath;
     private String userProfilePagePath;
     private String readyOrderPagePath;
     private String ordersPagePath;
@@ -30,6 +30,7 @@ public class PageProperties {
     private String changePasswordPagePath;
     private String createCardPagePath;
     private String cardsPagePath;
+    private String accessDeniedPagePath;
 
     private int countOfEntitiesOnPage;
 
@@ -51,7 +52,7 @@ public class PageProperties {
         this.updateNewsPagePath = environment.getProperty("update.news.page.path");
         this.oneNewsPagePath = environment.getProperty("one.news.page.path");
         this.oneItemPagePath = environment.getProperty("one.item.page.path");
-        this.createPagePath = environment.getProperty("create.order.page.path");
+        this.createOrderPagePath = environment.getProperty("create.order.page.path");
         this.userProfilePagePath = environment.getProperty("user.profile.page.path");
         this.readyOrderPagePath = environment.getProperty("ready.order.page.path");
         this.ordersPagePath = environment.getProperty("orders.page.path");
@@ -61,6 +62,8 @@ public class PageProperties {
         this.changePasswordPagePath = environment.getProperty("change.password.page.path");
         this.createCardPagePath = environment.getProperty("create.card.page.path");
         this.cardsPagePath = environment.getProperty("cards.page.path");
+        this.accessDeniedPagePath = environment.getProperty("access.denied.page.path");
+
         this.countOfEntitiesOnPage = Integer.parseInt(environment.getProperty("count.of.entities.on.page"));
     }
 
@@ -108,8 +111,8 @@ public class PageProperties {
         return oneItemPagePath;
     }
 
-    public String getCreatePagePath() {
-        return createPagePath;
+    public String getCreateOrderPagePath() {
+        return createOrderPagePath;
     }
 
     public String getUserProfilePagePath() {
@@ -150,5 +153,9 @@ public class PageProperties {
 
     public String getCardsPagePath() {
         return cardsPagePath;
+    }
+
+    public String getAccessDeniedPagePath() {
+        return accessDeniedPagePath;
     }
 }

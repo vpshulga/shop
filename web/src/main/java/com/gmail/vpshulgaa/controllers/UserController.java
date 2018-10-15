@@ -8,7 +8,6 @@ import com.gmail.vpshulgaa.service.dto.RoleDto;
 import com.gmail.vpshulgaa.service.dto.UserProfileDto;
 import com.gmail.vpshulgaa.service.util.ServiceUtils;
 import java.util.List;
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,20 +22,24 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final PageProperties pageProperties;
     private final UserService userService;
-    private final Validator userValidator;
+    private final Validator createUserValidator;
     private final RoleService roleService;
     private final Validator changePasswordValidator;
+    private final Validator updateUserValidator;
 
     @Autowired
-    public UserController(PageProperties pageProperties, UserService userService,
-                          @Qualifier("userValidator") Validator userValidator,
-                          RoleService roleService,
-                          @Qualifier("changePasswordValidator") Validator changePasswordValidator) {
+    public UserController(
+            PageProperties pageProperties, UserService userService,
+            @Qualifier("createUserValidator") Validator createUserValidator,
+            RoleService roleService,
+            @Qualifier("changePasswordValidator") Validator changePasswordValidator,
+            @Qualifier("updateUserValidator") Validator updateUserValidator) {
         this.pageProperties = pageProperties;
         this.userService = userService;
-        this.userValidator = userValidator;
+        this.createUserValidator = createUserValidator;
         this.roleService = roleService;
         this.changePasswordValidator = changePasswordValidator;
+        this.updateUserValidator = updateUserValidator;
     }
 
     @GetMapping
@@ -63,7 +66,7 @@ public class UserController {
     public String createUser(@ModelAttribute UserProfileDto user,
                              BindingResult result,
                              ModelMap modelMap) {
-        userValidator.validate(user, result);
+        createUserValidator.validate(user, result);
         if (result.hasErrors()) {
             modelMap.addAttribute("user", user);
             return pageProperties.getCreateUserPagePath();
@@ -97,11 +100,16 @@ public class UserController {
                              BindingResult result,
                              ModelMap modelMap, @PathVariable("id") Long id) {
         user.setId(id);
-        userService.update(user);
-        List<RoleDto> roles = roleService.findAll();
-        modelMap.addAttribute("user", user);
-        modelMap.addAttribute("roles", roles);
-        return "redirect:/web/users";
+        updateUserValidator.validate(user, result);
+        if (result.hasErrors()) {
+            modelMap.addAttribute("user", user);
+            List<RoleDto> roles = roleService.findAll();
+            modelMap.addAttribute("roles", roles);
+            return pageProperties.getUpdateUserPagePath();
+        } else {
+            userService.update(user);
+            return "redirect:/web/users";
+        }
     }
 
     @PostMapping("/delete")

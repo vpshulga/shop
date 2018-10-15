@@ -9,6 +9,7 @@ import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.NewsDto;
 import com.gmail.vpshulgaa.service.dto.UserProfileDto;
+import com.gmail.vpshulgaa.service.util.ServiceUtils;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,10 +66,11 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     @Transactional
-    public NewsDto create(NewsDto newsDto, Long userId) {
+    public NewsDto create(NewsDto newsDto) {
         try {
             newsDto.setCreated(LocalDateTime.now());
             News news = newsConverter.toEntity(newsDto);
+            Long userId = ServiceUtils.getPrincipal().getId();
             UserProfileDto userDto = userService.findOne(userId);
             news.setUser(userProfileConverter.toEntity(userDto));
             newsDao.create(news);

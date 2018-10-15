@@ -1,17 +1,13 @@
 package com.gmail.vpshulgaa.controllers;
 
 import com.gmail.vpshulgaa.config.PageProperties;
-import com.gmail.vpshulgaa.dao.entities.Order;
 import com.gmail.vpshulgaa.dao.enums.Status;
 import com.gmail.vpshulgaa.service.ItemService;
 import com.gmail.vpshulgaa.service.OrderService;
 import com.gmail.vpshulgaa.service.dto.ItemDto;
 import com.gmail.vpshulgaa.service.dto.OrderDto;
 import com.gmail.vpshulgaa.service.util.ServiceUtils;
-import com.gmail.vpshulgaa.utils.WebUtils;
-
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -26,9 +22,10 @@ public class OrderController {
     private final OrderService orderService;
 
     @Autowired
-    public OrderController(PageProperties pageProperties,
-                           ItemService itemService,
-                           OrderService orderService) {
+    public OrderController(
+            PageProperties pageProperties,
+            ItemService itemService,
+            OrderService orderService) {
         this.pageProperties = pageProperties;
         this.itemService = itemService;
         this.orderService = orderService;
@@ -40,12 +37,12 @@ public class OrderController {
                             ModelMap modelMap) {
         Long pagesCount = ServiceUtils.countOfPages(orderService.countOfOrder(),
                 pageProperties.getCountOfEntitiesOnPage());
-        Long userPagesCount = ServiceUtils.countOfPages(orderService.countOfOrderForUser(WebUtils.getPrincipal().getId()),
+        Long userPagesCount = ServiceUtils.countOfPages(orderService.countOfOrderForUser(),
                 pageProperties.getCountOfEntitiesOnPage());
         List<OrderDto> orders = orderService.findOrdersByPage(page,
                 pageProperties.getCountOfEntitiesOnPage());
         List<OrderDto> userOrders = orderService.findOrdersByPageForUser(page,
-                pageProperties.getCountOfEntitiesOnPage(), WebUtils.getPrincipal().getId());
+                pageProperties.getCountOfEntitiesOnPage());
         modelMap.addAttribute("pages", pagesCount);
         modelMap.addAttribute("pagesForUser", userPagesCount);
         modelMap.addAttribute("orders", orders);
@@ -71,19 +68,25 @@ public class OrderController {
         ItemDto item = itemService.findOne(id);
         modelMap.addAttribute("item", item);
         modelMap.addAttribute("order", new OrderDto());
-        return pageProperties.getCreatePagePath();
+        return pageProperties.getCreateOrderPagePath();
     }
 
     @PostMapping("/order")
     @PreAuthorize("hasAuthority('CREATE_ORDER')")
-    public String createReadyOrder(@RequestParam("quantity") Integer quantity,
-                                   @RequestParam("item") Long id,
-                                   ModelMap modelMap) {
-        ItemDto item = itemService.findOne(id);
-        modelMap.addAttribute("item", item);
-        modelMap.addAttribute("quantity", quantity);
-        modelMap.addAttribute("order", new OrderDto());
-        return pageProperties.getReadyOrderPagePath();
+    public String createOrderBeforePay(@RequestParam(value = "quantity", defaultValue = "1") Integer quantity,
+                                       @RequestParam("item") Long id,
+                                       ModelMap modelMap) {
+        if (quantity <= 0) {
+            ItemDto item = itemService.findOne(id);
+            modelMap.addAttribute("item", item);
+            return pageProperties.getCreateOrderPagePath();
+        } else {
+            ItemDto item = itemService.findOne(id);
+            modelMap.addAttribute("item", item);
+            modelMap.addAttribute("quantity", quantity);
+            modelMap.addAttribute("order", new OrderDto());
+            return pageProperties.getReadyOrderPagePath();
+        }
     }
 
     @PostMapping("/order/ready")
@@ -91,8 +94,8 @@ public class OrderController {
     public String createOrder(ModelMap modelMap,
                               @ModelAttribute OrderDto order,
                               @RequestParam("item") Long id) {
-        orderService.create(order, id, WebUtils.getPrincipal().getId());
         modelMap.addAttribute("order", order);
+        orderService.create(order, id);
         return "redirect:/web/orders";
     }
 

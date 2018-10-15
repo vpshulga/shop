@@ -25,8 +25,7 @@
             </div>
             <security:authorize access="hasAuthority('CHANGE_ROLE')">
                 <div class="form-group">
-                    <form:label path="email">Email:</form:label>
-                    <form:input path="email" type="email" class="form-control" placeholder="Email"/>
+                    <form:input path="email" type="hidden" class="form-control" placeholder="Email"/>
                 </div>
             </security:authorize>
 

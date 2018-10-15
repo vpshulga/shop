@@ -21,8 +21,7 @@ public class BusinessCardApiController {
     @GetMapping(value = "/{id}")
     @PreAuthorize("hasAuthority('API_USER_PERMISSION')")
     public List<BusinessCardDto> getCards(@PathVariable("id") Long id) {
-        List<BusinessCardDto> businessCards = businessService.findCardsForUser(id);
-        return businessCards;
+        return businessService.findCardsForUser();
     }
 
     @DeleteMapping(value = "/{id}/delete")

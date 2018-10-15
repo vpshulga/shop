@@ -41,4 +41,11 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
         query.setMaxResults(maxResults);
         return query.list();
     }
+
+    @Override
+    public List<String> findAllEmails() {
+        String hql = "select u.email from User as u";
+        Query query = getCurrentSession().createQuery(hql);
+        return query.list();
+    }
 }

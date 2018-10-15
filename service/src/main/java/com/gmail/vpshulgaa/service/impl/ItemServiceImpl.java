@@ -3,9 +3,11 @@ package com.gmail.vpshulgaa.service.impl;
 import com.gmail.vpshulgaa.dao.ItemDao;
 import com.gmail.vpshulgaa.dao.entities.Item;
 import com.gmail.vpshulgaa.service.ItemService;
+import com.gmail.vpshulgaa.service.OrderService;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.ItemDto;
+import com.gmail.vpshulgaa.service.dto.OrderDto;
 import com.gmail.vpshulgaa.service.dto.XmlItemsDto;
 import com.gmail.vpshulgaa.service.util.ServiceUtils;
 import java.io.BufferedReader;
@@ -15,6 +17,7 @@ import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 import org.apache.logging.log4j.LogManager;
@@ -33,9 +36,10 @@ public class ItemServiceImpl implements ItemService {
     private final DtoConverter<ItemDto, Item> itemDtoConverter;
 
     @Autowired
-    public ItemServiceImpl(ItemDao itemDao,
-                           @Qualifier("itemConverter") Converter<ItemDto, Item> itemConverter,
-                           @Qualifier("itemDtoConverter") DtoConverter<ItemDto, Item> itemDtoConverter) {
+    public ItemServiceImpl(
+            ItemDao itemDao,
+            @Qualifier("itemConverter") Converter<ItemDto, Item> itemConverter,
+            @Qualifier("itemDtoConverter") DtoConverter<ItemDto, Item> itemDtoConverter) {
         this.itemDao = itemDao;
         this.itemConverter = itemConverter;
         this.itemDtoConverter = itemDtoConverter;

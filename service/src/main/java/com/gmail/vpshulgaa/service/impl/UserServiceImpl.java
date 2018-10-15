@@ -207,4 +207,16 @@ public class UserServiceImpl implements UserService {
         }
         return usersDto;
     }
+
+    @Override
+    @Transactional
+    public boolean isExistsEmail(String email) {
+        boolean isExists = false;
+        for (String string : userDao.findAllEmails()) {
+            if (string.equals(email)) {
+                isExists = true;
+            }
+        }
+        return isExists;
+    }
 }

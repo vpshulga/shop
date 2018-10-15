@@ -10,6 +10,7 @@ import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.BusinessCardDto;
 import com.gmail.vpshulgaa.service.dto.UserProfileDto;
+import com.gmail.vpshulgaa.service.util.ServiceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,9 +73,10 @@ public class BusinessServiceImpl implements BusinessService {
 
     @Override
     @Transactional
-    public BusinessCardDto create(BusinessCardDto dto, Long userId) {
+    public BusinessCardDto create(BusinessCardDto dto) {
         try {
             BusinessCard businessCard = businessCardConverter.toEntity(dto);
+            Long userId = ServiceUtils.getPrincipal().getId();
             User user = userDao.findOne(userId);
             businessCard.setUser(user);
             businessCardDao.create(businessCard);
@@ -125,10 +127,11 @@ public class BusinessServiceImpl implements BusinessService {
 
     @Override
     @Transactional
-    public List<BusinessCardDto> findCardsForUser(Long userId) {
+    public List<BusinessCardDto> findCardsForUser() {
         List<BusinessCardDto> businessCardDtos = new ArrayList<>();
         List<BusinessCard> businessCards;
         try {
+            Long userId = ServiceUtils.getPrincipal().getId();
             businessCards = businessCardDao.findCardsForUser(userId);
             for (BusinessCard businessCard : businessCards) {
                 businessCardDtos.add(businessCardDtoConverter.toDto(businessCard));

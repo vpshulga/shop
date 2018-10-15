@@ -8,7 +8,7 @@ public interface CommentService {
 
     List<CommentDto> findAll();
 
-    CommentDto create(final CommentDto dto, Long newsId, Long userId);
+    CommentDto create(final CommentDto dto, Long newsId);
 
     CommentDto update(final CommentDto dto);
 

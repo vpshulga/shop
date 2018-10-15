@@ -9,7 +9,7 @@ public interface BusinessService {
 
     List<BusinessCardDto> findAll();
 
-    BusinessCardDto create(final BusinessCardDto dto, Long userId);
+    BusinessCardDto create(final BusinessCardDto dto);
 
     BusinessCardDto update(final BusinessCardDto dto, Long userId);
 
@@ -17,5 +17,5 @@ public interface BusinessService {
 
     void deleteById(final Long id);
 
-    List<BusinessCardDto> findCardsForUser(Long userId);
+    List<BusinessCardDto> findCardsForUser();
 }

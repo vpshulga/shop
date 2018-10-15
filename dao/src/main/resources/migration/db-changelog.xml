@@ -473,6 +473,11 @@
             <column name="F_ADDRESS" value="Minsk"/>
             <column name="F_TELEPHONE" value="+375296622611"/>
         </insert>
+        <insert tableName="t_profile">
+            <column name="F_USER_ID" valueNumeric="6"/>
+            <column name="F_ADDRESS" value="Minsk"/>
+            <column name="F_TELEPHONE" value="+375296622345"/>
+        </insert>
     </changeSet>
     <changeSet author="vpshulga (generated)" id="1538644835993-16">
         <insert tableName="t_role">

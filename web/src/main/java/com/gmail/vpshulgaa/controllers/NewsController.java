@@ -6,13 +6,14 @@ import com.gmail.vpshulgaa.service.NewsService;
 import com.gmail.vpshulgaa.service.dto.CommentDto;
 import com.gmail.vpshulgaa.service.dto.NewsDto;
 import com.gmail.vpshulgaa.service.util.ServiceUtils;
-import com.gmail.vpshulgaa.utils.WebUtils;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -21,14 +22,20 @@ public class NewsController {
     private final NewsService newsService;
     private final PageProperties pageProperties;
     private final CommentService commentService;
+    private final Validator newsValidator;
+    private final Validator commentValidator;
 
     @Autowired
     public NewsController(NewsService newsService,
                           PageProperties pageProperties,
-                          CommentService commentService) {
+                          CommentService commentService,
+                          @Qualifier("commentValidator") Validator commentValidator,
+                          @Qualifier("newsValidator") Validator newsValidator) {
         this.newsService = newsService;
         this.pageProperties = pageProperties;
         this.commentService = commentService;
+        this.commentValidator = commentValidator;
+        this.newsValidator = newsValidator;
     }
 
     @GetMapping
@@ -74,18 +81,32 @@ public class NewsController {
     public String createNews(@ModelAttribute NewsDto news,
                              BindingResult result,
                              ModelMap modelMap) {
-        newsService.create(news, WebUtils.getPrincipal().getId());
-        modelMap.addAttribute("news", news);
-        return "redirect:/web/news";
+        newsValidator.validate(news, result);
+        {
+            if (result.hasErrors()) {
+                modelMap.addAttribute("news", news);
+                return pageProperties.getCreateNewsPagePath();
+            } else {
+                newsService.create(news);
+                return "redirect:/web/news";
+            }
+        }
     }
 
     @PostMapping(value = "/{news_id}")
     @PreAuthorize("hasAuthority('CREATE_COMMENT')")
     public String createComment(@ModelAttribute CommentDto comment,
-                                ModelMap modelMap, @PathVariable("news_id") Long news_id) {
-        commentService.create(comment, news_id, WebUtils.getPrincipal().getId());
-        modelMap.addAttribute("comment", comment);
-        return "redirect:/web/news/" + news_id;
+                                ModelMap modelMap,
+                                BindingResult result,
+                                @PathVariable("news_id") Long news_id) {
+        commentValidator.validate(comment, result);
+        if (result.hasErrors()) {
+            modelMap.addAttribute("comment", comment);
+            return "redirect:/web/news/" + news_id;
+        } else {
+            commentService.create(comment, news_id);
+            return "redirect:/web/news/" + news_id;
+        }
     }
 
     @GetMapping(value = "/{id}/update")

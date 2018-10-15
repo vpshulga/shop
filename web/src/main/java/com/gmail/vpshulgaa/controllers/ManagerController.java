@@ -3,7 +3,7 @@ package com.gmail.vpshulgaa.controllers;
 import com.gmail.vpshulgaa.config.PageProperties;
 import com.gmail.vpshulgaa.service.BusinessService;
 import com.gmail.vpshulgaa.service.dto.BusinessCardDto;
-import com.gmail.vpshulgaa.utils.WebUtils;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/web/cards")
@@ -37,8 +35,7 @@ public class ManagerController {
     @GetMapping
     @PreAuthorize("hasAuthority('MANAGE_BUSINESS_CARD')")
     public String getCards(ModelMap modelMap) {
-        List<BusinessCardDto> businessCards = businessService.findCardsForUser(
-                WebUtils.getPrincipal().getId());
+        List<BusinessCardDto> businessCards = businessService.findCardsForUser();
         modelMap.addAttribute("cards", businessCards);
         return pageProperties.getCardsPagePath();
     }
@@ -56,11 +53,11 @@ public class ManagerController {
                              BindingResult result,
                              ModelMap modelMap) {
         businessCardValidator.validate(businessCard, result);
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             modelMap.addAttribute("businessCard", businessCard);
             return pageProperties.getCreateCardPagePath();
         } else {
-            businessService.create(businessCard, WebUtils.getPrincipal().getId());
+            businessService.create(businessCard);
             modelMap.addAttribute("businessCard", businessCard);
             return "redirect:/web/cards";
         }

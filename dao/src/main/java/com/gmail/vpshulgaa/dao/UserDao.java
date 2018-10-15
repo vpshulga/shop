@@ -9,4 +9,6 @@ public interface UserDao extends GenericDao<User> {
     Long countOfUsers();
 
     List<User> findUsersByPage(Long page, int maxResults);
+
+    List<String> findAllEmails();
 }

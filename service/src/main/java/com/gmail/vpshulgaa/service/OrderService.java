@@ -8,7 +8,7 @@ public interface OrderService {
 
     List<OrderDto> findAll();
 
-    OrderDto create(final OrderDto dto, Long itemId, Long userId);
+    OrderDto create(final OrderDto dto, Long itemId);
 
     OrderDto update(final OrderDto dto, Long itemId, Long userId);
 
@@ -20,9 +20,11 @@ public interface OrderService {
 
     Long countOfOrder();
 
-    Long countOfOrderForUser(Long userId);
+    Long countOfOrderForUser();
 
     List<OrderDto> findOrdersByPage(Long page, int maxResults);
 
-    List<OrderDto> findOrdersByPageForUser(Long page, int maxResults, Long userId);
+    List<OrderDto> findOrdersByPageForUser(Long page, int maxResults);
+
+    boolean isExistInOrders(Long itemId);
 }

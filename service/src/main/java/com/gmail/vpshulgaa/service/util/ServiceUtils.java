@@ -1,9 +1,12 @@
 package com.gmail.vpshulgaa.service.util;
 
+import com.gmail.vpshulgaa.service.dto.UserPrincipal;
 import java.util.Random;
 import java.util.UUID;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 public class ServiceUtils {
     private static final Logger logger = LogManager.getLogger(ServiceUtils.class);
@@ -28,5 +31,10 @@ public class ServiceUtils {
             sb.append(uId.charAt(random.nextInt(uId.length()-1)));
         }
         return sb.toString();
+    }
+
+    public static UserPrincipal getPrincipal() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return (UserPrincipal) authentication.getPrincipal();
     }
 }

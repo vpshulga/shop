@@ -12,6 +12,7 @@ import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.CommentDto;
 import com.gmail.vpshulgaa.service.dto.NewsDto;
 import com.gmail.vpshulgaa.service.dto.UserProfileDto;
+import com.gmail.vpshulgaa.service.util.ServiceUtils;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,10 +73,11 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
-    public CommentDto create(CommentDto commentDto, Long newsId, Long userId) {
+    public CommentDto create(CommentDto commentDto, Long newsId) {
         try {
             commentDto.setCreated(LocalDateTime.now());
             Comment comment = commentConverter.toEntity(commentDto);
+            Long userId = ServiceUtils.getPrincipal().getId();
             UserProfileDto userDto = userService.findOne(userId);
             NewsDto newsDto = newsService.findOne(newsId);
             comment.setNews(newsConverter.toEntity(newsDto));

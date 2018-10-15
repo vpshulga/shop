@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class DiscountDaoImpl extends GenericDaoImpl<Discount> implements DiscountDao {
+
     public DiscountDaoImpl() {
         super(Discount.class);
     }

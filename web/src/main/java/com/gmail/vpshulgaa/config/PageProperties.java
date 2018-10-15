@@ -2,6 +2,7 @@ package com.gmail.vpshulgaa.config;
 
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 public class PageProperties {
     private final Environment environment;
 
+    @Value("${login.page.path}")
     private String loginPagePath;
     private String usersPagePath;
     private String errorsPagePath;

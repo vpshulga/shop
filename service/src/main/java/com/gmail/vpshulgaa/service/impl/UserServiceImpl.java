@@ -14,8 +14,10 @@ import com.gmail.vpshulgaa.service.dto.ChangePasswordDto;
 import com.gmail.vpshulgaa.service.dto.ProfileDto;
 import com.gmail.vpshulgaa.service.dto.RoleDto;
 import com.gmail.vpshulgaa.service.dto.UserProfileDto;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,14 +63,12 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public UserProfileDto findOne(Long id) {
-        UserProfileDto userProfileDto = new UserProfileDto();
-        try {
-            User user = userDao.findOne(id);
-            userProfileDto = userProfileDtoConverter.toDto(user);
-        } catch (Exception e) {
-            logger.error("Failed to find user");
+        User user = userDao.findOne(id);
+        if (user != null) {
+            return userProfileDtoConverter.toDto(user);
+        } else {
+            throw new RuntimeException("User not found");
         }
-        return userProfileDto;
     }
 
     @Override

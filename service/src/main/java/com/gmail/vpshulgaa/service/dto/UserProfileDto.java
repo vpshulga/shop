@@ -3,7 +3,7 @@ package com.gmail.vpshulgaa.service.dto;
 import java.util.Objects;
 
 public class UserProfileDto {
-    private long id;
+    private Long id;
     private String email;
     private String name;
     private String surname;
@@ -15,11 +15,11 @@ public class UserProfileDto {
     private Boolean deleted;
     private RoleDto role;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

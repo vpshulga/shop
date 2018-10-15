@@ -23,7 +23,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final AuthenticationSuccessHandler appSuccessHandler;
 
     @Autowired
-    public WebSecurityConfig(@Qualifier(value = "userDetailService") UserDetailsService userDetailsService, AppSuccessHandler appSuccessHandler) {
+    public WebSecurityConfig(
+            @Qualifier(value = "userDetailService") UserDetailsService userDetailsService,
+            AppSuccessHandler appSuccessHandler
+    ) {
         this.userDetailsService = userDetailsService;
         this.appSuccessHandler = appSuccessHandler;
     }

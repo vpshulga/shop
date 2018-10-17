@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <jsp:include page="../commons/header.jsp"/>
-    <title>Update user</title>
+    <title>Update news</title>
 </head>
 <body>
 <div class="row">

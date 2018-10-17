@@ -4,15 +4,16 @@
 <html lang="en">
 <head>
     <jsp:include page="../commons/header.jsp"/>
-    <title>Create user</title>
+    <title>Create business card</title>
 </head>
 <body>
 <div class="row">
     <div class="col-md-4"></div>
     <div class="col-md-4 shadow-lg bg-white rounded">
         <h1>Registration form</h1>
-        <form:form action="${pageContext.request.contextPath}/web/cards/create" modelAttribute="businessCard" method="post">
-            <form:errors path="*" cssClass="error" element="div" />
+        <form:form action="${pageContext.request.contextPath}/web/cards/create" modelAttribute="businessCard"
+                   method="post">
+            <form:errors path="*" cssClass="error" element="div"/>
             <div class="form-group">
                 <form:label path="title">Title</form:label>
                 <form:input path="title" class="form-control" placeholder="Title"/>

@@ -1,6 +1,6 @@
 package com.gmail.vpshulgaa.dao.enums;
 
-public enum Roles {
+public enum RolesEnum {
     ADMIN,
     USER,
     SECURITY_USER,

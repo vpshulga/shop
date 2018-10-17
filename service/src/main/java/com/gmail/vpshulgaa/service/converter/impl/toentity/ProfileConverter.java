@@ -3,7 +3,6 @@ package com.gmail.vpshulgaa.service.converter.impl.toentity;
 import com.gmail.vpshulgaa.dao.entities.Profile;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.dto.ProfileDto;
-import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component("profileConverter")
@@ -20,10 +19,5 @@ public class ProfileConverter implements Converter<ProfileDto, Profile> {
         profile.setTelephone(dto.getTelephone());
 
         return profile;
-    }
-
-    @Override
-    public List<Profile> toEntityList(List<ProfileDto> list) {
-        return null;
     }
 }

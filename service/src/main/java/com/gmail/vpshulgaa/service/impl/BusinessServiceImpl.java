@@ -5,12 +5,13 @@ import com.gmail.vpshulgaa.dao.UserDao;
 import com.gmail.vpshulgaa.dao.entities.BusinessCard;
 import com.gmail.vpshulgaa.dao.entities.User;
 import com.gmail.vpshulgaa.service.BusinessService;
-import com.gmail.vpshulgaa.service.UserService;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.BusinessCardDto;
-import com.gmail.vpshulgaa.service.dto.UserProfileDto;
-import com.gmail.vpshulgaa.service.util.ServiceUtils;
+import com.gmail.vpshulgaa.service.exception.EntityNotFoundException;
+import com.gmail.vpshulgaa.service.util.CurrentUserUtils;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,88 +19,52 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 public class BusinessServiceImpl implements BusinessService {
+
     private static final Logger logger = LogManager.getLogger(BusinessServiceImpl.class);
     private final BusinessCardDao businessCardDao;
     private final UserDao userDao;
     private final Converter<BusinessCardDto, BusinessCard> businessCardConverter;
     private final DtoConverter<BusinessCardDto, BusinessCard> businessCardDtoConverter;
-    private final UserService userService;
-    private final Converter<UserProfileDto, User> userProfileConverter;
 
     @Autowired
     public BusinessServiceImpl(
             BusinessCardDao businessCardDao,
             @Qualifier("businessCardConverter") Converter<BusinessCardDto, BusinessCard> businessCardConverter,
             @Qualifier("businessCardDtoConverter") DtoConverter<BusinessCardDto, BusinessCard> businessCardDtoConverter,
-            UserService userService,
-            Converter<UserProfileDto, User> userProfileConverter, UserDao userDao) {
+            UserDao userDao) {
         this.businessCardDao = businessCardDao;
         this.businessCardConverter = businessCardConverter;
         this.businessCardDtoConverter = businessCardDtoConverter;
-        this.userService = userService;
-        this.userProfileConverter = userProfileConverter;
         this.userDao = userDao;
     }
 
     @Override
     @Transactional(readOnly = true)
     public BusinessCardDto findOne(Long id) {
-        BusinessCardDto commentDto = null;
-        try {
-            BusinessCard businessCard = businessCardDao.findOne(id);
-            commentDto = businessCardDtoConverter.toDto(businessCard);
-        } catch (Exception e) {
-            logger.error("Failed to get cards", e);
+        BusinessCard businessCard = businessCardDao.findOne(id);
+        if (businessCard != null) {
+            return businessCardDtoConverter.toDto(businessCard);
+        } else {
+            throw new EntityNotFoundException(User.class, id);
         }
-        return commentDto;
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<BusinessCardDto> findAll() {
-        List<BusinessCardDto> businessCards = new ArrayList<>();
-        try {
-            businessCards = businessCardDtoConverter.toDtoList(businessCardDao.findAll());
-        } catch (Exception e) {
-            logger.error("Failed to get cards", e);
-        }
-        return businessCards;
     }
 
     @Override
     @Transactional
     public BusinessCardDto create(BusinessCardDto dto) {
-        try {
-            BusinessCard businessCard = businessCardConverter.toEntity(dto);
-            Long userId = ServiceUtils.getPrincipal().getId();
-            User user = userDao.findOne(userId);
+        BusinessCard businessCard = businessCardConverter.toEntity(dto);
+        Long userId = CurrentUserUtils.getPrincipal().getId();
+        User user = userDao.findOne(userId);
+        if (user != null) {
             businessCard.setUser(user);
             businessCardDao.create(businessCard);
-            dto = businessCardDtoConverter.toDto(businessCard);
-        } catch (Exception e) {
-            logger.error("Failed to save card", e);
+            return businessCardDtoConverter.toDto(businessCard);
+        } else {
+            throw new EntityNotFoundException(User.class, userId);
         }
-        return dto;
-    }
 
-    @Override
-    @Transactional
-    public BusinessCardDto update(BusinessCardDto dto, Long userId) {
-        try {
-            BusinessCard businessCard = businessCardConverter.toEntity(dto);
-            User user = userDao.findOne(userId);
-            businessCard.setUser(user);
-            businessCardDao.update(businessCard);
-            dto = businessCardDtoConverter.toDto(businessCard);
-        } catch (Exception e) {
-            logger.error("Failed to update card", e);
-        }
-        return dto;
     }
 
     @Override
@@ -118,10 +83,10 @@ public class BusinessServiceImpl implements BusinessService {
     @Override
     @Transactional
     public void deleteById(Long id) {
-        try {
+        if (businessCardDao.findOne(id) != null) {
             businessCardDao.deleteById(id);
-        } catch (Exception e) {
-            logger.error("Failed to delete news", e);
+        } else {
+            throw new EntityNotFoundException(BusinessCard.class, id);
         }
     }
 
@@ -131,7 +96,7 @@ public class BusinessServiceImpl implements BusinessService {
         List<BusinessCardDto> businessCardDtos = new ArrayList<>();
         List<BusinessCard> businessCards;
         try {
-            Long userId = ServiceUtils.getPrincipal().getId();
+            Long userId = CurrentUserUtils.getPrincipal().getId();
             businessCards = businessCardDao.findCardsForUser(userId);
             for (BusinessCard businessCard : businessCards) {
                 businessCardDtos.add(businessCardDtoConverter.toDto(businessCard));

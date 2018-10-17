@@ -1,6 +1,6 @@
 package com.gmail.vpshulgaa.dao.enums;
 
-public enum Status {
+public enum StatusEnum {
     NEW,
     REVIEWING,
     IN_PROGRESS,

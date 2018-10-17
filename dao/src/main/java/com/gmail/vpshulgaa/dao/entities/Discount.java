@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "T_DISCOUNT")
 public class Discount implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "F_ID", updatable = false, nullable = false)
@@ -19,9 +20,6 @@ public class Discount implements Serializable {
     private BigDecimal percent;
     @Column(name = "F_EXPIRE_DATE")
     private LocalDate expireDate;
-
-    public Discount() {
-    }
 
     public Long getId() {
         return id;

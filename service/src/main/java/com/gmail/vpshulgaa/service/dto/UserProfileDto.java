@@ -3,6 +3,7 @@ package com.gmail.vpshulgaa.service.dto;
 import java.util.Objects;
 
 public class UserProfileDto {
+
     private Long id;
     private String email;
     private String name;
@@ -108,7 +109,7 @@ public class UserProfileDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserProfileDto that = (UserProfileDto) o;
-        return id == that.id &&
+        return Objects.equals(id, that.id) &&
                 Objects.equals(email, that.email) &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(surname, that.surname) &&

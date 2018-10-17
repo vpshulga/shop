@@ -12,23 +12,21 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Audit implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "F_ID", updatable = false, nullable = false)
-    private long id;
+    private Long id;
     @Column(name = "F_EVENT_TYPE", length = 30)
     private String eventType;
     @Column(name = "F_CREATED")
     private LocalDateTime created;
 
-    public Audit() {
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -53,7 +51,7 @@ public class Audit implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Audit audit = (Audit) o;
-        return id == audit.id &&
+        return Objects.equals(id, audit.id) &&
                 Objects.equals(eventType, audit.eventType) &&
                 Objects.equals(created, audit.created);
     }

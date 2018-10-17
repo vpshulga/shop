@@ -5,10 +5,9 @@ import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.dto.BusinessCardDto;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component("businessCardConverter")
 public class BusinessCardConverter implements Converter<BusinessCardDto, BusinessCard> {
+
     @Override
     public BusinessCard toEntity(BusinessCardDto dto) {
         if (dto == null) {
@@ -21,10 +20,5 @@ public class BusinessCardConverter implements Converter<BusinessCardDto, Busines
         businessCard.setWorkingTelephone(dto.getWorkingTelephone());
 
         return businessCard;
-    }
-
-    @Override
-    public List<BusinessCard> toEntityList(List<BusinessCardDto> list) {
-        return null;
     }
 }

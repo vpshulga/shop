@@ -4,19 +4,17 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class CommentDto {
-    private long id;
+
+    private Long id;
     private String content;
     private LocalDateTime created;
     private String creator;
 
-    public CommentDto() {
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -49,7 +47,7 @@ public class CommentDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CommentDto that = (CommentDto) o;
-        return id == that.id &&
+        return Objects.equals(id, that.id) &&
                 Objects.equals(content, that.content) &&
                 Objects.equals(created, that.created);
     }

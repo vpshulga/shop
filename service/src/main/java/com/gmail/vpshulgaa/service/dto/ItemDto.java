@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class ItemDto {
-    private long id;
+
+    private Long id;
     private String name;
     private String description;
     private String uniqueNumber;
@@ -15,14 +16,11 @@ public class ItemDto {
 
     private List<DiscountDto> discounts = new ArrayList<>();
 
-    public ItemDto() {
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -79,7 +77,7 @@ public class ItemDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ItemDto itemDto = (ItemDto) o;
-        return id == itemDto.id &&
+        return Objects.equals(id, itemDto.id) &&
                 Objects.equals(name, itemDto.name) &&
                 Objects.equals(description, itemDto.description) &&
                 Objects.equals(uniqueNumber, itemDto.uniqueNumber) &&

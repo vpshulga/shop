@@ -1,12 +1,13 @@
 package com.gmail.vpshulgaa.controllers.handlers;
 
+import com.gmail.vpshulgaa.service.exception.ApiUserException;
+import com.gmail.vpshulgaa.util.URLPrefix;
 import java.io.IOException;
 import java.util.Collection;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.security.core.Authentication;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AppSuccessHandler implements AuthenticationSuccessHandler {
+
     private static final Logger logger = LogManager.getLogger(AppSuccessHandler.class);
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
@@ -45,6 +47,7 @@ public class AppSuccessHandler implements AuthenticationSuccessHandler {
         boolean isSaleUser = false;
         boolean isCustomerUser = false;
         boolean isManagerUser = false;
+        boolean isApiUser = false;
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         for (GrantedAuthority grantedAuthority : authorities) {
@@ -59,21 +62,25 @@ public class AppSuccessHandler implements AuthenticationSuccessHandler {
                     isCustomerUser = true;
                 case "MANAGE_BUSINESS_CARD":
                     isManagerUser = true;
+                case "API_USER_PERMISSION":
+                    isApiUser = true;
             }
         }
 
         if (isAdmin) {
-            return "/web/users";
+            return URLPrefix.WEB_PREFIX + "/users";
         } else if (isSecurityUser) {
-            return "/web/users";
+            return URLPrefix.WEB_PREFIX + "/users";
         } else if (isSaleUser) {
-            return "/web/orders";
+            return URLPrefix.WEB_PREFIX + "/orders";
         } else if (isCustomerUser) {
-            return "/web/items";
+            return URLPrefix.WEB_PREFIX + "/items";
         } else if (isManagerUser) {
-            return "/web/cards";
+            return URLPrefix.WEB_PREFIX + "/cards";
+        } else if (isApiUser) {
+            throw new ApiUserException("Sorry, you have an API role and can not enter to the web");
         } else {
-            throw new IllegalStateException();
+            throw new UnsupportedOperationException();
         }
     }
 

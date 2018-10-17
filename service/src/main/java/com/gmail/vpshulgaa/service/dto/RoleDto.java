@@ -1,40 +1,27 @@
 package com.gmail.vpshulgaa.service.dto;
 
-import com.gmail.vpshulgaa.dao.enums.Roles;
-import java.util.HashSet;
+import com.gmail.vpshulgaa.dao.enums.RolesEnum;
 import java.util.Objects;
-import java.util.Set;
 
 public class RoleDto {
-    private long id;
-    private Roles name;
-    private Set<PermissionDto> permissions = new HashSet<>();
 
-    public RoleDto() {
-    }
+    private Long id;
+    private RolesEnum name;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Roles getName() {
+    public RolesEnum getName() {
         return name;
     }
 
-    public void setName(Roles name) {
+    public void setName(RolesEnum name) {
         this.name = name;
-    }
-
-    public Set<PermissionDto> getPermissions() {
-        return permissions;
-    }
-
-    public void setPermissions(Set<PermissionDto> permissions) {
-        this.permissions = permissions;
     }
 
     @Override
@@ -42,7 +29,7 @@ public class RoleDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RoleDto roleDto = (RoleDto) o;
-        return id == roleDto.id &&
+        return Objects.equals(id, roleDto.id) &&
                 name == roleDto.name;
     }
 

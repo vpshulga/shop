@@ -3,13 +3,13 @@ package com.gmail.vpshulgaa.service.converter.impl.todto;
 import com.gmail.vpshulgaa.dao.entities.BusinessCard;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.BusinessCardDto;
-import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 @Component("businessCardDtoConverter")
 public class BusinessServiceDtoConverter implements DtoConverter<BusinessCardDto, BusinessCard> {
+
     @Override
     public BusinessCardDto toDto(BusinessCard entity) {
         if (entity == null) {

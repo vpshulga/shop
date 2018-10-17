@@ -4,21 +4,19 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class NewsDto {
-    private long id;
+
+    private Long id;
     private String title;
     private String content;
     private LocalDateTime created;
     private String creator;
     private Long userId;
 
-    public NewsDto() {
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -67,7 +65,7 @@ public class NewsDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NewsDto newsDto = (NewsDto) o;
-        return id == newsDto.id &&
+        return Objects.equals(id, newsDto.id) &&
                 Objects.equals(title, newsDto.title) &&
                 Objects.equals(content, newsDto.content) &&
                 Objects.equals(created, newsDto.created);

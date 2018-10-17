@@ -3,18 +3,16 @@ package com.gmail.vpshulgaa.service.dto;
 import java.util.Objects;
 
 public class ProfileDto {
-    private long userId;
+
+    private Long userId;
     private String address;
     private String telephone;
 
-    public ProfileDto() {
-    }
-
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -39,7 +37,7 @@ public class ProfileDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProfileDto that = (ProfileDto) o;
-        return userId == that.userId &&
+        return Objects.equals(userId, that.userId) &&
                 Objects.equals(address, that.address) &&
                 Objects.equals(telephone, that.telephone);
     }

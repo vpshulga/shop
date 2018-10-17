@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <jsp:include page="../commons/header.jsp"/>
-    <title>Users page</title>
+    <title>Business cards page</title>
 </head>
 <body>
 <div class="container">

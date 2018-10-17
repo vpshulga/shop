@@ -4,9 +4,8 @@ import com.gmail.vpshulgaa.service.dto.OrderDto;
 import java.util.List;
 
 public interface OrderService {
-    OrderDto findOne(final Long id);
 
-    List<OrderDto> findAll();
+    OrderDto findOne(final Long id);
 
     OrderDto create(final OrderDto dto, Long itemId);
 
@@ -15,8 +14,6 @@ public interface OrderService {
     OrderDto delete(final OrderDto dto);
 
     void deleteById(final Long id);
-
-    List<OrderDto> findOrdersByUserId(Long userId);
 
     Long countOfOrder();
 

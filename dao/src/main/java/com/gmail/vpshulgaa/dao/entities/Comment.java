@@ -12,10 +12,11 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Comment implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "F_ID", updatable = false, nullable = false)
-    private long id;
+    private Long id;
     @Column(name = "F_CONTENT", length = 1000)
     private String content;
     @Column(name = "F_CREATED")
@@ -29,14 +30,11 @@ public class Comment implements Serializable {
     @JoinColumn(name = "F_NEWS_ID")
     private News news;
 
-    public Comment() {
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -77,7 +75,7 @@ public class Comment implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Comment comment = (Comment) o;
-        return id == comment.id &&
+        return Objects.equals(id, comment.id) &&
                 Objects.equals(content, comment.content) &&
                 Objects.equals(created, comment.created);
     }

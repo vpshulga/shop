@@ -1,73 +1,69 @@
 package com.gmail.vpshulgaa.config;
 
-import javax.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 @Component
 public class PageProperties {
-    private final Environment environment;
 
     @Value("${login.page.path}")
     private String loginPagePath;
+    @Value("${users.page.path}")
     private String usersPagePath;
+    @Value("${errors.page.path}")
     private String errorsPagePath;
+    @Value("${items.page.path}")
     private String itemsPagePath;
+    @Value("${create.user.page.path}")
     private String createUserPagePath;
+    @Value("${update.user.page.path}")
     private String updateUserPagePath;
+    @Value("${news.page.path}")
     private String newsPagePath;
+    @Value("${create.news.page.path}")
     private String createNewsPagePath;
+    @Value("${update.news.page.path}")
     private String updateNewsPagePath;
+    @Value("${one.news.page.path}")
     private String oneNewsPagePath;
+    @Value("${one.item.page.path}")
     private String oneItemPagePath;
+    @Value("${create.order.page.path}")
     private String createOrderPagePath;
+    @Value("${user.profile.page.path}")
     private String userProfilePagePath;
+    @Value("${ready.order.page.path}")
     private String readyOrderPagePath;
+    @Value("${orders.page.path}")
     private String ordersPagePath;
+    @Value("${update.order.page.path}")
     private String updateOrderPagePath;
+    @Value("${logout.page.path}")
     private String logoutPagePath;
+    @Value("${create.item.page.path}")
     private String createItemPagePath;
+    @Value("${change.password.page.path}")
     private String changePasswordPagePath;
+    @Value("${create.card.page.path}")
     private String createCardPagePath;
+    @Value("${cards.page.path}")
     private String cardsPagePath;
+    @Value("${registration.page.path}")
+    private String registrationPagePath;
+    @Value("${access.denied.page.path}")
     private String accessDeniedPagePath;
+    @Value("${entity.not.found.page.path}")
+    private String entityNotFoundPagePath;
+    @Value("${unmarshal.error.page.path}")
+    private String unmarshalErrorPagePath;
+    @Value("${unsupported.operation.page.path}")
+    private String unsupportedErrorPagePath;
+    @Value("${api.errors.page.path}")
+    private String apiErrorPagePath;
 
+    @Value("${count.of.entities.on.page}")
     private int countOfEntitiesOnPage;
 
-    @Autowired
-    public PageProperties(Environment environment) {
-        this.environment = environment;
-    }
-
-    @PostConstruct
-    public void initialize() {
-        this.loginPagePath = environment.getProperty("login.page.path");
-        this.usersPagePath = environment.getProperty("users.page.path");
-        this.errorsPagePath = environment.getProperty("errors.page.path");
-        this.itemsPagePath = environment.getProperty("items.page.path");
-        this.createUserPagePath = environment.getProperty("create.user.page.path");
-        this.updateUserPagePath = environment.getProperty("update.user.page.path");
-        this.newsPagePath = environment.getProperty("news.page.path");
-        this.createNewsPagePath = environment.getProperty("create.news.page.path");
-        this.updateNewsPagePath = environment.getProperty("update.news.page.path");
-        this.oneNewsPagePath = environment.getProperty("one.news.page.path");
-        this.oneItemPagePath = environment.getProperty("one.item.page.path");
-        this.createOrderPagePath = environment.getProperty("create.order.page.path");
-        this.userProfilePagePath = environment.getProperty("user.profile.page.path");
-        this.readyOrderPagePath = environment.getProperty("ready.order.page.path");
-        this.ordersPagePath = environment.getProperty("orders.page.path");
-        this.updateOrderPagePath = environment.getProperty("update.order.page.path");
-        this.logoutPagePath = environment.getProperty("logout.page.path");
-        this.createItemPagePath = environment.getProperty("create.item.page.path");
-        this.changePasswordPagePath = environment.getProperty("change.password.page.path");
-        this.createCardPagePath = environment.getProperty("create.card.page.path");
-        this.cardsPagePath = environment.getProperty("cards.page.path");
-        this.accessDeniedPagePath = environment.getProperty("access.denied.page.path");
-
-        this.countOfEntitiesOnPage = Integer.parseInt(environment.getProperty("count.of.entities.on.page"));
-    }
 
     public String getLoginPagePath() {
         return loginPagePath;
@@ -159,5 +155,25 @@ public class PageProperties {
 
     public String getAccessDeniedPagePath() {
         return accessDeniedPagePath;
+    }
+
+    public String getRegistrationPagePath() {
+        return registrationPagePath;
+    }
+
+    public String getEntityNotFoundPagePath() {
+        return entityNotFoundPagePath;
+    }
+
+    public String getUnmarshalErrorPagePath() {
+        return unmarshalErrorPagePath;
+    }
+
+    public String getUnsupportedErrorPagePath() {
+        return unsupportedErrorPagePath;
+    }
+
+    public String getApiErrorPagePath() {
+        return apiErrorPagePath;
     }
 }

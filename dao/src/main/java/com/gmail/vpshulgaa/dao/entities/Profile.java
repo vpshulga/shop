@@ -13,6 +13,7 @@ import org.hibernate.annotations.Parameter;
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Profile implements Serializable {
+
     @GenericGenerator(
             name = "generator",
             strategy = "foreign",
@@ -21,7 +22,7 @@ public class Profile implements Serializable {
     @Id
     @GeneratedValue(generator = "generator")
     @Column(name = "F_USER_ID", unique = true, nullable = false)
-    private long userId;
+    private Long userId;
     @Column(name = "F_ADDRESS", length = 200)
     private String address;
     @Column(name = "F_TELEPHONE", length = 20)
@@ -30,14 +31,11 @@ public class Profile implements Serializable {
     @PrimaryKeyJoinColumn
     private User user;
 
-    public Profile() {
-    }
-
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -70,7 +68,7 @@ public class Profile implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Profile profile = (Profile) o;
-        return userId == profile.userId &&
+        return Objects.equals(userId, profile.userId) &&
                 Objects.equals(address, profile.address) &&
                 Objects.equals(telephone, profile.telephone);
     }

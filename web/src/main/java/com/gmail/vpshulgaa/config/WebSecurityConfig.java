@@ -1,6 +1,7 @@
 package com.gmail.vpshulgaa.config;
 
 import com.gmail.vpshulgaa.controllers.handlers.AppSuccessHandler;
+import com.gmail.vpshulgaa.util.URLPrefix;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +20,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
     private final UserDetailsService userDetailsService;
     private final AuthenticationSuccessHandler appSuccessHandler;
 
@@ -39,23 +41,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/web/login**").permitAll()
+                .antMatchers(URLPrefix.WEB_PREFIX + "/login**").permitAll()
                 .antMatchers("/resources/**").permitAll()
-                .antMatchers("/web/users/create/**").permitAll()
+                .antMatchers(URLPrefix.WEB_PREFIX + "/registration").permitAll()
                 .anyRequest().fullyAuthenticated()
                 .and()
                 .formLogin()
                 .usernameParameter("email")
                 .passwordParameter("password")
-                .loginPage("/web/login")
-                .loginProcessingUrl("/web/login")
+                .loginPage(URLPrefix.WEB_PREFIX + "/login")
+                .loginProcessingUrl(URLPrefix.WEB_PREFIX + "/login")
                 .successHandler(appSuccessHandler)
-                .failureUrl("/web/login?error=true")
+                .failureUrl(URLPrefix.WEB_PREFIX + "/login?error=true")
                 .permitAll()
                 .and()
                 .logout()
-                .logoutUrl("/web/logout")
-                .logoutSuccessUrl("/web/login?logout")
+                .logoutUrl(URLPrefix.WEB_PREFIX + "/logout")
+                .logoutSuccessUrl(URLPrefix.WEB_PREFIX + "/login?logout")
                 .permitAll()
                 .and()
                 .csrf().disable();

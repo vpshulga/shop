@@ -3,22 +3,18 @@ package com.gmail.vpshulgaa.service.impl;
 import com.gmail.vpshulgaa.dao.ItemDao;
 import com.gmail.vpshulgaa.dao.entities.Item;
 import com.gmail.vpshulgaa.service.ItemService;
-import com.gmail.vpshulgaa.service.OrderService;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.ItemDto;
-import com.gmail.vpshulgaa.service.dto.OrderDto;
 import com.gmail.vpshulgaa.service.dto.XmlItemsDto;
-import com.gmail.vpshulgaa.service.util.ServiceUtils;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.math.BigDecimal;
+import com.gmail.vpshulgaa.service.exception.CustomUnmarshalException;
+import com.gmail.vpshulgaa.service.exception.EntityNotFoundException;
+import com.gmail.vpshulgaa.service.util.UIDGeneratorUtils;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.UnmarshalException;
 import javax.xml.bind.Unmarshaller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ItemServiceImpl implements ItemService {
+
     private static final Logger logger = LogManager.getLogger(ItemServiceImpl.class);
     private final ItemDao itemDao;
     private final Converter<ItemDto, Item> itemConverter;
@@ -48,20 +45,12 @@ public class ItemServiceImpl implements ItemService {
     @Override
     @Transactional(readOnly = true)
     public ItemDto findOne(Long id) {
-        ItemDto itemDto = null;
-        try {
-            Item item = itemDao.findOne(id);
-            itemDto = itemDtoConverter.toDto(item);
-        } catch (Exception e) {
-            logger.error("Failed to get item", e);
+        Item item = itemDao.findOne(id);
+        if (item != null) {
+            return itemDtoConverter.toDto(item);
+        } else {
+            throw new EntityNotFoundException(Item.class, id);
         }
-        return itemDto;
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<ItemDto> findAll() {
-        return new ArrayList<>();
     }
 
     @Override
@@ -70,7 +59,7 @@ public class ItemServiceImpl implements ItemService {
         try {
             Item item = itemConverter.toEntity(itemDto);
             item.setDeleted(Boolean.FALSE);
-            item.setUniqueNumber(ServiceUtils.generateUniqueId());
+            item.setUniqueNumber(UIDGeneratorUtils.generateUniqueId());
             itemDao.create(item);
             itemDto = itemDtoConverter.toDto(item);
         } catch (Exception e) {
@@ -108,55 +97,11 @@ public class ItemServiceImpl implements ItemService {
     @Override
     @Transactional
     public void deleteById(Long id) {
-        try {
+        if (itemDao.findOne(id) != null) {
             itemDao.deleteById(id);
-        } catch (Exception e) {
-            logger.error("Failed to delete item", e);
+        } else {
+            throw new EntityNotFoundException(Item.class, id);
         }
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<ItemDto> findItemsInPriceDiapason(BigDecimal start, BigDecimal finish) {
-        List<ItemDto> itemsDto = new ArrayList<>();
-        List<Item> items;
-        try {
-            items = itemDao.findItemsInPriceDiapason(start, finish);
-            for (Item item : items) {
-                itemsDto.add(itemDtoConverter.toDto(item));
-            }
-        } catch (Exception e) {
-            logger.error("Failed to find items", e);
-        }
-        return itemsDto;
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<ItemDto> findItemsByDiscount(BigDecimal discount) {
-        List<ItemDto> itemsDto = new ArrayList<>();
-        List<Item> items;
-        try {
-            items = itemDao.findItemsByDiscount(discount);
-            for (Item item : items) {
-                itemsDto.add(itemDtoConverter.toDto(item));
-            }
-        } catch (Exception e) {
-            logger.error("Failed to find items", e);
-        }
-        return itemsDto;
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Long countItemsInDiapason(BigDecimal start, BigDecimal finish) {
-        Long count = 0L;
-        try {
-            count = itemDao.countItemsInDiapason(start, finish);
-        } catch (Exception e) {
-            logger.error("Failed to find items", e);
-        }
-        return count;
     }
 
     @Override
@@ -190,27 +135,32 @@ public class ItemServiceImpl implements ItemService {
     @Override
     @Transactional
     public void createFromXml(MultipartFile file) {
+        File tmpFile = new File("tmp.xml");
         try {
+            file.transferTo(tmpFile);
+        } catch (IOException e) {
+            logger.error("Failed to find file", e);
+        }
+        try (BufferedReader bufferedReader = new BufferedReader(
+                new InputStreamReader(new FileInputStream(tmpFile), "UTF-8"))) {
             if (file.getSize() != 0) {
                 JAXBContext context = JAXBContext.newInstance(XmlItemsDto.class);
                 Unmarshaller unmarshaller = context.createUnmarshaller();
-                File tmpFile = new File("tmp.xml");
-                file.transferTo(tmpFile);
-                BufferedReader bufferedReader = new BufferedReader(
-                        new InputStreamReader(new FileInputStream(tmpFile), "UTF-8"));
+
                 XmlItemsDto xmlItemsDto = (XmlItemsDto) unmarshaller.unmarshal(bufferedReader);
                 List<ItemDto> itemsDto = xmlItemsDto.getItems();
 
                 for (ItemDto itemDto : itemsDto) {
                     Item item = itemConverter.toEntity(itemDto);
                     item.setDeleted(Boolean.FALSE);
-                    item.setUniqueNumber(ServiceUtils.generateUniqueId());
+                    item.setUniqueNumber(UIDGeneratorUtils.generateUniqueId());
                     itemDao.create(item);
                 }
-                tmpFile.delete();
             }
+        } catch (UnmarshalException e) {
+            throw new CustomUnmarshalException("Invalid file format, choose xml file with correct schema");
         } catch (Exception e) {
-            logger.error("Failed to create items", e);
+            logger.error("Failed to upload items", e);
         }
     }
 }

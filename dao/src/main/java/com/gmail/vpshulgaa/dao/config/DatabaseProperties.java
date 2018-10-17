@@ -1,72 +1,50 @@
 package com.gmail.vpshulgaa.dao.config;
 
-import javax.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DatabaseProperties {
 
-    private final Environment environment;
-
     //database
-    private String driver;
+    @Value("${url}")
     private String url;
+    @Value("${user}")
     private String user;
+    @Value("${password}")
     private String password;
 
     //cache
+    @Value("${hibernate.cache.use_second_level_cache}")
     private String useSecondLevelCache;
+    @Value("${hibernate.cache.region.factory_class}")
     private String factoryClass;
 
     //hibernate
+    @Value("${hibernate.current_session_context_class}")
     private String currentSessionContextClass;
+    @Value("${hibernate.hbm2ddl.auto}")
     private String hbm2ddl;
+    @Value("${hibernate.show_sql}")
     private String showSql;
+    @Value("${hibernate.dialect}")
     private String hibernateDialect;
 
     //Hikari connection pool
+    @Value("${pool.data.source.class}")
     private String dataSourceClass;
+    @Value("${pool.max.size}")
     private int maxPoolSize;
+    @Value("${pool.cache.prepared.statements}")
     private String cachePreparedStatements;
+    @Value("${pool.cache.prepared.statements.size}")
     private String cachePreparedStatementsSize;
+    @Value("${pool.cache.prepared.statements.sql.limit}")
     private String cachePreparedStatementsSqlLimit;
+    @Value("${pool.use.server.prepared.statements}")
     private String useServerPreparedStatements;
 
-    @Autowired
-    public DatabaseProperties(Environment environment) {
-        this.environment = environment;
-    }
-
-    @PostConstruct
-    public void initialize() {
-        this.driver = environment.getProperty("driver");
-        this.url = environment.getProperty("url");
-        this.user = environment.getProperty("user");
-        this.password = environment.getProperty("password");
-
-        this.useSecondLevelCache = environment.getProperty("hibernate.cache.use_second_level_cache");
-        this.factoryClass = environment.getProperty("hibernate.cache.region.factory_class");
-
-        this.currentSessionContextClass = environment.getProperty("hibernate.current_session_context_class");
-        this.hbm2ddl = environment.getProperty("hibernate.hbm2ddl.auto");
-        this.showSql = environment.getProperty("hibernate.show_sql");
-        this.hibernateDialect = environment.getProperty("hibernate.dialect");
-
-        this.dataSourceClass = environment.getProperty("pool.data.source.class");
-        this.maxPoolSize = Integer.parseInt(environment.getProperty("pool.max.size"));
-        this.cachePreparedStatements = environment.getProperty("pool.cache.prepared.statements");
-        this.cachePreparedStatementsSize = environment.getProperty("pool.cache.prepared.statements.size");
-        this.cachePreparedStatementsSqlLimit = environment.getProperty("pool.cache.prepared.statements.sql.limit");
-        this.useServerPreparedStatements = environment.getProperty("pool.use.server.prepared.statements");
-    }
-
-    public String getDriver() {
-        return driver;
-    }
-
-    public String getUrl() {
+    String getUrl() {
         return url;
     }
 
@@ -78,11 +56,11 @@ public class DatabaseProperties {
         return password;
     }
 
-    public String getUseSecondLevelCache() {
+    String getUseSecondLevelCache() {
         return useSecondLevelCache;
     }
 
-    public String getFactoryClass() {
+    String getFactoryClass() {
         return factoryClass;
     }
 
@@ -90,39 +68,39 @@ public class DatabaseProperties {
         return currentSessionContextClass;
     }
 
-    public String getHbm2ddl() {
+    String getHbm2ddl() {
         return hbm2ddl;
     }
 
-    public String getShowSql() {
+    String getShowSql() {
         return showSql;
     }
 
-    public String getHibernateDialect() {
+    String getHibernateDialect() {
         return hibernateDialect;
     }
 
-    public String getDataSourceClass() {
+    String getDataSourceClass() {
         return dataSourceClass;
     }
 
-    public int getMaxPoolSize() {
+    int getMaxPoolSize() {
         return maxPoolSize;
     }
 
-    public String getCachePreparedStatements() {
+    String getCachePreparedStatements() {
         return cachePreparedStatements;
     }
 
-    public String getCachePreparedStatementsSize() {
+    String getCachePreparedStatementsSize() {
         return cachePreparedStatementsSize;
     }
 
-    public String getCachePreparedStatementsSqlLimit() {
+    String getCachePreparedStatementsSqlLimit() {
         return cachePreparedStatementsSqlLimit;
     }
 
-    public String getUseServerPreparedStatements() {
+    String getUseServerPreparedStatements() {
         return useServerPreparedStatements;
     }
 }

@@ -3,6 +3,7 @@ package com.gmail.vpshulgaa.controllers;
 import com.gmail.vpshulgaa.config.PageProperties;
 import com.gmail.vpshulgaa.service.BusinessService;
 import com.gmail.vpshulgaa.service.dto.BusinessCardDto;
+import com.gmail.vpshulgaa.util.URLPrefix;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,8 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/web/cards")
+@RequestMapping(URLPrefix.WEB_PREFIX + "/cards")
 public class ManagerController {
+
     private final PageProperties pageProperties;
     private final BusinessService businessService;
     private final Validator businessCardValidator;
@@ -59,7 +61,7 @@ public class ManagerController {
         } else {
             businessService.create(businessCard);
             modelMap.addAttribute("businessCard", businessCard);
-            return "redirect:/web/cards";
+            return "redirect:" + URLPrefix.WEB_PREFIX + "/cards";
         }
     }
 

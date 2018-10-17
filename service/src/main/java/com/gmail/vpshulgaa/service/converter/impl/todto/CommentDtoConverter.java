@@ -5,8 +5,6 @@ import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.CommentDto;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component("commentDtoConverter")
 public class CommentDtoConverter implements DtoConverter<CommentDto, Comment> {
 
@@ -22,10 +20,5 @@ public class CommentDtoConverter implements DtoConverter<CommentDto, Comment> {
         commentDto.setCreator(entity.getUser().getName());
 
         return commentDto;
-    }
-
-    @Override
-    public List<CommentDto> toDtoList(List<Comment> list) {
-        return null;
     }
 }

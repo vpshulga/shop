@@ -13,11 +13,11 @@
     <div class="col-md-8">
         <ul class="list-group">
             <security:authentication property="principal.id" var="id"/>
-                <li class="list-group-item">Name: ${user.name}</li>
-                <li class="list-group-item">Surname: ${user.surname}</li>
-                <li class="list-group-item">Email: ${user.email}</li>
-                <li class="list-group-item">Address: ${user.address}</li>
-                <li class="list-group-item">Telephone: ${user.telephone}</li>
+            <li class="list-group-item">Name: ${user.name}</li>
+            <li class="list-group-item">Surname: ${user.surname}</li>
+            <li class="list-group-item">Email: ${user.email}</li>
+            <li class="list-group-item">Address: ${user.address}</li>
+            <li class="list-group-item">Telephone: ${user.telephone}</li>
         </ul>
         <a href="${pageContext.request.contextPath}/web/users/${user.id}/update" class="btn btn-primary"
            aria-pressed="true"

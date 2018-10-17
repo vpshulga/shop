@@ -47,16 +47,8 @@ public class UserPrincipal implements UserDetails {
         this.password = password;
     }
 
-    public boolean getDisabled() {
+    private boolean getDisabled() {
         return disabled;
-    }
-
-    public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
-    }
-
-    public void setAuthorities(List<GrantedAuthority> authorities) {
-        this.authorities = authorities;
     }
 
     @Override
@@ -73,7 +65,6 @@ public class UserPrincipal implements UserDetails {
     public String getUsername() {
         return getEmail();
     }
-
 
     @Override
     public boolean isAccountNonExpired() {

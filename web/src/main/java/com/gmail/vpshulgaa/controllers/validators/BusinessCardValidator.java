@@ -8,6 +8,7 @@ import org.springframework.validation.Validator;
 
 @Component("businessCardValidator")
 public class BusinessCardValidator implements Validator {
+
     @Override
     public boolean supports(Class<?> aClass) {
         return BusinessCardDto.class.equals(aClass);

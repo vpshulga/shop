@@ -5,13 +5,11 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class DiscountDto {
+
     private Long id;
     private String name;
     private BigDecimal percent;
     private LocalDate expireDate;
-
-    public DiscountDto() {
-    }
 
     public Long getId() {
         return id;

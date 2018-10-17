@@ -1,12 +1,13 @@
 package com.gmail.vpshulgaa.dao.entities;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "T_CARD")
 public class BusinessCard implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "F_ID", updatable = false, nullable = false)
@@ -21,9 +22,6 @@ public class BusinessCard implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "F_USER_ID")
     private User user;
-
-    public BusinessCard() {
-    }
 
     public Long getId() {
         return id;

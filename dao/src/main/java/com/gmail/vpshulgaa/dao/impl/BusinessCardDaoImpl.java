@@ -2,13 +2,13 @@ package com.gmail.vpshulgaa.dao.impl;
 
 import com.gmail.vpshulgaa.dao.BusinessCardDao;
 import com.gmail.vpshulgaa.dao.entities.BusinessCard;
+import java.util.List;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public class BusinessCardDaoImpl extends GenericDaoImpl<BusinessCard> implements BusinessCardDao {
+
     public BusinessCardDaoImpl() {
         super(BusinessCard.class);
     }

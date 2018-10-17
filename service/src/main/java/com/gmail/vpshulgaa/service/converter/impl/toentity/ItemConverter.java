@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Component("itemConverter")
 public class ItemConverter implements Converter<ItemDto, Item> {
+
     private final Converter<DiscountDto, Discount> discountConverter;
 
     @Autowired
@@ -40,10 +41,5 @@ public class ItemConverter implements Converter<ItemDto, Item> {
         item.setDiscounts(discounts);
 
         return item;
-    }
-
-    @Override
-    public List<Item> toEntityList(List<ItemDto> list) {
-        return null;
     }
 }

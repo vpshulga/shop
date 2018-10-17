@@ -1,6 +1,7 @@
 package com.gmail.vpshulgaa.service.dto;
 
 public class BusinessCardDto {
+
     private Long id;
     private String title;
     private String fullName;

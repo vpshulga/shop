@@ -1,18 +1,16 @@
 package com.gmail.vpshulgaa.service.converter.impl.toentity;
 
-import com.gmail.vpshulgaa.dao.entities.Profile;
 import com.gmail.vpshulgaa.dao.entities.Role;
 import com.gmail.vpshulgaa.dao.entities.User;
 import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.dto.RoleDto;
 import com.gmail.vpshulgaa.service.dto.UserProfileDto;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component("userProfileConverter")
 public class UserProfileConverter implements Converter<UserProfileDto, User> {
+
     private final Converter<RoleDto, Role> roleConverter;
 
     @Autowired
@@ -38,10 +36,5 @@ public class UserProfileConverter implements Converter<UserProfileDto, User> {
             user.setRole(role);
         }
         return user;
-    }
-
-    @Override
-    public List<User> toEntityList(List<UserProfileDto> list) {
-        return null;
     }
 }

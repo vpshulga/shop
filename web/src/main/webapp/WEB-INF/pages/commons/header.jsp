@@ -3,7 +3,6 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <jsp:include page="../util/head.jsp"/>
 
-
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -25,7 +24,7 @@
         <security:authorize access="isAnonymous()">
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="${pageContext.request.contextPath}/web/users/create"><span
+                <li><a href="${pageContext.request.contextPath}/web/registration"><span
                         class="glyphicon glyphicon-user"></span> Sign Up</a></li>
                 <li><a href="${pageContext.request.contextPath}/web/login"><span
                         class="glyphicon glyphicon-log-in"></span>

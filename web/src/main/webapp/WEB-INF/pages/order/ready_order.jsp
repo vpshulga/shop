@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <jsp:include page="../commons/header.jsp"/>
-    <title>Create user</title>
+    <title>Order</title>
 </head>
 <body>
 <div class="row">

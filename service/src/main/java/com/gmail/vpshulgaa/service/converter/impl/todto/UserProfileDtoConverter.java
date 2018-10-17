@@ -5,15 +5,12 @@ import com.gmail.vpshulgaa.dao.entities.User;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.RoleDto;
 import com.gmail.vpshulgaa.service.dto.UserProfileDto;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component("userProfileDtoConverter")
 public class UserProfileDtoConverter implements DtoConverter<UserProfileDto, User> {
+
     private final DtoConverter<RoleDto, Role> roleDtoConverter;
 
     @Autowired
@@ -42,10 +39,5 @@ public class UserProfileDtoConverter implements DtoConverter<UserProfileDto, Use
             userProfileDto.setRole(roleDto);
         }
         return userProfileDto;
-    }
-
-    @Override
-    public List<UserProfileDto> toDtoList(List<User> list) {
-        return new ArrayList<>();
     }
 }

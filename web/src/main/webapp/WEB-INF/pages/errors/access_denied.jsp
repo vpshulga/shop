@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <jsp:include page="commons/header.jsp"/>
+    <jsp:include page="../commons/header.jsp"/>
     <title>Access denied page</title>
 </head>
 <body>
@@ -11,6 +11,6 @@
                                 alt="Access denied image"></div>
 </div>
 
-<jsp:include page="util/js.jsp"/>
+<jsp:include page="../util/js.jsp"/>
 </body>
 </html>

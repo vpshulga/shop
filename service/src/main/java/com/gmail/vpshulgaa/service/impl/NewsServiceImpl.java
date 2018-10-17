@@ -9,7 +9,8 @@ import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.NewsDto;
 import com.gmail.vpshulgaa.service.dto.UserProfileDto;
-import com.gmail.vpshulgaa.service.util.ServiceUtils;
+import com.gmail.vpshulgaa.service.exception.EntityNotFoundException;
+import com.gmail.vpshulgaa.service.util.CurrentUserUtils;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,20 +49,12 @@ public class NewsServiceImpl implements NewsService {
     @Override
     @Transactional(readOnly = true)
     public NewsDto findOne(Long id) {
-        NewsDto newsDto = null;
-        try {
-            News news = newsDao.findOne(id);
-            newsDto = newsDtoConverter.toDto(news);
-        } catch (Exception e) {
-            logger.error("Failed to get news", e);
+        News news = newsDao.findOne(id);
+        if (news != null) {
+            return newsDtoConverter.toDto(news);
+        } else {
+            throw new EntityNotFoundException(News.class, id);
         }
-        return newsDto;
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<NewsDto> findAll() {
-        return new ArrayList<>();
     }
 
     @Override
@@ -70,7 +63,7 @@ public class NewsServiceImpl implements NewsService {
         try {
             newsDto.setCreated(LocalDateTime.now());
             News news = newsConverter.toEntity(newsDto);
-            Long userId = ServiceUtils.getPrincipal().getId();
+            Long userId = CurrentUserUtils.getPrincipal().getId();
             UserProfileDto userDto = userService.findOne(userId);
             news.setUser(userProfileConverter.toEntity(userDto));
             newsDao.create(news);
@@ -112,10 +105,10 @@ public class NewsServiceImpl implements NewsService {
     @Override
     @Transactional
     public void deleteById(Long id) {
-        try {
+        if (newsDao.findOne(id) != null) {
             newsDao.deleteById(id);
-        } catch (Exception e) {
-            logger.error("Failed to delete news", e);
+        } else {
+            throw new EntityNotFoundException(News.class, id);
         }
     }
 

@@ -14,15 +14,16 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Item implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "F_ID", updatable = false, nullable = false)
-    private long id;
-    @Column(name = "F_NAME", length = 50)
+    private Long id;
+    @Column(name = "F_NAME", length = 200)
     private String name;
     @Column(name = "F_DESCRIPTION", length = 1500)
     private String description;
-    @Column(name = "F_U_NUMBER", length = 200, unique = true)
+    @Column(name = "F_U_NUMBER", length = 10, unique = true)
     private String uniqueNumber;
     @Column(name = "F_PRICE")
     private BigDecimal price;
@@ -37,14 +38,11 @@ public class Item implements Serializable {
     )
     private List<Discount> discounts = new ArrayList<>();
 
-    public Item() {
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -101,7 +99,7 @@ public class Item implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-        return id == item.id &&
+        return Objects.equals(id, item.id) &&
                 Objects.equals(name, item.name) &&
                 Objects.equals(description, item.description) &&
                 Objects.equals(uniqueNumber, item.uniqueNumber) &&

@@ -12,7 +12,7 @@
     <div class="col-md-4 shadow-lg bg-white rounded">
         <h1>Registration form</h1>
         <form:form action="${pageContext.request.contextPath}/web/users/create" modelAttribute="user" method="post">
-            <form:errors path="*" cssClass="error" element="div" />
+            <form:errors path="*" cssClass="error" element="div"/>
             <div class="form-group">
                 <form:label path="name">First name:</form:label>
                 <form:input path="name" class="form-control" placeholder="First name"/>

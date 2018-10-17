@@ -14,6 +14,7 @@ public class UserPrincipal implements UserDetails {
     private String email;
     private String password;
     private List<GrantedAuthority> authorities;
+    private boolean disabled;
 
     public UserPrincipal(User user) {
         this.id = user.getId();
@@ -23,6 +24,7 @@ public class UserPrincipal implements UserDetails {
                 .map(Permission::getName)
                 .toArray(String[]::new);
         this.authorities = AuthorityUtils.createAuthorityList(authorityList);
+        this.disabled = user.getDisabled();
     }
 
     public Long getId() {
@@ -45,8 +47,8 @@ public class UserPrincipal implements UserDetails {
         this.password = password;
     }
 
-    public void setAuthorities(List<GrantedAuthority> authorities) {
-        this.authorities = authorities;
+    private boolean getDisabled() {
+        return disabled;
     }
 
     @Override
@@ -81,6 +83,6 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return !getDisabled();
     }
 }

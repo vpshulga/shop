@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <jsp:include page="../commons/header.jsp"/>
-    <title>order page</title>
+    <title>Order page</title>
 </head>
 <body>
 <form:form action="${pageContext.request.contextPath}/web/orders/order" method="post">

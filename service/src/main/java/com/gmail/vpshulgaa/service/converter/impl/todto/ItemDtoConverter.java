@@ -43,9 +43,4 @@ public class ItemDtoConverter implements DtoConverter<ItemDto, Item> {
 
         return itemDto;
     }
-
-    @Override
-    public List<ItemDto> toDtoList(List<Item> list) {
-        return null;
-    }
 }

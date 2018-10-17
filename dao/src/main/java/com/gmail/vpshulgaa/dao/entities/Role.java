@@ -1,6 +1,6 @@
 package com.gmail.vpshulgaa.dao.entities;
 
-import com.gmail.vpshulgaa.dao.enums.Roles;
+import com.gmail.vpshulgaa.dao.enums.RolesEnum;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
@@ -14,13 +14,14 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Role implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "F_ID", updatable = false, nullable = false)
-    private long id;
+    private Long id;
     @Enumerated(EnumType.STRING)
-    @Column(name = "F_NAME")
-    private Roles name;
+    @Column(name = "F_NAME", length = 50)
+    private RolesEnum name;
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
@@ -30,22 +31,19 @@ public class Role implements Serializable {
     )
     private Set<Permission> permissions = new HashSet<>();
 
-    public Role() {
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Roles getName() {
+    public RolesEnum getName() {
         return name;
     }
 
-    public void setName(Roles name) {
+    public void setName(RolesEnum name) {
         this.name = name;
     }
 
@@ -53,16 +51,12 @@ public class Role implements Serializable {
         return permissions;
     }
 
-    public void setPermissions(Set<Permission> permissions) {
-        this.permissions = permissions;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Role role = (Role) o;
-        return id == role.id &&
+        return Objects.equals(id, role.id) &&
                 name == role.name;
     }
 

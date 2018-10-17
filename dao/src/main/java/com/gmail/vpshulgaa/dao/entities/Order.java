@@ -1,6 +1,6 @@
 package com.gmail.vpshulgaa.dao.entities;
 
-import com.gmail.vpshulgaa.dao.enums.Status;
+import com.gmail.vpshulgaa.dao.enums.StatusEnum;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -13,17 +13,18 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Order implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "F_ID", updatable = false, nullable = false)
-    private long id;
+    private Long id;
     @Column(name = "F_CREATED")
     private LocalDateTime created;
     @Column(name = "F_QUANTITY")
     private Integer quantity;
     @Enumerated(EnumType.STRING)
-    @Column(name = "F_STATUS")
-    private Status status = Status.NEW;
+    @Column(name = "F_STATUS", length = 50)
+    private StatusEnum status = StatusEnum.NEW;
 
     @ManyToOne
     @JoinColumn(name = "F_ITEM_ID")
@@ -33,14 +34,11 @@ public class Order implements Serializable {
     @JoinColumn(name = "F_USER_ID")
     private User user;
 
-    public Order() {
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -60,11 +58,11 @@ public class Order implements Serializable {
         this.quantity = quantity;
     }
 
-    public Status getStatus() {
+    public StatusEnum getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(StatusEnum status) {
         this.status = status;
     }
 
@@ -89,7 +87,7 @@ public class Order implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return id == order.id &&
+        return Objects.equals(id, order.id) &&
                 Objects.equals(created, order.created) &&
                 Objects.equals(quantity, order.quantity);
     }

@@ -1,52 +1,59 @@
 package com.gmail.vpshulgaa.controllers.rest;
 
+import com.gmail.vpshulgaa.service.ItemService;
+import com.gmail.vpshulgaa.service.OrderService;
 import com.gmail.vpshulgaa.service.dto.ItemDto;
+import com.gmail.vpshulgaa.util.URLPrefix;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
 @RestController
-@RequestMapping("/api/items")
+@RequestMapping(URLPrefix.API_PREFIX + "/items")
 public class ItemApiController {
-    private Map<Integer, ItemDto> items = new HashMap<>();
-    private Random random = new Random();
 
+    private final ItemService itemService;
+    private final OrderService orderService;
+
+    @Autowired
+    public ItemApiController(ItemService itemService, OrderService orderService) {
+        this.itemService = itemService;
+        this.orderService = orderService;
+    }
 
     @GetMapping(value = "/{id}")
-    public ItemDto getItem(@PathVariable("id") Integer id) {
-        ItemDto item = new ItemDto();
-        item.setName("asdsad");
-        item.setDescription("sdsds");
-        items.put(1, item);
-        return items.get(id);
+    @PreAuthorize("hasAuthority('API_USER_PERMISSION')")
+    public ItemDto getItem(@PathVariable("id") Long id) {
+        return itemService.findOne(id);
     }
 
-    @PostMapping
-    public ItemDto saveItem(@RequestBody ItemDto item) {
-        return items.put(5, item);
+
+    @PostMapping(value = "/create")
+    @PreAuthorize("hasAuthority('API_USER_PERMISSION')")
+    public ItemDto createItem(ItemDto item) {
+        return itemService.create(item);
     }
 
-    @GetMapping()
-    public List<ItemDto> getItems() {
-        ItemDto item = new ItemDto();
-        item.setName("asdsad1");
-        item.setDescription("sdsds");
-        items.put(1, item);
-        ItemDto item1 = new ItemDto();
-        item1.setName("asdsad2");
-        item1.setDescription("sdsds");
-        items.put(1, item);
-        ItemDto item2 = new ItemDto();
-        item2.setName("asdsad3");
-        item2.setDescription("sdsds");
-        items.put(1, item);
-        ItemDto item3= new ItemDto();
-        item3.setName("asdsad4");
-        item3.setDescription("sdsds");
-        items.put(1, item);
-        items.put(2, item1);
-        items.put(3, item2);
-        items.put(4, item3);
-        return new ArrayList<>(items.values());
+    @PostMapping(value = "/{id}/update")
+    @PreAuthorize("hasAuthority('API_USER_PERMISSION')")
+    public ItemDto updateItem(ItemDto item, @PathVariable("id") Long id) {
+        item.setId(id);
+        item.setDeleted(false);
+        return itemService.update(item);
     }
+
+    @DeleteMapping(value = "/{id}/delete")
+    @PreAuthorize("hasAuthority('API_USER_PERMISSION')")
+    public void deleteItem(@PathVariable("id") Long id) {
+        ItemDto item = itemService.findOne(id);
+        if (orderService.isExistInOrders(id)) {
+            item.setDeleted(true);
+            itemService.update(item);
+        } else {
+            itemService.deleteById(id);
+        }
+    }
+
 }

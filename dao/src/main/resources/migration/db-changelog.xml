@@ -1,7 +1,9 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
     <property name="now" value="now()" dbms="mysql"/>
-    <changeSet author="vpshulga (generated)" id="1538644835993-1">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-1">
         <createTable tableName="t_audit">
             <column autoIncrement="true" name="F_ID" type="BIGINT">
                 <constraints primaryKey="true"/>
@@ -11,7 +13,7 @@
             <column name="F_USER_ID" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-2">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-2">
         <createTable tableName="t_comment">
             <column autoIncrement="true" name="F_ID" type="BIGINT">
                 <constraints primaryKey="true"/>
@@ -22,7 +24,7 @@
             <column name="F_USER_ID" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-3">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-3">
         <createTable tableName="t_discount">
             <column autoIncrement="true" name="F_ID" type="BIGINT">
                 <constraints primaryKey="true"/>
@@ -32,7 +34,7 @@
             <column name="F_PERCENT" type="DECIMAL(19, 2)"/>
         </createTable>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-4">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-4">
         <createTable tableName="t_discount_item">
             <column name="F_ITEM_ID" type="BIGINT">
                 <constraints nullable="false"/>
@@ -42,7 +44,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-5">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-5">
         <createTable tableName="t_item">
             <column autoIncrement="true" name="F_ID" type="BIGINT">
                 <constraints primaryKey="true"/>
@@ -56,7 +58,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-6">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-6">
         <createTable tableName="t_news">
             <column autoIncrement="true" name="F_ID" type="BIGINT">
                 <constraints primaryKey="true"/>
@@ -67,27 +69,27 @@
             <column name="F_USER_ID" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-7">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-7">
         <createTable tableName="t_order">
             <column autoIncrement="true" name="F_ID" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
             <column name="F_CREATED" type="datetime"/>
             <column name="F_QUANTITY" type="INT"/>
-            <column name="F_STATUS" type="VARCHAR(255)"/>
+            <column name="F_STATUS" type="VARCHAR(50)"/>
             <column name="F_ITEM_ID" type="BIGINT"/>
             <column name="F_USER_ID" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-8">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-8">
         <createTable tableName="t_permission">
             <column autoIncrement="true" name="F_ID" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="F_NAME" type="VARCHAR(30)"/>
+            <column name="F_NAME" type="VARCHAR(50)"/>
         </createTable>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-9">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-9">
         <createTable tableName="t_permission_role">
             <column name="F_ROLE_ID" type="BIGINT">
                 <constraints primaryKey="true"/>
@@ -97,7 +99,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-10">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-10">
         <createTable tableName="t_profile">
             <column name="F_USER_ID" type="BIGINT">
                 <constraints primaryKey="true"/>
@@ -106,15 +108,15 @@
             <column name="F_TELEPHONE" type="VARCHAR(20)"/>
         </createTable>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-11">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-11">
         <createTable tableName="t_role">
             <column autoIncrement="true" name="F_ID" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="F_NAME" type="VARCHAR(255)"/>
+            <column name="F_NAME" type="VARCHAR(50)"/>
         </createTable>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-12">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-12">
         <createTable tableName="t_user">
             <column autoIncrement="true" name="F_ID" type="BIGINT">
                 <constraints primaryKey="true"/>
@@ -131,7 +133,7 @@
             <column name="F_ROLE_ID" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-13">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-13">
         <insert tableName="t_permission">
             <column name="F_ID" valueNumeric="1"/>
             <column name="F_NAME" value="SHOW_USERS"/>
@@ -236,8 +238,12 @@
             <column name="F_ID" valueNumeric="26"/>
             <column name="F_NAME" value="SHOW_ITEMS"/>
         </insert>
+        <insert tableName="t_permission">
+            <column name="F_ID" valueNumeric="27"/>
+            <column name="F_NAME" value="MANAGE_BUSINESS_CARD"/>
+        </insert>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-14">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-14">
         <insert tableName="t_permission_role">
             <column name="F_ROLE_ID" valueNumeric="1"/>
             <column name="F_PERMISSION_ID" valueNumeric="1"/>
@@ -438,8 +444,12 @@
             <column name="F_ROLE_ID" valueNumeric="5"/>
             <column name="F_PERMISSION_ID" valueNumeric="25"/>
         </insert>
+        <insert tableName="t_permission_role">
+            <column name="F_ROLE_ID" valueNumeric="6"/>
+            <column name="F_PERMISSION_ID" valueNumeric="27"/>
+        </insert>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-15">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-15">
         <insert tableName="t_profile">
             <column name="F_USER_ID" valueNumeric="1"/>
             <column name="F_ADDRESS" value="Minsk"/>
@@ -465,8 +475,13 @@
             <column name="F_ADDRESS" value="Minsk"/>
             <column name="F_TELEPHONE" value="+375296622611"/>
         </insert>
+        <insert tableName="t_profile">
+            <column name="F_USER_ID" valueNumeric="6"/>
+            <column name="F_ADDRESS" value="Minsk"/>
+            <column name="F_TELEPHONE" value="+375296622345"/>
+        </insert>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-16">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-16">
         <insert tableName="t_role">
             <column name="F_ID" valueNumeric="1"/>
             <column name="F_NAME" value="ADMIN"/>
@@ -487,8 +502,12 @@
             <column name="F_ID" valueNumeric="5"/>
             <column name="F_NAME" value="API_USER"/>
         </insert>
+        <insert tableName="t_role">
+            <column name="F_ID" valueNumeric="6"/>
+            <column name="F_NAME" value="MANAGER"/>
+        </insert>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-17">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-17">
         <insert tableName="t_user">
             <column name="F_ID" valueNumeric="1"/>
             <column name="F_EMAIL" value="admin@admin.ru"/>
@@ -544,135 +563,146 @@
             <column name="F_DISCOUNT_ID"/>
             <column name="F_ROLE_ID" valueNumeric="5"/>
         </insert>
+        <insert tableName="t_user">
+            <column name="F_ID" valueNumeric="6"/>
+            <column name="F_EMAIL" value="manager@manager.ru"/>
+            <column name="F_IS_DISABLED" valueBoolean="false"/>
+            <column name="F_IS_DELETED" valueBoolean="false"/>
+            <column name="F_NAME" value="Manager"/>
+            <column name="F_PASSWORD" value="$2a$04$xdx8Ulje7.vTPA6N1eM23O37PQqwR4frZM2Athb6wBDofKXU//uxi"/>
+            <column name="F_SURNAME" value="Manager"/>
+            <column name="F_DISCOUNT_ID"/>
+            <column name="F_ROLE_ID" valueNumeric="6"/>
+        </insert>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-18">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-18">
         <createIndex indexName="FK1bnfdhs2ffsgb7twwqxbgj1wp" tableName="t_order">
             <column name="F_ITEM_ID"/>
         </createIndex>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-19">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-19">
         <createIndex indexName="FK1dpyp0hr6159qy32fho9na0ya" tableName="t_order">
             <column name="F_USER_ID"/>
         </createIndex>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-20">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-20">
         <createIndex indexName="FK2mm6ehn6e6qno5s131opk6ou5" tableName="t_permission_role">
             <column name="F_PERMISSION_ID"/>
         </createIndex>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-21">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-21">
         <createIndex indexName="FK6507v43ylmbe4fj6j1hs65805" tableName="t_user">
             <column name="F_ROLE_ID"/>
         </createIndex>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-22">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-22">
         <createIndex indexName="FK7mh8p7k731m5lfakvwpoyiu1f" tableName="t_discount_item">
             <column name="F_DISCOUNT_ID"/>
         </createIndex>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-23">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-23">
         <createIndex indexName="FKd5y4mg1tcpsyi2dcla37gka5m" tableName="t_news">
             <column name="F_USER_ID"/>
         </createIndex>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-24">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-24">
         <createIndex indexName="FKeniu19lguym67ac3regewvpcw" tableName="t_comment">
             <column name="F_NEWS_ID"/>
         </createIndex>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-25">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-25">
         <createIndex indexName="FKh9g9cfe2h36vut30ur2c674jt" tableName="t_user">
             <column name="F_DISCOUNT_ID"/>
         </createIndex>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-26">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-26">
         <createIndex indexName="FKhp2xreeuwv5aijppbnts2ddi1" tableName="t_discount_item">
             <column name="F_ITEM_ID"/>
         </createIndex>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-27">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-27">
         <createIndex indexName="FKj08s3lhgtgxc5tricii8ic6h8" tableName="t_comment">
             <column name="F_USER_ID"/>
         </createIndex>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-28">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-28">
         <createIndex indexName="FKjrn3ioy0oylsyml20ai8qe3qc" tableName="t_audit">
             <column name="F_USER_ID"/>
         </createIndex>
     </changeSet>
-	<changeSet author="vpshulga (generated)" id="1538644835993-29">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-29">
         <addForeignKeyConstraint baseColumnNames="F_ITEM_ID" baseTableName="t_order"
                                  constraintName="FK1bnfdhs2ffsgb7twwqxbgj1wp" deferrable="false"
                                  initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
                                  referencedColumnNames="F_ID" referencedTableName="t_item" validate="true"/>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-30">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-30">
         <addForeignKeyConstraint baseColumnNames="F_USER_ID" baseTableName="t_order"
                                  constraintName="FK1dpyp0hr6159qy32fho9na0ya" deferrable="false"
                                  initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
                                  referencedColumnNames="F_ID" referencedTableName="t_user" validate="true"/>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-31">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-31">
         <addForeignKeyConstraint baseColumnNames="F_PERMISSION_ID" baseTableName="t_permission_role"
                                  constraintName="FK2mm6ehn6e6qno5s131opk6ou5" deferrable="false"
                                  initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
                                  referencedColumnNames="F_ID" referencedTableName="t_permission" validate="true"/>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-32">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-32">
         <addForeignKeyConstraint baseColumnNames="F_ROLE_ID" baseTableName="t_user"
                                  constraintName="FK6507v43ylmbe4fj6j1hs65805" deferrable="false"
                                  initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
                                  referencedColumnNames="F_ID" referencedTableName="t_role" validate="true"/>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-33">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-33">
         <addForeignKeyConstraint baseColumnNames="F_DISCOUNT_ID" baseTableName="t_discount_item"
                                  constraintName="FK7mh8p7k731m5lfakvwpoyiu1f" deferrable="false"
                                  initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
                                  referencedColumnNames="F_ID" referencedTableName="t_discount" validate="true"/>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-34">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-34">
         <addForeignKeyConstraint baseColumnNames="F_USER_ID" baseTableName="t_news"
                                  constraintName="FKd5y4mg1tcpsyi2dcla37gka5m" deferrable="false"
                                  initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
                                  referencedColumnNames="F_ID" referencedTableName="t_user" validate="true"/>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-35">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-35">
         <addForeignKeyConstraint baseColumnNames="F_NEWS_ID" baseTableName="t_comment"
                                  constraintName="FKeniu19lguym67ac3regewvpcw" deferrable="false"
                                  initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION"
                                  referencedColumnNames="F_ID" referencedTableName="t_news" validate="true"/>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-36">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-36">
         <addForeignKeyConstraint baseColumnNames="F_DISCOUNT_ID" baseTableName="t_user"
                                  constraintName="FKh9g9cfe2h36vut30ur2c674jt" deferrable="false"
                                  initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
                                  referencedColumnNames="F_ID" referencedTableName="t_discount" validate="true"/>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-37">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-37">
         <addForeignKeyConstraint baseColumnNames="F_ITEM_ID" baseTableName="t_discount_item"
                                  constraintName="FKhp2xreeuwv5aijppbnts2ddi1" deferrable="false"
                                  initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
                                  referencedColumnNames="F_ID" referencedTableName="t_item" validate="true"/>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-38">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-38">
         <addForeignKeyConstraint baseColumnNames="F_ROLE_ID" baseTableName="t_permission_role"
                                  constraintName="FKi4s0tahl2bgydcq9gx1nkkl6u" deferrable="false"
                                  initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
                                  referencedColumnNames="F_ID" referencedTableName="t_role" validate="true"/>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-39">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-39">
         <addForeignKeyConstraint baseColumnNames="F_USER_ID" baseTableName="t_comment"
                                  constraintName="FKj08s3lhgtgxc5tricii8ic6h8" deferrable="false"
                                  initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
                                  referencedColumnNames="F_ID" referencedTableName="t_user" validate="true"/>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-40">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-40">
         <addForeignKeyConstraint baseColumnNames="F_USER_ID" baseTableName="t_audit"
                                  constraintName="FKjrn3ioy0oylsyml20ai8qe3qc" deferrable="false"
                                  initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
                                  referencedColumnNames="F_ID" referencedTableName="t_user" validate="true"/>
     </changeSet>
-    <changeSet author="vpshulga (generated)" id="1538644835993-41">
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-41">
         <insert tableName="t_news">
             <column name="F_ID" valueNumeric="1"/>
             <column name="F_CONTENT" value="Нашумевших и напуганных произведенным эффектом Александра Кокорина и Павла Мамаева доставили в Тверской суд Москвы. Он должен вынести решение относительно ходатайства СК об аресте футболистов. Ранее, после ультиматума правоохранительных органов, они один за другим явились в полицию и (с разным успехом) демонстрировали раскаяние. Mash описывает происходящее в зале.
@@ -691,5 +721,23 @@
             <column name="F_TITLE" value="Двое мужчин отправились на рыбалку и не вернулись домой"/>
             <column name="F_USER_ID" valueNumeric="1"/>
         </insert>
+    </changeSet>
+
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-42">
+        <createTable tableName="t_card">
+            <column autoIncrement="true" name="F_ID" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="F_TITLE" type="VARCHAR(255)"/>
+            <column name="F_FULL_NAME" type="VARCHAR(255)"/>
+            <column name="F_WORKING_TELEPHONE" type="VARCHAR(255)"/>
+            <column name="F_USER_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="vpshulgaa@gmail.com" id="1538644835993-43">
+        <addForeignKeyConstraint baseColumnNames="F_USER_ID" baseTableName="t_card"
+                                 constraintName="fkmanager" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="F_ID" referencedTableName="t_user" validate="true"/>
     </changeSet>
 </databaseChangeLog>

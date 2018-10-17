@@ -1,15 +1,16 @@
 package com.gmail.vpshulgaa.service.dto;
 
-import com.gmail.vpshulgaa.dao.enums.Status;
+import com.gmail.vpshulgaa.dao.enums.StatusEnum;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class OrderDto {
-    private long id;
+
+    private Long id;
     private LocalDateTime created;
     private Integer quantity;
-    private Status status;
+    private StatusEnum status;
     private BigDecimal total;
     private String itemName;
     private BigDecimal itemPrice;
@@ -17,14 +18,11 @@ public class OrderDto {
     private Long userId;
     private String creator;
 
-    public OrderDto() {
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -52,11 +50,11 @@ public class OrderDto {
         this.total = total;
     }
 
-    public Status getStatus() {
+    public StatusEnum getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(StatusEnum status) {
         this.status = status;
     }
 
@@ -105,7 +103,7 @@ public class OrderDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderDto orderDto = (OrderDto) o;
-        return id == orderDto.id &&
+        return Objects.equals(id, orderDto.id) &&
                 Objects.equals(created, orderDto.created) &&
                 Objects.equals(quantity, orderDto.quantity);
     }

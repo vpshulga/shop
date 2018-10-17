@@ -4,7 +4,7 @@ import com.gmail.vpshulgaa.dao.UserDao;
 import com.gmail.vpshulgaa.dao.entities.Profile;
 import com.gmail.vpshulgaa.dao.entities.Role;
 import com.gmail.vpshulgaa.dao.entities.User;
-import com.gmail.vpshulgaa.dao.enums.Roles;
+import com.gmail.vpshulgaa.dao.enums.RolesEnum;
 import com.gmail.vpshulgaa.service.ProfileService;
 import com.gmail.vpshulgaa.service.RoleService;
 import com.gmail.vpshulgaa.service.UserService;
@@ -14,6 +14,7 @@ import com.gmail.vpshulgaa.service.dto.ChangePasswordDto;
 import com.gmail.vpshulgaa.service.dto.ProfileDto;
 import com.gmail.vpshulgaa.service.dto.RoleDto;
 import com.gmail.vpshulgaa.service.dto.UserProfileDto;
+import com.gmail.vpshulgaa.service.exception.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
@@ -27,8 +28,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
+    private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
     private final UserDao userDao;
     private final Converter<UserProfileDto, User> userProfileConverter;
     private final DtoConverter<UserProfileDto, User> userProfileDtoConverter;
@@ -61,26 +62,12 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public UserProfileDto findOne(Long id) {
-        UserProfileDto userProfileDto = new UserProfileDto();
-        try {
-            User user = userDao.findOne(id);
-            userProfileDto = userProfileDtoConverter.toDto(user);
-        } catch (Exception e) {
-            logger.error("Failed to find user");
+        User user = userDao.findOne(id);
+        if (user != null) {
+            return userProfileDtoConverter.toDto(user);
+        } else {
+            throw new EntityNotFoundException(User.class, id);
         }
-        return userProfileDto;
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<UserProfileDto> findAll() {
-        List<UserProfileDto> users = new ArrayList<>();
-        try {
-            users = userProfileDtoConverter.toDtoList(userDao.findAll());
-        } catch (Exception e) {
-            logger.error("Failed to get users", e);
-        }
-        return users;
     }
 
     @Override
@@ -88,7 +75,7 @@ public class UserServiceImpl implements UserService {
     public UserProfileDto create(UserProfileDto userDto) {
         try {
             User user = userProfileConverter.toEntity(userDto);
-            Role role = roleConverter.toEntity(roleService.findByName(Roles.CUSTOMER_USER));
+            Role role = roleConverter.toEntity(roleService.findByName(RolesEnum.CUSTOMER_USER));
             user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
             user.setRole(role);
             user.setDisabled(Boolean.FALSE);
@@ -147,37 +134,28 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void deleteById(Long id) {
-        try {
+        if (userDao.findOne(id) != null) {
             userDao.deleteById(id);
-        } catch (Exception e) {
-            logger.error("Failed to delete user", e);
+        } else {
+            throw new EntityNotFoundException(User.class, id);
         }
-    }
-
-    @Override
-    @Transactional
-    public UserProfileDto findByEmail(String email) {
-        UserProfileDto userDto = null;
-        try {
-            User user = userDao.findByEmail(email);
-            userDto = userProfileDtoConverter.toDto(user);
-        } catch (Exception e) {
-            logger.error("Failed to find user", e);
-        }
-        return userDto;
     }
 
     @Override
     @Transactional
     public UserProfileDto changePassword(ChangePasswordDto changePassword, Long userId) {
         User user = userDao.findOne(userId);
-        if (changePassword.getNewPassword().equals(changePassword.getConfirmPassword())) {
-            changePassword.setNewPassword(bCryptPasswordEncoder.encode(changePassword.getNewPassword()));
+        if (user != null) {
+            if (changePassword.getNewPassword().equals(changePassword.getConfirmPassword())) {
+                changePassword.setNewPassword(bCryptPasswordEncoder.encode(changePassword.getNewPassword()));
 
-            user.setPassword(changePassword.getNewPassword());
-            userDao.update(user);
+                user.setPassword(changePassword.getNewPassword());
+                userDao.update(user);
+            }
+            return userProfileDtoConverter.toDto(user);
+        } else {
+            throw new EntityNotFoundException(User.class, userId);
         }
-        return userProfileDtoConverter.toDto(user);
     }
 
     @Override
@@ -206,5 +184,17 @@ public class UserServiceImpl implements UserService {
             logger.error("Failed to find users", e);
         }
         return usersDto;
+    }
+
+    @Override
+    @Transactional
+    public boolean isExistsEmail(String email) {
+        boolean isExists = false;
+        for (String string : userDao.findAllEmails()) {
+            if (string.equals(email)) {
+                isExists = true;
+            }
+        }
+        return isExists;
     }
 }

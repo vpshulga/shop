@@ -4,6 +4,7 @@ import com.gmail.vpshulgaa.dao.entities.Order;
 import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.OrderDto;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Component;
 
@@ -32,6 +33,10 @@ public class OrderDtoConverter implements DtoConverter<OrderDto, Order> {
 
     @Override
     public List<OrderDto> toDtoList(List<Order> list) {
-        return null;
+        List<OrderDto> orderDtos = new ArrayList<>();
+        for (Order order : list) {
+            orderDtos.add(toDto(order));
+        }
+        return orderDtos;
     }
 }

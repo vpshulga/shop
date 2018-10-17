@@ -15,7 +15,8 @@
             <form action="${pageContext.request.contextPath}/web/users/delete" method="post">
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="${pageContext.request.contextPath}/web/users/create" class="btn btn-primary" aria-pressed="true" role="button">ADD</a>
+                        <a href="${pageContext.request.contextPath}/web/users/create" class="btn btn-primary"
+                           aria-pressed="true" role="button">ADD</a>
                         <button type="submit" class="btn btn-primary">DELETE</button>
                     </div>
                 </div>
@@ -43,7 +44,8 @@
                                     <td>${user.role.name}</td>
                                     <td>${user.disabled}</td>
                                     <td>
-                                        <a href="${pageContext.request.contextPath}/web/users/${user.id}" class="btn btn-primary" aria-pressed="true"
+                                        <a href="${pageContext.request.contextPath}/web/users/${user.id}"
+                                           class="btn btn-primary" aria-pressed="true"
                                            role="button">Info</a>
                                     </td>
                                 </tr>
@@ -53,7 +55,8 @@
                         <ul class="pagination">
                             <c:forEach var="page" begin="1" end="${pages}">
                                 <li class="page-item"><a class="page-link"
-                                                         href="${pageContext.request.contextPath}/web/users?page=${page}">${page}</a></li>
+                                                         href="${pageContext.request.contextPath}/web/users?page=${page}">${page}</a>
+                                </li>
                             </c:forEach>
                         </ul>
                     </div>

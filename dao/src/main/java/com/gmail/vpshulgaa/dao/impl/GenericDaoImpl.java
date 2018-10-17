@@ -8,11 +8,11 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class GenericDaoImpl<T extends Serializable> implements GenericDao<T> {
+
     private Class<T> clazz;
 
     @Autowired
     private SessionFactory sessionFactory;
-
 
     public GenericDaoImpl(Class<T> clazz) {
         this.clazz = clazz;
@@ -44,7 +44,7 @@ public abstract class GenericDaoImpl<T extends Serializable> implements GenericD
         delete(entity);
     }
 
-    public Session getCurrentSession() {
+    Session getCurrentSession() {
         return sessionFactory.getCurrentSession();
     }
 }

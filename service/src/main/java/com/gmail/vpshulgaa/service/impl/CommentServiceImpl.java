@@ -12,6 +12,8 @@ import com.gmail.vpshulgaa.service.converter.DtoConverter;
 import com.gmail.vpshulgaa.service.dto.CommentDto;
 import com.gmail.vpshulgaa.service.dto.NewsDto;
 import com.gmail.vpshulgaa.service.dto.UserProfileDto;
+import com.gmail.vpshulgaa.service.exception.EntityNotFoundException;
+import com.gmail.vpshulgaa.service.util.CurrentUserUtils;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +26,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CommentServiceImpl implements CommentService {
-    private static final Logger logger = LogManager.getLogger(CommentServiceImpl.class);
 
+    private static final Logger logger = LogManager.getLogger(CommentServiceImpl.class);
     private final CommentDao commentDao;
     private final Converter<CommentDto, Comment> commentConverter;
     private final DtoConverter<CommentDto, Comment> commentDtoConverter;
@@ -52,30 +54,12 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public CommentDto findOne(Long id) {
-        CommentDto commentDto = null;
-        try {
-            Comment comment = commentDao.findOne(id);
-            commentDto = commentDtoConverter.toDto(comment);
-        } catch (Exception e) {
-            logger.error("Failed to get comment", e);
-        }
-        return commentDto;
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<CommentDto> findAll() {
-        return new ArrayList<>();
-    }
-
-    @Override
     @Transactional
-    public CommentDto create(CommentDto commentDto, Long newsId, Long userId) {
+    public CommentDto create(CommentDto commentDto, Long newsId) {
         try {
             commentDto.setCreated(LocalDateTime.now());
             Comment comment = commentConverter.toEntity(commentDto);
+            Long userId = CurrentUserUtils.getPrincipal().getId();
             UserProfileDto userDto = userService.findOne(userId);
             NewsDto newsDto = newsService.findOne(newsId);
             comment.setNews(newsConverter.toEntity(newsDto));
@@ -90,37 +74,11 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
-    public CommentDto update(CommentDto commentDto) {
-        try {
-            Comment comment = commentConverter.toEntity(commentDto);
-            commentDao.update(comment);
-            commentDto = commentDtoConverter.toDto(comment);
-        } catch (Exception e) {
-            logger.error("Failed to update comment", e);
-        }
-        return commentDto;
-    }
-
-    @Override
-    @Transactional
-    public CommentDto delete(CommentDto commentDto) {
-        try {
-            Comment comment = commentConverter.toEntity(commentDto);
-            commentDao.delete(comment);
-            commentDto = commentDtoConverter.toDto(comment);
-        } catch (Exception e) {
-            logger.error("Failed to delete comment", e);
-        }
-        return commentDto;
-    }
-
-    @Override
-    @Transactional
     public void deleteById(Long id) {
-        try {
+        if (commentDao.findOne(id) != null) {
             commentDao.deleteById(id);
-        } catch (Exception e) {
-            logger.error("Failed to delete comment", e);
+        } else {
+            throw new EntityNotFoundException(Comment.class, id);
         }
     }
 

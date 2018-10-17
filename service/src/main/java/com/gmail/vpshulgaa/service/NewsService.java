@@ -4,11 +4,10 @@ import com.gmail.vpshulgaa.service.dto.NewsDto;
 import java.util.List;
 
 public interface NewsService {
+
     NewsDto findOne(final Long id);
 
-    List<NewsDto> findAll();
-
-    NewsDto create(final NewsDto dto, Long userId);
+    NewsDto create(final NewsDto dto);
 
     NewsDto update(final NewsDto dto, Long userId);
 

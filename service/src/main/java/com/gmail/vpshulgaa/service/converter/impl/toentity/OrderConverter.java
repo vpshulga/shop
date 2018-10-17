@@ -5,8 +5,6 @@ import com.gmail.vpshulgaa.service.converter.Converter;
 import com.gmail.vpshulgaa.service.dto.OrderDto;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component("orderConverter")
 public class OrderConverter implements Converter<OrderDto, Order> {
 
@@ -21,10 +19,5 @@ public class OrderConverter implements Converter<OrderDto, Order> {
         order.setQuantity(dto.getQuantity());
         order.setStatus(dto.getStatus());
         return order;
-    }
-
-    @Override
-    public List<Order> toEntityList(List<OrderDto> list) {
-        return null;
     }
 }

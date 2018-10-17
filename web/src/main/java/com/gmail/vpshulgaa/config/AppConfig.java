@@ -8,7 +8,8 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
 @PropertySource({"classpath:database.properties", "classpath:application.properties"})
-@ComponentScan(basePackages = {"com.gmail.vpshulgaa.dao",
+@ComponentScan(basePackages = {
+        "com.gmail.vpshulgaa.dao",
         "com.gmail.vpshulgaa.service",
         "com.gmail.vpshulgaa.config",
         "com.gmail.vpshulgaa.controllers"})

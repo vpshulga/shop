@@ -1,6 +1,7 @@
 package com.gmail.vpshulgaa.service.dto;
 
 public class ChangePasswordDto {
+
     private String newPassword;
     private String confirmPassword;
 

@@ -34,7 +34,8 @@
                             <td>${order.total}</td>
                             <td>${order.creator}</td>
                             <td>${order.status}(<a class="page-link"
-                                                   href="${pageContext.request.contextPath}/web/orders/${order.id}">change</a>)</td>
+                                                   href="${pageContext.request.contextPath}/web/orders/${order.id}">change</a>)
+                            </td>
                         </tr>
                     </c:forEach>
                     </tbody>

@@ -15,10 +15,11 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class User implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "F_ID", updatable = false, nullable = false)
-    private long id;
+    private Long id;
 
     @Column(name = "F_EMAIL", length = 150, unique = true)
     @NotNull
@@ -50,14 +51,11 @@ public class User implements Serializable {
     @JoinColumn(name = "F_DISCOUNT_ID")
     private Discount discount;
 
-    public User() {
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -117,14 +115,6 @@ public class User implements Serializable {
         this.profile = profile;
     }
 
-    public Set<Audit> getAudits() {
-        return audits;
-    }
-
-    public void setAudits(Set<Audit> audits) {
-        this.audits = audits;
-    }
-
     public Role getRole() {
         return role;
     }
@@ -133,20 +123,12 @@ public class User implements Serializable {
         this.role = role;
     }
 
-    public Discount getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(Discount discount) {
-        this.discount = discount;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         User user = (User) o;
-        return id == user.id &&
+        return Objects.equals(id, user.id) &&
                 Objects.equals(email, user.email) &&
                 Objects.equals(name, user.name) &&
                 Objects.equals(surname, user.surname) &&

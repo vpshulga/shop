@@ -1,11 +1,11 @@
-<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <jsp:include page="commons/header.jsp"/>
-    <title>Login page</title>
+    <title>Logout page</title>
 </head>
 <body>
 <div class="container">

@@ -15,6 +15,7 @@ public class UserPrincipal implements UserDetails {
     private String password;
     private List<GrantedAuthority> authorities;
     private boolean disabled;
+    private boolean deleted;
 
     public UserPrincipal(User user) {
         this.id = user.getId();
@@ -25,6 +26,7 @@ public class UserPrincipal implements UserDetails {
                 .toArray(String[]::new);
         this.authorities = AuthorityUtils.createAuthorityList(authorityList);
         this.disabled = user.getDisabled();
+        this.deleted = user.getDeleted();
     }
 
     public Long getId() {
@@ -51,6 +53,10 @@ public class UserPrincipal implements UserDetails {
         return disabled;
     }
 
+    public boolean getDeleted() {
+        return deleted;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.authorities;
@@ -68,7 +74,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return !getDeleted();
     }
 
     @Override

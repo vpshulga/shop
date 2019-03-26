@@ -28,7 +28,7 @@ public class Item implements Serializable {
     @Column(name = "F_PRICE")
     private BigDecimal price;
     @Column(name = "F_IS_DELETED")
-    private Boolean deleted;
+    private Boolean deleted = Boolean.FALSE;
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(

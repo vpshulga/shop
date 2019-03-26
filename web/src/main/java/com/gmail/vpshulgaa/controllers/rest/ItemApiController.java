@@ -24,7 +24,6 @@ public class ItemApiController {
     }
 
     @GetMapping(value = "/{id}")
-    @PreAuthorize("hasAuthority('API_USER_PERMISSION')")
     public ItemDto getItem(@PathVariable("id") Long id) {
         return itemService.findOne(id);
     }

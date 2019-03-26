@@ -7,7 +7,9 @@ import com.gmail.vpshulgaa.service.dto.CommentDto;
 import com.gmail.vpshulgaa.service.dto.NewsDto;
 import com.gmail.vpshulgaa.service.util.PaginationUtils;
 import com.gmail.vpshulgaa.util.URLPrefix;
+
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -46,11 +48,9 @@ public class NewsController {
     public String getNews(
             @RequestParam(value = "page", defaultValue = "1") Long page,
             ModelMap modelMap) {
-        Long pagesCount = PaginationUtils.countOfPages(newsService.countOfNews(),
-                pageProperties.getCountOfEntitiesOnPage());
+        Long pagesCount = PaginationUtils.countOfPages(newsService.countOfNews(), pageProperties.getCountOfEntitiesOnPage());
         modelMap.addAttribute("pages", pagesCount);
-        List<NewsDto> news = newsService.findNewsByPage(page,
-                pageProperties.getCountOfEntitiesOnPage());
+        List<NewsDto> news = newsService.findNewsByPage(page, pageProperties.getCountOfEntitiesOnPage());
         modelMap.addAttribute("news", news);
         return pageProperties.getNewsPagePath();
     }
